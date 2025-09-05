@@ -1,0 +1,23 @@
+.layout-content{
+    margin: 24px 16px;
+    padding: 24px;
+    min-height: 280px;
+    background: #fff;       
+    border-radius: 8px; 
+}
+
+.layout-wrapper {
+  min-height: 100vh;
+}
+
+
+.layout-header {
+  background-color: #fff;
+  padding: 0;
+}
+
+.ant-btn.toggle-btn {
+  font-size: 16px;
+  width: 64px;
+  height: 64px;
+}
