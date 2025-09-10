@@ -28,7 +28,8 @@ const items = [
     getItem('장비 관리','/1-4'), 
     getItem('선박 관리','/1-5'),
     getItem('창고 관리','/1-6'),
-    getItem('표준 공정 관리','/1-7')  
+    getItem('표준 공정 관리','/1-7')  ,
+    getItem('사원 정보 관리','/1-8')
   ]),
   getItem('영업 관리','/sales',<ShoppingOutlined />,
   [ getItem('견적 관리','2-1'),
@@ -45,8 +46,7 @@ const items = [
   ]),
   getItem('인사/회계 관리','/account', <MoneyCollectOutlined />,
   [ getItem('전표 관리','/5-1'),
-    getItem('추가 근무 등록','/5-2'),
-    getItem('사원 정보 관리','/5-3')
+    getItem('추가 근무 등록','/5-2')
   ]),
   getItem('안전 관리','/safety',<WarningOutlined />) 
 ];
