@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import "./layout.css";
 import {
   TeamOutlined,
   WarningOutlined,
@@ -57,18 +58,25 @@ const LayoutPresent = () => {
   } = theme.useToken();
   const navigate = useNavigate();
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="layout">
       <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['/home']} onClick={({key})=>navigate(key)} mode="inline" items={items} />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '0 16px' }}>
+        <Header className="main-header" >
+          <div></div>
+          <div className='user-info'>
+              <div className="info-item">사용자 님</div>
+              <div className="info-item">마이페이지</div>
+              <div className="info-item">로그아웃</div>
+          </div>
+        </Header>
+        <Content className="main-content" >
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        <Footer className="main-footer">
+          2025-SmartFactory Final Project ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
     </Layout>
