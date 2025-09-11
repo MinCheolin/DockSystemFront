@@ -50,7 +50,7 @@ const EquipmentPresenter = ({equipments,HandleChangeInput , HandleCreateEquipmen
         <>
             <div className="equipment-content">
                 <div className="grid-func">
-                    <div className="equipment-list">거래처 목록</div>
+                    <div className="equipment-list">장비 목록</div>
                     <div className="func-button">
                     <Button onClick={HandleCreateModalOpen}>추가</Button>
                     <Button type="primary" danger  disabled={!hasSelected} onClick={HandleDeleteEquipment}>삭제</Button>                
