@@ -106,6 +106,7 @@ const ClientContainer = () =>{
         
         try {
             const response = await axios.post('http://localhost:8080/api/erp/v1/clients', clientInfo);
+
             } catch (error) {
             console.error('등록 실패:', error);
             }
@@ -180,7 +181,7 @@ const ClientContainer = () =>{
             <ClientPresenter 
                 HandleChangeInput={HandleChangeInput} HandleCreateClient={HandleCreateClient} HandleUpdateClient ={HandleUpdateClient} filteredClients={filteredClients}
                 updateClientInfo={updateClientInfo} HandleUpdateChangeInput ={HandleUpdateChangeInput} HandleDeleteClient = {HandleDeleteClient} setSearchTerm={setSearchTerm}
-                HandleChangeSelect={HandleChangeSelect} HandleUpdateChangeSelect={HandleUpdateChangeSelect} setIsUpdateModalOpen={setIsUpdateModalOpen}
+                HandleChangeSelect={HandleChangeSelect} HandleUpdateChangeSelect={HandleUpdateChangeSelect} setIsUpdateModalOpen={setIsUpdateModalOpen} clientInfo={clientInfo}
                 HandleCreateModalOpen={HandleCreateModalOpen} HandleModalClose={HandleModalClose} isModalOpen={isModalOpen} searchTerm={searchTerm} isSearching={isSearching}
                 clients={clients}  HandleUpdateModalClose={HandleUpdateModalClose} isUpdateModalOpen={isUpdateModalOpen} handleShowAll={handleShowAll}
                 rowSelection={rowSelection} HandleRowClick={HandleRowClick} hasSelected={hasSelected} HandleDoubleClick={HandleDoubleClick} handleSearchClient={handleSearchClient}/>

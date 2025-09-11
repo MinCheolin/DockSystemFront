@@ -5,7 +5,7 @@ import "./Client.css";
 
 const ClientPresenter = ({clients,HandleChangeInput , HandleCreateClient,HandleCreateModalOpen,HandleModalClose,isModalOpen,HandleUpdateModalClose,handleSearchClient,
                         HandleUpdateClient,rowSelection, HandleRowClick, hasSelected,HandleDeleteClient, HandleDoubleClick,isUpdateModalOpen,setSearchTerm,handleShowAll,
-                        updateClientInfo,HandleUpdateChangeInput,HandleChangeSelect, HandleUpdateChangeSelect,handleSearchChange, filteredClients,searchTerm,isSearching}) =>{
+                        updateClientInfo,HandleUpdateChangeInput,HandleChangeSelect, HandleUpdateChangeSelect,filteredClients,searchTerm,isSearching,clientInfo}) =>{
     
     const typeOptions = [
     { value: "자재", label: "자재" },
@@ -95,12 +95,12 @@ const ClientPresenter = ({clients,HandleChangeInput , HandleCreateClient,HandleC
         >
 
         <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} onFinish={HandleCreateClient}>
-            <Form.Item label="거래처명"><Input placeholder="거래처명을 입력하세요." name="clientName" onChange={HandleChangeInput} /></Form.Item>
-            <Form.Item label="거래처 유형"><Select placeholder="거래처 유형을 선택하세요." name="type" options={typeOptions} onChange={(value) => HandleChangeSelect("type", value)} /></Form.Item>
-            <Form.Item label="사업자 등록 번호"><Input placeholder="사업자 등록 번호를 입력하세요." name="clientBrn" onChange={HandleChangeInput} /></Form.Item>
-            <Form.Item label="대표명"><Input placeholder="대표명을 입력하세요." name="clientCeo" onChange={HandleChangeInput} /></Form.Item>
-            <Form.Item label="담당자명"><Input placeholder="담당자명을 입력하세요." name="clientManager" onChange={HandleChangeInput} /></Form.Item>
-            <Form.Item label="연락처"><Input placeholder="연락처를 입력하세요." name="clientPhone" onChange={HandleChangeInput} /> </Form.Item>
+            <Form.Item label="거래처명"><Input placeholder="거래처명을 입력하세요." name="clientName" value={clientInfo.clientName} onChange={HandleChangeInput} /></Form.Item>
+            <Form.Item label="거래처 유형"><Select placeholder="거래처 유형을 선택하세요." name="type" options={typeOptions} value={clientInfo.type} onChange={(value) => HandleChangeSelect("type", value)} /></Form.Item>
+            <Form.Item label="사업자 등록 번호"><Input placeholder="사업자 등록 번호를 입력하세요." name="clientBrn" value={clientInfo.clientBrn} onChange={HandleChangeInput} /></Form.Item>
+            <Form.Item label="대표명"><Input placeholder="대표명을 입력하세요." name="clientCeo" value={clientInfo.clientCeo} onChange={HandleChangeInput} /></Form.Item>
+            <Form.Item label="담당자명"><Input placeholder="담당자명을 입력하세요." name="clientManager" value={clientInfo.clientManager} onChange={HandleChangeInput} /></Form.Item>
+            <Form.Item label="연락처"><Input placeholder="연락처를 입력하세요." name="clientPhone" value={clientInfo.clientPhone} onChange={HandleChangeInput} /> </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}> 
             <div className="modal-form-button">      <Button type="primary" htmlType="submit">
             추가

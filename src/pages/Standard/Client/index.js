@@ -1,3 +1,3 @@
-import Client from "./RoleContainer";
+import Client from "./ClientContainer";
 
 export default Client;
