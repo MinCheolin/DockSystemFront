@@ -19,6 +19,10 @@ const VesselContainer = () =>{
         vesselSize:""
     });
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredVessels, setFilteredVessels] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/erp/v1/vessels');
@@ -64,7 +68,7 @@ const VesselContainer = () =>{
 
  const HandleDoubleClick = (record) => {
     setSelectedRowKeys([record.vesselNo]);
-    setUpdateVesselInfo({ ...record });             
+    setUpdateVesselInfo({ ...record });
     setIsUpdateModalOpen(true);    
   };
 
@@ -116,6 +120,20 @@ const HandleUpdateChangeInput = (e) => {
          fetchData();
   }
 
+  const handleSearchVessel = () => {
+        const result = vessels.filter(vessel =>
+            vessel.vesselName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredVessels(result);
+        setIsSearching(true);
+    };
+
+    const handleShowAll = () => {
+        setSearchTerm("");          
+        setFilteredVessels([]);     
+        setIsSearching(false);
+    };
+
   const HandleCreateModalOpen = () => {
     setVesselInfo('');
     setIsModalOpen(true);
@@ -133,7 +151,9 @@ const HandleUpdateChangeInput = (e) => {
         <VesselPresenter HandleChangeInput={HandleChangeInput} HandleCreateVessel={HandleCreateVessel} HandleDeleteVessel={HandleDeleteVessel} setIsUpdateModalOpen={setIsUpdateModalOpen}
             updateVesselInfo={updateVesselInfo}       HandleUpdateChangeInput ={HandleUpdateChangeInput} HandleUpdateVessel={HandleUpdateVessel}
         HandleCreateModalOpen={HandleCreateModalOpen} HandleModalClose={HandleModalClose} isModalOpen={isModalOpen} isUpdateModalOpen={isUpdateModalOpen}vessels={vessels}
-                rowSelection={rowSelection} HandleRowClick={HandleRowClick} hasSelected={hasSelected} HandleDoubleClick={HandleDoubleClick} HandleUpdateModalClose={HandleUpdateModalClose}/>
+                rowSelection={rowSelection} HandleRowClick={HandleRowClick} hasSelected={hasSelected} HandleDoubleClick={HandleDoubleClick} HandleUpdateModalClose={HandleUpdateModalClose}
+                filteredVessels={filteredVessels} isSearching={isSearching} handleSearchVessel={handleSearchVessel} handleShowAll={handleShowAll} setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm} />
                
               );  
 }

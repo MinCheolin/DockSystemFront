@@ -1,9 +1,26 @@
-import { Button, Table, Modal, Form, Input} from 'antd';
+import { Button, Table, Modal, Form, Input, Select} from 'antd';
+import { SearchOutlined ,UnorderedListOutlined} from '@ant-design/icons';
 import "./vessel.css";
+import Vessel from '.';
 
 
-const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleCreateModalOpen,HandleModalClose,isModalOpen,HandleUpdateModalClose,
-                          HandleUpdateVessel,rowSelection, HandleRowClick, hasSelected,HandleDeleteVessel, HandleDoubleClick,isUpdateModalOpen,updateVesselInfo,HandleUpdateChangeInput }) =>{
+const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleCreateModalOpen,HandleModalClose,isModalOpen,HandleUpdateModalClose,handleSearchVessel,
+                          HandleUpdateVessel,rowSelection, HandleRowClick, hasSelected,HandleDeleteVessel, HandleDoubleClick,isUpdateModalOpen,setSearchTerm,handleShowAll,
+                          updateVesselInfo,HandleUpdateChangeInput,HandleChangeSelect, HandleUpdateChangeSelect,handleSearchChange, filteredVessels,searchTerm,isSearching}) =>{
+
+ const nameFilter = [...new Set(vessels.map(vessel => vessel.vesselName))].map(name => ({
+  text:name,
+  value:name
+ }));
+ const typeFilter = [...new Set(vessels.map(vessel => vessel.vesselType))].map(type => ({
+  text:type,
+  value:type
+ }));
+ const sizeFilter = [...new Set(vessels.map(vessel => vessel.vesselSize))].map(size => ({
+  text:size,
+  value:size
+ }));
+                            
  const columns = [
    {
       title: '번호',
@@ -15,16 +32,19 @@ const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleC
     title: '선박명',
     dataIndex: 'vesselName',
     key: 'name',
+    filters:nameFilter, onFilter: (value,record) => record.vesselName === value
   },
   {
     title: '선박종류',
     dataIndex: 'vesselType',
     key: 'Type',
+    filters:typeFilter, onFilter: (value,record) => record.vesselType === value
   },
   {
     title: '선박크기',
     dataIndex: 'vesselSize',
     key: 'Size',
+    filters:sizeFilter, onFilter: (value,record) => record.vesselSize === value
   }
   ];
 
@@ -38,12 +58,29 @@ const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleC
                    <Button type="primary" danger  disabled={!hasSelected} onClick={HandleDeleteVessel}>삭제</Button>                
                 </div>
             </div>
+            <div className='vessel-search'> 
+                    <Input
+                        placeholder="선박명 입력" 
+                        value={searchTerm}          
+                        onChange={(e) => setSearchTerm(e.target.value)} 
+                    />
+                    <Button
+                        type="primary"
+                        icon={<SearchOutlined />}
+                        onClick={handleSearchVessel}>
+                    </Button>
+                    <Button 
+                        icon = {<UnorderedListOutlined />}
+                        onClick={handleShowAll}>
+                    </Button>
+                </div>
             <div className="grid-box">
                   <Table size="small"
                    pagination={false}
                    rowClassName="clickable-row"
                    rowSelection={rowSelection}
-                   columns={columns} dataSource={vessels} 
+                   columns={columns}
+                   dataSource={isSearching ? filteredVessels : vessels} 
                    rowKey="vesselNo" 
                    onRow={(record) => ({
                        onClick: () => HandleRowClick(record),
@@ -85,19 +122,16 @@ const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleC
 
      <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} onFinish={HandleUpdateVessel}>
       <Form.Item label="선박명">   <Input placeholder="선박명을 입력하세요." name="vesselName"
-       value={updateVesselInfo.vesselName}  // 상태 반영
+       value={updateVesselInfo.vesselName}
       onChange={HandleUpdateChangeInput}
-      //onChange={HandleChangeInput}
        /> </Form.Item>
        <Form.Item label="선박종류">   <Input placeholder="선박 종류를 입력하세요." name="vesselType"
-       value={updateVesselInfo.vesselType}  // 상태 반영
+       value={updateVesselInfo.vesselType}
       onChange={HandleUpdateChangeInput}
-      //onChange={HandleChangeInput}
        /> </Form.Item>
        <Form.Item label="선박크기">   <Input placeholder="선박 크기를 입력하세요." name="vesselSize"
-       value={updateVesselInfo.vesselSize}  // 상태 반영
+       value={updateVesselInfo.vesselSize}
       onChange={HandleUpdateChangeInput}
-      //onChange={HandleChangeInput}
        /> </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }}> 
         <div className="modal-form-button">      <Button type="primary" htmlType="submit">

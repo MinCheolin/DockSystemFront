@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Tab from "./pages/Standard/Tab";
 import Client from "./pages/Standard/Client";
 import Vessel from "./pages/Standard/Vessel";
+import Material from "./pages/Standard/Material";
 
 const App = () => {
   
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="home" element ={<Home />}/>
             <Route path="user" element={<Tab />}/>
             <Route path="vessel" element={<Vessel />}/>
+            <Route path="material" element={<Material />}/>
             <Route path="standard/client" element = {<Client />}></Route>
             <Route path="safety" element={<SafetyBoard />} />
           </Route>

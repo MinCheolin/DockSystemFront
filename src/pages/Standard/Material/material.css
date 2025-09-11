@@ -1,4 +1,4 @@
-.vessel-content{
+.material-content{
     height: 100vh;
     border-radius: 15px;
     background-color: white;
@@ -13,7 +13,7 @@
     align-items: center;
 }
 
-.vessel-list{
+.material-list{
     font-size: 22px;
     font-weight: 500;
 }
@@ -40,13 +40,13 @@
     
 }
 
-.vessel-search {
+.material-search {
     display: flex;         
     align-items: center;     
     gap: 8px;                
     margin-bottom: 16px;     
 }
 
-.vessel-search input {
+.material-search input {
     flex: 1;                 
 }
