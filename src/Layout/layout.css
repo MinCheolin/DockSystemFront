@@ -1,0 +1,32 @@
+.layout{
+  minHeight: 100vh; 
+}
+
+
+.main-content{
+  margin: 10px 16px;
+}
+
+.main-header{
+  display: flex;              /* 가로 배치 */
+  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  align-items: center;        
+  padding: 20px;
+  background-color: white
+}
+
+.main-footer
+{
+  text-align: center;
+}
+
+.user-info{
+   display: flex;
+  justify-content: space-between; /* 양 끝부터 일정 간격 */
+  align-items: center;           /* 세로 중앙 정렬 */
+  padding: 10px;
+}
+
+.info-item{
+   padding: 10px 8px;
+}
