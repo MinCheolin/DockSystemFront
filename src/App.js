@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Tab from "./pages/Standard/Tab";
 import Client from "./pages/Standard/Client/ClientContainer";
 import Customer from "./pages/Standard/Customer/CustomerContainer";
+import Equipment from "./pages/Standard/Equipment/EquipmentContainer";
 
 const App = () => {
   
@@ -15,9 +16,10 @@ const App = () => {
           <Route path='/' element={<LayoutPresent/>}>
             <Route index element={<Home />} /> 
             <Route path="home" element ={<Home />}/>
-            <Route path="/standard/user" element={<Tab />}/>
+            <Route path="standard/user" element={<Tab />}/>
             <Route path="standard/client" element = {<Client />}></Route>
             <Route path="standard/customer" element = {<Customer />}></Route>
+            <Route path="standard/equipment" element = {<Equipment />}></Route>
             <Route path="safety" element={<SafetyBoard />} />
           </Route>
         </Routes>
