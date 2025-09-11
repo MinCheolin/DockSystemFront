@@ -1,8 +1,10 @@
 import VesselPresenter from "./VesselPresenter";
 import { useState,useEffect } from "react";
 import axios from 'axios';
+import { Form } from "antd";
 
 const VesselContainer = () =>{
+  const [form] = Form.useForm();
   const [vessels, setVessels] = useState([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateVesselInfo,setUpdateVesselInfo] = useState({
@@ -13,11 +15,11 @@ const VesselContainer = () =>{
     });
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [vesselInfo, setVesselInfo] = useState({
-        vesselName:"",
-        vesselType:"",
-        vesselSize:""
-    });
+  // const [vesselInfo, setVesselInfo] = useState({
+  //       vesselName:"",
+  //       vesselType:"",
+  //       vesselSize:""
+  //   });
 
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredVessels, setFilteredVessels] = useState([]);
@@ -43,7 +45,6 @@ const VesselContainer = () =>{
       const lastKey = selectedRowKeys.pop();
       setSelectedRowKeys(lastKey ? [lastKey] : []);
     },
-    
   };
 
   const HandleRowClick = (record) => {
@@ -54,17 +55,15 @@ const VesselContainer = () =>{
     }
   };
 
-
-
   const hasSelected = selectedRowKeys.length > 0;
 
-  const HandleChangeInput= (e) => {
-        const { name, value } = e.target;
-        setVesselInfo(prev => ({
-        ...prev,
-        [name]: value,
-        }));
-    };
+  // const HandleChangeInput= (e) => {
+  //       const { name, value } = e.target;
+  //       setVesselInfo(prev => ({
+  //       ...prev,
+  //       [name]: value,
+  //       }));
+  //   };
 
  const HandleDoubleClick = (record) => {
     setSelectedRowKeys([record.vesselNo]);
@@ -80,16 +79,18 @@ const HandleUpdateChangeInput = (e) => {
   }));
 };
 
-
-
-  const HandleCreateVessel = async () => {
+  const HandleCreateVessel = async (values) => {
        try {
-          const response = await axios.post('http://localhost:8080/api/erp/v1/vessels', vesselInfo);
+          const response = await axios.post('http://localhost:8080/api/erp/v1/vessels', values);
           console.log('등록 성공:', response.data);
+
+          setIsModalOpen(false);
+          form.resetFields();
+          fetchData();
         } catch (error) {
         console.error('등록 실패:', error);
         }
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
   }
   const HandleDeleteVessel = async () =>{
     if (selectedRowKeys.length === 0) return;  
@@ -135,7 +136,8 @@ const HandleUpdateChangeInput = (e) => {
     };
 
   const HandleCreateModalOpen = () => {
-    setVesselInfo('');
+    form.resetFields();
+    // setVesselInfo('');
     setIsModalOpen(true);
   };
 
@@ -148,14 +150,32 @@ const HandleUpdateChangeInput = (e) => {
   };
 
   return (
-        <VesselPresenter HandleChangeInput={HandleChangeInput} HandleCreateVessel={HandleCreateVessel} HandleDeleteVessel={HandleDeleteVessel} setIsUpdateModalOpen={setIsUpdateModalOpen}
-            updateVesselInfo={updateVesselInfo}       HandleUpdateChangeInput ={HandleUpdateChangeInput} HandleUpdateVessel={HandleUpdateVessel}
-        HandleCreateModalOpen={HandleCreateModalOpen} HandleModalClose={HandleModalClose} isModalOpen={isModalOpen} isUpdateModalOpen={isUpdateModalOpen}vessels={vessels}
-                rowSelection={rowSelection} HandleRowClick={HandleRowClick} hasSelected={hasSelected} HandleDoubleClick={HandleDoubleClick} HandleUpdateModalClose={HandleUpdateModalClose}
-                filteredVessels={filteredVessels} isSearching={isSearching} handleSearchVessel={handleSearchVessel} handleShowAll={handleShowAll} setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm} />
-               
-              );  
+    <VesselPresenter
+        form={form} // form 인스턴스 전달
+        HandleCreateVessel={HandleCreateVessel}
+        HandleDeleteVessel={HandleDeleteVessel}
+        setIsUpdateModalOpen={setIsUpdateModalOpen}
+        updateVesselInfo={updateVesselInfo}
+        HandleUpdateChangeInput ={HandleUpdateChangeInput}
+        HandleUpdateVessel={HandleUpdateVessel}
+        HandleCreateModalOpen={HandleCreateModalOpen}
+        HandleModalClose={HandleModalClose}
+        isModalOpen={isModalOpen}
+        isUpdateModalOpen={isUpdateModalOpen}
+        vessels={vessels}
+        rowSelection={rowSelection}
+        HandleRowClick={HandleRowClick}
+        hasSelected={hasSelected}
+        HandleDoubleClick={HandleDoubleClick}
+        HandleUpdateModalClose={HandleUpdateModalClose}
+        filteredVessels={filteredVessels}
+        isSearching={isSearching}
+        handleSearchVessel={handleSearchVessel}
+        handleShowAll={handleShowAll}
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+    />
+  );  
 }
 
 export default VesselContainer;

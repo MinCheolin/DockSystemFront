@@ -1,12 +1,32 @@
 import { Button, Table, Modal, Form, Input, Select} from 'antd';
 import { SearchOutlined ,UnorderedListOutlined} from '@ant-design/icons';
 import "./vessel.css";
-import Vessel from '.';
 
 
-const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleCreateModalOpen,HandleModalClose,isModalOpen,HandleUpdateModalClose,handleSearchVessel,
-                          HandleUpdateVessel,rowSelection, HandleRowClick, hasSelected,HandleDeleteVessel, HandleDoubleClick,isUpdateModalOpen,setSearchTerm,handleShowAll,
-                          updateVesselInfo,HandleUpdateChangeInput,HandleChangeSelect, HandleUpdateChangeSelect,handleSearchChange, filteredVessels,searchTerm,isSearching}) =>{
+const VesselPresenter = ({
+  form,
+    vessels,
+    isModalOpen,
+    isUpdateModalOpen,
+    updateVesselInfo,
+    hasSelected,
+    rowSelection,
+    searchTerm,
+    isSearching,
+    filteredVessels,
+    HandleCreateVessel,
+    HandleCreateModalOpen,
+    HandleModalClose,
+    HandleUpdateVessel,
+    HandleUpdateModalClose,
+    HandleUpdateChangeInput,
+    HandleDeleteVessel,
+    HandleRowClick,
+    HandleDoubleClick,
+    setSearchTerm,
+    handleSearchVessel,
+    handleShowAll
+}) =>{
 
  const nameFilter = [...new Set(vessels.map(vessel => vessel.vesselName))].map(name => ({
   text:name,
@@ -97,10 +117,31 @@ const VesselPresenter = ({vessels,HandleChangeInput , HandleCreateVessel,HandleC
         onCancel={HandleModalClose} 
       >
 
-     <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} onFinish={HandleCreateVessel}>
-      <Form.Item label="선박명">   <Input placeholder="선박명을 입력하세요." name="vesselName" onChange={HandleChangeInput} /> </Form.Item>
+     <Form form={form} onFinish={HandleCreateVessel} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} validateTrigger="onBlur">
+      {/* <Form.Item label="선박명">   <Input placeholder="선박명을 입력하세요." name="vesselName" onChange={HandleChangeInput} /> </Form.Item>
       <Form.Item label="선박종류">   <Input placeholder="선박 종류를 입력하세요." name="vesselType" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="선박크기">   <Input placeholder="선박 크기를 입력하세요." name="vesselSize" onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="선박크기">   <Input placeholder="선박 크기를 입력하세요." name="vesselSize" onChange={HandleChangeInput} /> </Form.Item> */}
+      <Form.Item
+        label="선박명"
+        name="vesselName"
+        rules={[{ required:true, message: '선박명을 입력하세요!' }]}
+      >
+        <Input placeholder="선박명을 입력하세요." />
+      </Form.Item>
+      <Form.Item
+        label="선박종류"
+        name="vesselType"
+        rules={[{ required: true, message: '선박 종류를 입력하세요!' }]}
+      >
+        <Input placeholder="선박 종류를 입력하세요." />
+      </Form.Item>
+      <Form.Item
+        label="선박크기"
+        name="vesselSize"
+        rules={[{ required: true, message: '선박 크기를 입력하세요!' }]}
+      >
+        <Input placeholder="선박 크기를 입력하세요." />
+      </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }}> 
         <div className="modal-form-button">      <Button type="primary" htmlType="submit">
         추가
