@@ -11,6 +11,11 @@
     justify-content: space-between; 
     align-items: center;
 }
+.user-list{
+    font-size: 22px;
+    font-weight: 500;
+}
+
 
 .func-button{
     display: flex;
@@ -31,4 +36,10 @@
     align-items: center; 
     gap: 15px;
     
+}
+
+.ant-input[disabled] {
+  background-color: #eeeeee !important;  /* 더 연한 회색 */
+  color: rgba(0, 0, 0, 0.65) !important; /* 글자색 */
+  border-color: #e5e5e5 !important;      /* 연한 border */
 }
