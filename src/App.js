@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Tab from "./pages/Standard/Tab";
 import Client from "./pages/Standard/Client";
 import StandardProcess from "./pages/Standard/StandardProcess";
+import Warehouse from "./pages/Standard/Warehouse";
 
 const App = () => {
   
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="home" element ={<Home />}/>
             <Route path="user" element={<Tab />}/>
             <Route path="StandardProcess" element={<StandardProcess />}/>
+            <Route path="Warehouse" element={<Warehouse/>} />
             <Route path="standard/client" element = {<Client />}></Route>
             <Route path="safety" element={<SafetyBoard />} />
           </Route>
