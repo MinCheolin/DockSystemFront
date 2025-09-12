@@ -1,7 +1,6 @@
 import { Button, Table, Modal, Form, Input} from 'antd';
 import "./role.css";
 
-
 const RolePresenter = ({  rowSelection, hasSelected,roles,updateRoleInfo,isModalOpen,isUpdateModalOpen,
                           HandleRowClick,HandleDoubleClick,
                           HandleCreateRole, HandleUpdateRole,HandleDeleteRole,
@@ -63,7 +62,6 @@ const RolePresenter = ({  rowSelection, hasSelected,roles,updateRoleInfo,isModal
           <Button type="primary" htmlType="submit">   추가 </Button>
           <Button onClick={HandleModalClose}>         닫기 </Button>      </div>
           </Form.Item> </Form> </Modal>
-
     <Modal
         title="직급 수정"
         open={isUpdateModalOpen}
@@ -97,7 +95,6 @@ const RolePresenter = ({  rowSelection, hasSelected,roles,updateRoleInfo,isModal
     );
 }
  
-
 export default RolePresenter;
 
 

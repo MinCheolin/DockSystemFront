@@ -60,6 +60,7 @@ const DepartmentContainer  = () =>{
         }));
     };
 
+
       const HandleUpdateChangeInput= (e) => {
         const { name, value } = e.target;
         setUpdateDepartmentInfo(prev => ({

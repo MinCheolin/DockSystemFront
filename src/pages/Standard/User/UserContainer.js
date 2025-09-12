@@ -138,6 +138,7 @@ const UserContainer = () =>{
         } catch (error) {
         console.error('등록 실패:', error);
         }
+
         setIsModalOpen(false);
         fetchData();      
         }

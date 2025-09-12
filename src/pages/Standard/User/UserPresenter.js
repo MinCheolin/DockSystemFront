@@ -1,6 +1,7 @@
 import "./user.css";
 import { Button, Table, Modal, Form, Input,Select} from 'antd';
 
+
 const UserPresenter = ({rowSelection, hasSelected, users,departments, roles,updateUserInfo,  
                        isModalOpen, isUpdateModalOpen,
                        HandleRowClick, HandleDoubleClick,
@@ -152,22 +153,9 @@ const UserPresenter = ({rowSelection, hasSelected, users,departments, roles,upda
      </Form>
       </Modal>
     
-      
-
-
-
-
-
-
-
-
         </div>
     );
 
 }
 
 export default UserPresenter;
-
-
-// <Select placeholder="부서를 선택하세요."           options={departments.departmentName}          onChange={ (value) => HandleChangeSelect('department', value)}/> 
-       

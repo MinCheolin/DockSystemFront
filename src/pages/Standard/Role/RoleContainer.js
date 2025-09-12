@@ -15,7 +15,6 @@ const RoleContainer = () =>{
     roleName:""
   });
   
-
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/erp/v1/roles');
@@ -49,15 +48,13 @@ const RoleContainer = () =>{
         }));
     };
   
-    const HandleUpdateChangeInput = (e) => {
+  const HandleUpdateChangeInput = (e) => {
       const { name, value } = e.target;
       setUpdateRoleInfo(prev => ({
        ...prev,
       [name]: value
     }));
 };
-
-
 
   const HandleRowClick = (record) => {
     if (selectedRowKeys.includes(record.roleNo)) {
@@ -72,8 +69,6 @@ const RoleContainer = () =>{
     setUpdateRoleInfo({ ...record });             
     setIsUpdateModalOpen(true);    
   };
-
-
 
   const HandleCreateRole = async () => {
        try {
@@ -135,7 +130,6 @@ const RoleContainer = () =>{
                        HandleChangeInput={HandleChangeInput}  HandleUpdateChangeInput ={HandleUpdateChangeInput}
                        HandleCreateModalOpen={HandleCreateModalOpen}  HandleModalClose={HandleModalClose}    HandleUpdateModalClose={HandleUpdateModalClose}
                />
-               
               );  
 }
 

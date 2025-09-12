@@ -34,6 +34,7 @@ const DepartmentPresenter = ({rowSelection,hasSelected, departments, updateDepar
             </div>
             <div className="grid-box">
                   <Table size="small"
+
                    pagination={false}              
                    rowSelection={rowSelection}
                    columns={columns} dataSource={departments} 
