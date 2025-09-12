@@ -1,22 +1,65 @@
 import UserPresenter from "./UserPresenter";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from 'axios';
 
 const UserContainer = () =>{
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userInfo, setUserInfo] = useState({
+  const [users, setUsers] = useState([]); 
+  const [departments,setDepartments] =useState([]);
+  const [roles,setRoles] =useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [userInfo, setUserInfo] = useState({
     userId: "",
     userPw: "",
     userName: "",
     userPhone: "",
     userWork: "",
     userSalary: "",
-    department: "",
-    role: "",
+    departmentNo: "",
+    roleNo: "",
   });
 
+  const [updateUserInfo, setUpdateUserInfo] = useState({
+    userNo:"",
+    userId: "",
+    userPw: "",
+    userName: "",
+    userPhone: "",
+    userWork: "",
+    userSalary: "",
+    departmentNo: "",
+    roleNo: "",
+  });
+
+  const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/erp/v1/users');
+        setUsers(response.data);    
+      } catch (err) {
+        
+      } finally {
   
-   const onChangeInputHandler= (e) => {
+      }
+    };
+
+    useEffect(() => {
+      fetchData();
+    }, []); 
+
+    const rowSelection = {
+    selectedRowKeys,
+    hideSelectAll: true,
+    onChange: (selectedRowKeys) => {
+      const lastKey = selectedRowKeys.pop();
+      setSelectedRowKeys(lastKey ? [lastKey] : []);
+    },
+    
+  };
+  const hasSelected = selectedRowKeys.length > 0;
+
+    const HandleChangeInput= (e) => {
         const { name, value } = e.target;
         setUserInfo(prev => ({
         ...prev,
@@ -24,51 +67,130 @@ const UserContainer = () =>{
         }));
     };
 
-  const onChangeSelectHandler = (name, value) => {
-    setUserInfo((prev) => ({
+    const HandleChangeSelect = (name, value) => {
+      setUserInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));     
+    };
+
+
+    const HandleUpdateChangeSelect = (name, value) => {
+      setUpdateUserInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
+           console.log("HandleUpdateChangeSelect");
+           console.log(updateUserInfo);
+           
+    };
+
+    const HandleUpdateChangeInput = (e) => {
+       const { name, value } = e.target;
+       setUpdateUserInfo(prev => ({
+      ...prev,
+       [name]: value
+       }));
+
+    };
+
+
+  const HandleRowClick = (record) => {
+    if (selectedRowKeys.includes(record.userNo)) {
+      setSelectedRowKeys([]);      
+    } else {
+      setSelectedRowKeys([record.userNo]); 
+    }
+  };
+ 
+   const HandleDoubleClick = async (record) => {
+    const resDep =   await axios.get('http://localhost:8080/api/erp/v1/departments');
+    const resRol =  await axios.get('http://localhost:8080/api/erp/v1/roles');
+    setDepartments(resDep.data);
+    setRoles(resRol.data);
+    setSelectedRowKeys([record.userNo]);
+    const matchData = {
+            userNo:record.userNo,
+            userId:record.userId ,
+            userPw: record.userPw,
+            userName: record.userName,
+            userPhone: record.userPhone,
+            userWork: record.userWork,
+            userSalary:record.userSalary, 
+            departmentNo: Number(record.department.departmentNo),
+            roleNo: Number(record.role.roleNo),          
+        };
+    setUpdateUserInfo({ ...matchData });         
+    setIsUpdateModalOpen(true);    
   };
 
 
-    const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-};
-
-
-  const CreateUserHandler = async () => {
+  const HandleCreateUser = async () => {
         const finalData = {
             ...userInfo,
-            department: Number(userInfo.department),
-            role: Number(userInfo.role),          
+            departmentNo: Number(userInfo.departmentNo),
+            roleNo: Number(userInfo.roleNo),          
         };
-
-
-       try {
-             console.log("폼 데이터 :",finalData);
-            const response = await axios.post('http://localhost:8080/api/erp/v1/users', userInfo);
+        
+        try {
+            const response = await axios.post('http://localhost:8080/api/erp/v1/users', finalData);
             console.log('등록 성공:', response.data);
         } catch (error) {
         console.error('등록 실패:', error);
         }
-    setIsModalOpen(false);
-  }
 
-  const handleAddClick = () => {
+        setIsModalOpen(false);
+        fetchData();      
+        }
+
+
+   const HandleUpdateUser = async () =>{
+  
+        const finalData = {
+            ...updateUserInfo,
+            departmentNo: Number(updateUserInfo.departmentNo),
+            roleNo: Number(updateUserInfo.roleNo),          
+        };
+          try {
+          await axios.put(`http://localhost:8080/api/erp/v1/users/${finalData.userNo}`,finalData);
+        } catch (err) {
+           console.error(err);
+           alert('수정 실패');
+        }
+         setIsUpdateModalOpen(false);
+         fetchData();       
+    
+         }
+    
+
+
+   const HandleCreateModalOpen = async() => {
+    const resDep =   await axios.get('http://localhost:8080/api/erp/v1/departments');
+    const resRol =  await axios.get('http://localhost:8080/api/erp/v1/roles');
+    setDepartments(resDep.data);
+    setRoles(resRol.data);
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
+    const HandleModalClose = () => {
     setIsModalOpen(false);
   };
+
+    const HandleUpdateModalClose = () => {
+    setIsUpdateModalOpen(false);
+  };
+
   
+
+
   return (
-        <UserPresenter handleAddClick={handleAddClick} isModalOpen={isModalOpen} handleModalClose={handleModalClose}
-                       CreateUserHandler={CreateUserHandler}  onChange={onChange}  onChangeInputHandler={onChangeInputHandler}
-                        onChangeSelectHandler={onChangeSelectHandler}
-                       />
-    );
+        <UserPresenter rowSelection={rowSelection} hasSelected={hasSelected}  users={users} departments={departments} roles={roles} updateUserInfo={updateUserInfo}  
+                       isModalOpen={isModalOpen} isUpdateModalOpen={isUpdateModalOpen}
+                       HandleRowClick={HandleRowClick} HandleDoubleClick={HandleDoubleClick}
+                       HandleCreateUser={HandleCreateUser} HandleUpdateUser={HandleUpdateUser}  //HandleDeleteUser={HandleDeleteUser}
+                       HandleChangeInput={HandleChangeInput}  HandleUpdateChangeInput ={HandleUpdateChangeInput} HandleChangeSelect={HandleChangeSelect} HandleUpdateChangeSelect={HandleUpdateChangeSelect}
+                       HandleCreateModalOpen={HandleCreateModalOpen}  HandleModalClose={HandleModalClose}    HandleUpdateModalClose={HandleUpdateModalClose}/>
+  );
 }
 
 export default UserContainer;
