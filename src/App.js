@@ -3,9 +3,9 @@ import LayoutPresent from "./Layout/LayoutPresent";
 import SafetyBoard from "./pages/SafetyBoard";
 import Home from "./pages/Home";
 import Tab from "./pages/Standard/Tab";
-import Client from "./pages/Standard/Client/ClientContainer";
-import Customer from "./pages/Standard/Customer/CustomerContainer";
-import Equipment from "./pages/Standard/Equipment/EquipmentContainer";
+import Client from "./pages/Standard/Client";
+import Customer from "./pages/Standard/Customer";
+import Equipment from "./pages/Standard/Equipment";
 
 const App = () => {
   
