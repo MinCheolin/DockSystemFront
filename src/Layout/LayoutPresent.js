@@ -26,16 +26,12 @@ const items = [
   [ getItem('거래처 관리','/standard/client'), 
 
     getItem('고객사 관리','/standard/customer'),
-    getItem('자재 관리','/1-3'), 
+    getItem('자재 관리','/standard/material'), 
     getItem('장비 관리','/standard/equipment'), 
-    getItem('선박 관리','/1-5'),
-    getItem('창고 관리','/1-6'),
-    getItem('표준 공정 관리','/1-7'),
+    getItem('선박 관리','/standard/vessel'),
+    getItem('창고 관리','/standard/warehouse'),
+    getItem('표준 공정 관리','/standard/StandardProcess'),
     getItem('사원 정보 관리','/standard/user')
-  ]),
-  getItem('영업 관리','/sales',<ShoppingOutlined />,
-  [ getItem('견적 관리','2-1'),
-    getItem('수주 관리','2-2')
   ]),
   getItem('프로젝트 관리','/project',<ProjectOutlined />,
   [ getItem('BOM 관리','/3-1'),
@@ -45,10 +41,6 @@ const items = [
   getItem('자재 관리','/material',<DatabaseOutlined/>, 
   [ getItem('발주 관리','/4-1'),
     getItem('재고 관리','/4-2')
-  ]),
-  getItem('인사/회계 관리','/account', <MoneyCollectOutlined />,
-  [ getItem('전표 관리','/5-1'),
-    getItem('추가 근무 등록','/5-2'),
   ]),
   getItem('안전 관리','/safety',<WarningOutlined />) 
 ];
