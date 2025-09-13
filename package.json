@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ag-grid-community": "^34.1.2",
     "ag-grid-react": "^34.1.2",
-    "antd": "^5.27.1",
+    "antd": "^5.27.3",
     "axios": "^1.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -26,9 +26,9 @@ const items = [
   [ getItem('거래처 관리','/standard/client'), 
 
     getItem('고객사 관리','/standard/customer'),
-    getItem('자재 관리','/1-3'), 
+    getItem('자재 관리','/standard/material'), 
     getItem('장비 관리','/standard/equipment'), 
-    getItem('선박 관리','/1-5'),
+    getItem('선박 관리','/standard/vessel'),
     getItem('창고 관리','/standard/warehouse'),
     getItem('표준 공정 관리','/standard/StandardProcess'),
     getItem('사원 정보 관리','/standard/user')
