@@ -23,7 +23,7 @@ const App = () => {
             <Route index element={<Home />} /> 
             <Route path="home" element ={<Home />}/>
             <Route path="standard/user" element={<Tab />}/>
-            <Route pathx="standard/StandardProcess" element={<StandardProcess />}/>
+            <Route path="standard/StandardProcess" element={<StandardProcess />}/>
             <Route path="standard/vessel" element={<Vessel />}/>
             <Route path="standard/material" element={<Material />}/>
             <Route path="standard/client" element = {<Client />}></Route>

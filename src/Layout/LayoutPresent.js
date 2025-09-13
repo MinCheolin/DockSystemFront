@@ -5,8 +5,6 @@ import {
   WarningOutlined,
   DatabaseOutlined,
   ProjectOutlined,
-  ShoppingOutlined,
-  MoneyCollectOutlined,
   HomeOutlined
 } from '@ant-design/icons';
 import {  Layout, Menu, theme } from 'antd';
