@@ -6,6 +6,8 @@ import Tab from "./pages/Standard/Tab";
 import Client from "./pages/Standard/Client";
 import Vessel from "./pages/Standard/Vessel";
 import Material from "./pages/Standard/Material";
+import Customer from "./pages/Standard/Customer";
+import Equipment from "./pages/Standard/Equipment";
 import StandardProcess from "./pages/Standard/StandardProcess";
 
 
@@ -18,9 +20,9 @@ const App = () => {
           <Route path='/' element={<LayoutPresent/>}>
             <Route index element={<Home />} /> 
             <Route path="home" element ={<Home />}/>
-            <Route path="user" element={<Tab />}/>
-            <Route path="vessel" element={<Vessel />}/>
-            <Route path="material" element={<Material />}/>
+            <Route path="standard/user" element={<Tab />}/>
+            <Route path="standard/vessel" element={<Vessel />}/>
+            <Route path="standard/material" element={<Material />}/>
             <Route path="StandardProcess" element={<StandardProcess />}/>
             <Route path="standard/client" element = {<Client />}></Route>
             <Route path="standard/customer" element = {<Customer />}></Route>
