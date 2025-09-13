@@ -19,7 +19,7 @@ const App = () => {
           <Route path='/' element={<LayoutPresent/>}>
             <Route index element={<Home />} /> 
             <Route path="home" element ={<Home />}/>
-            <Route path="user" element={<Tab />}/>
+            <Route path="standard/user" element={<Tab />}/>
             <Route path="standard/StandardProcess" element={<StandardProcess />}/>
             <Route path="standard/client" element = {<Client />}></Route>
             <Route path="standard/customer" element = {<Customer />}></Route>
