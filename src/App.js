@@ -9,6 +9,8 @@ import Material from "./pages/Standard/Material";
 import Customer from "./pages/Standard/Customer";
 import Equipment from "./pages/Standard/Equipment";
 import StandardProcess from "./pages/Standard/StandardProcess";
+import BOM from "./pages/Standard/BOM";
+
 
 
 const App = () => {
@@ -28,6 +30,7 @@ const App = () => {
             <Route path="standard/customer" element = {<Customer />}></Route>
             <Route path="standard/equipment" element = {<Equipment />}></Route>
             <Route path="safety" element={<SafetyBoard />} />
+            <Route path="standard/bom" element = {<BOM/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
