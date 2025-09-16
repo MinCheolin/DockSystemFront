@@ -2,6 +2,9 @@
   minHeight: 100vh; 
 }
 
+.layout > .ant-layout {
+  min-height: 100vh; /* 내부 Layout도 화면 전체 */
+}
 
 .main-content{
   margin: 10px 16px;
