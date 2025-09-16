@@ -7,6 +7,7 @@ import Client from "./pages/Standard/Client";
 import Customer from "./pages/Standard/Customer";
 import Equipment from "./pages/Standard/Equipment";
 import StandardProcess from "./pages/Standard/StandardProcess";
+import BOM from "./pages/Standard/BOM";
 import Warehouse from "./pages/Standard/Warehouse"
 import Vessel from "./pages/Standard/Vessel";
 import Material from "./pages/Standard/Material";
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="standard/equipment" element = {<Equipment />}></Route>
             <Route path="standard/warehouse" element = {<Warehouse />}></Route>
             <Route path="safety" element={<SafetyBoard />} />
+            <Route path="standard/bom" element = {<BOM/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

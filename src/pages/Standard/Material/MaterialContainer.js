@@ -91,6 +91,7 @@ const HandleUpdateChangeInput = (e) => {
   const HandleCreateMaterial = async () => {
        try {
           const response = await axios.post('http://localhost:8080/api/erp/v1/materials', materialInfo);
+          console.log(materialInfo);
           console.log('등록 성공:', response.data);
         } catch (error) {
           console.error('등록 실패:', error);
