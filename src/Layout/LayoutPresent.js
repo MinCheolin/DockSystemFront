@@ -29,10 +29,11 @@ const items = [
     getItem('선박 관리','/standard/vessel'),
     getItem('창고 관리','/standard/warehouse'),
     getItem('표준 공정 관리','/standard/StandardProcess'),
+    getItem('BOM 관리','/3-1'),
     getItem('사원 정보 관리','/standard/user')
   ]),
   getItem('프로젝트 관리','/project',<ProjectOutlined />,
-  [ getItem('BOM 관리','/3-1'),
+  [ 
     getItem('프로젝트 관리','/3-2'),
     getItem('생산 계획 관리','/3-3')
   ]),

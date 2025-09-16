@@ -80,16 +80,14 @@ const UserContainer = () =>{
       ...prev,
       [name]: value,
     }));
-           console.log("HandleUpdateChangeSelect");
-           console.log(updateUserInfo);
            
     };
 
     const HandleUpdateChangeInput = (e) => {
        const { name, value } = e.target;
        setUpdateUserInfo(prev => ({
-      ...prev,
-       [name]: value
+          ...prev,
+          [name]: value
        }));
 
     };
