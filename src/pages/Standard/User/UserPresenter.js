@@ -55,6 +55,7 @@ const UserPresenter = ({rowSelection, hasSelected, users,departments, roles,upda
                    <Button onClick={HandleCreateModalOpen}>추가</Button>
                    <Button type="primary" danger disabled={!hasSelected} >삭제</Button>                
                 </div>
+                
             </div>
             <div className="grid-box">
                   <Table size="small"

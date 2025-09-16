@@ -17,7 +17,6 @@ const MaterialContainer = () =>{
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [materialInfo, setMaterialInfo] = useState({
-        materialNo:"",
         materialCode:'',
         materialName:"",
         materialType:"",
@@ -95,10 +94,10 @@ const HandleUpdateChangeInput = (e) => {
           console.log(materialInfo);
           console.log('등록 성공:', response.data);
         } catch (error) {
-        console.error('등록 실패:', error);
+          console.error('등록 실패:', error);
         }
-       fetchData();
-    setIsModalOpen(false);
+      fetchData();
+      setIsModalOpen(false);
   }
   const HandleDeleteMaterial = async () =>{
     if (selectedRowKeys.length === 0) return;  
@@ -144,7 +143,14 @@ const HandleUpdateChangeInput = (e) => {
     };
 
   const HandleCreateModalOpen = () => {
-    setMaterialInfo('');
+    setMaterialInfo({
+        materialCode:'',
+        materialName:"",
+        materialType:"",
+        materialSize:"",
+        materialPrice:"",
+        materialUnit:""
+    });
     setIsModalOpen(true);
   };
 
@@ -159,10 +165,9 @@ const HandleUpdateChangeInput = (e) => {
   return (
         <MaterialPresenter HandleChangeInput={HandleChangeInput} HandleCreateMaterial={HandleCreateMaterial} HandleDeleteMaterial={HandleDeleteMaterial} setIsUpdateModalOpen={setIsUpdateModalOpen}
             updateMaterialInfo={updateMaterialInfo}       HandleUpdateChangeInput ={HandleUpdateChangeInput} HandleUpdateMaterial={HandleUpdateMaterial} handleShowAll={handleShowAll}
-        HandleCreateModalOpen={HandleCreateModalOpen} HandleModalClose={HandleModalClose} isModalOpen={isModalOpen} isUpdateModalOpen={isUpdateModalOpen}materials={materials}
+        HandleCreateModalOpen={HandleCreateModalOpen} HandleModalClose={HandleModalClose} isModalOpen={isModalOpen} isUpdateModalOpen={isUpdateModalOpen}materials={materials}  materialInfo ={materialInfo}
                 rowSelection={rowSelection} HandleRowClick={HandleRowClick} hasSelected={hasSelected} HandleDoubleClick={HandleDoubleClick} HandleUpdateModalClose={HandleUpdateModalClose}
                 filteredMaterials={filteredMaterials} isSearching={isSearching} searchTerm={searchTerm} setSearchTerm={setSearchTerm} handleSearchMaterial={handleSearchMaterial}/>
-               
               );  
 }
 

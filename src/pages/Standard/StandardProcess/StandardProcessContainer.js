@@ -1,17 +1,19 @@
 import StandardProcessPresenter from "./StandardProcessPresenter";
 import {useState, useEffect} from "react";
 import axios from 'axios';
-import { _updateColumnState } from "ag-grid-community";
 
 const StandardProcessContainer = () =>{
     const [standardprocesses, setStandardProcesses] = useState([]);
+    const [equipments,setEquipments] = useState([]);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateStandardProcessInfo, setUpdateStandardProcessInfo] = useState({
         spNo:"",
         spCode:"",
         spName:"",
         spTime:"",
-        spDescription:""
+        spDescription:"",
+        spEquipment:""
     });
 
 const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -20,7 +22,9 @@ const [standardprocessInfo, setStandardProcessInfo] = useState({
       spCode:"",
       spName:"",
       spTime:"",
-      spDescription:""
+      spDescription:"",
+      spEquipment:""
+
 })
 
 const [searchTerm, setSearchTerm] = useState("");
@@ -72,11 +76,19 @@ const rowSelection = {
     }));
   };
 
-  const HandleDoubleClick = (record) => {
-    console.log("1.모달 열릴 때 데이터:", record)
+  const HandleDoubleClick = async (record) => {
+    const resEquip = await axios.get('http://localhost:8080/api/erp/v1/equipments');
+    setEquipments(resEquip.data);
     setSelectedRowKeys([record.spNo]);
-    setUpdateStandardProcessInfo({
-       ...record});
+    const matchData = {
+        spNo:record.spNo,
+        spCode:record.spCode,
+        spName:record.spName,
+        spTime:record.spTime,
+        spDescription:record.spDescription,
+        spEquipment: record.spEquipment,
+      }
+    setUpdateStandardProcessInfo({...matchData});
     setIsUpdateModalOpen(true);
   };
 
@@ -88,8 +100,12 @@ const rowSelection = {
     }));
   };
   const handleCreateStandardProcess = async () => {
+    const finalData = {
+      ...standardprocessInfo,
+    };
+
     try{
-        const response = await axios.post('http://localhost:8080/api/erp/v1/standardprocesses', standardprocessInfo);
+        const response = await axios.post('http://localhost:8080/api/erp/v1/standardprocesses', finalData);
         console.log('등록성공:', response.data);
     } catch (error){
         console.error('등록 실패:', error);
@@ -97,6 +113,7 @@ const rowSelection = {
     fetchData();
     setIsModalOpen(false);
   }
+
   const HandleDeleteStandardProcess = async () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
@@ -114,7 +131,6 @@ const rowSelection = {
 
   const HandleUpdateStandardProcess = async (values) =>{
 
-      console.log("2. 폼 제출 시 데이터:", values); 
     const finalData = {
         ...updateStandardProcessInfo,
         ...values,
@@ -145,7 +161,7 @@ const rowSelection = {
       setIsSearching(false);
   };
 
-  const HandleCreateModalOpen = () => {
+  const HandleCreateModalOpen = async () => {
     setStandardProcessInfo('');
     setIsModalOpen(true);
   };

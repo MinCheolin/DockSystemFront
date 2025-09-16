@@ -5,7 +5,7 @@ import "./material.css";
 
 const MaterialPresenter = ({materials,HandleChangeInput , HandleCreateMaterial,HandleCreateModalOpen,HandleModalClose,isModalOpen,HandleUpdateModalClose,handleSearchMaterial,
                           HandleUpdateMaterial,rowSelection, HandleRowClick, hasSelected,HandleDeleteMaterial, HandleDoubleClick,isUpdateModalOpen,setSearchTerm,handleShowAll,
-                          updateMaterialInfo,HandleUpdateChangeInput,HandleChangeSelect, HandleUpdateChangeSelect,handleSearchChange, filteredMaterials,searchTerm,isSearching }) =>{
+                          updateMaterialInfo,HandleUpdateChangeInput,filteredMaterials,searchTerm,isSearching,materialInfo }) =>{
  
  const codeFilter = [...new Set(materials.map(material => material.materialCode))].map(code =>({
         text:code,
@@ -127,12 +127,12 @@ const MaterialPresenter = ({materials,HandleChangeInput , HandleCreateMaterial,H
       >
 
      <Form labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} onFinish={HandleCreateMaterial}>
-      <Form.Item label="자재코드">   <Input placeholder="자재 코드를 입력하세요." name="materialCode" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="자재명">   <Input placeholder="자재 명을 입력하세요." name="materialName" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="자재유형">   <Input placeholder="자재 유형를 입력하세요." name="materialType" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="자재규격">   <Input placeholder="자재 규격을 입력하세요." name="materialSize" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="자재단가">   <Input placeholder="자재 단가를 입력하세요." name="materialPrice" onChange={HandleChangeInput} /> </Form.Item>
-      <Form.Item label="자재단위">   <Input placeholder="자재 단위를 입력하세요." name="materialUnit" onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재코드">   <Input placeholder="자재 코드를 입력하세요." name="materialCode"  value={materialInfo.materialCode}onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재명">     <Input placeholder="자재 명을 입력하세요." name="materialName" value={materialInfo.materialName} onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재유형">   <Input placeholder="자재 유형를 입력하세요." name="materialType" value={materialInfo.materialType} onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재규격">   <Input placeholder="자재 규격을 입력하세요." name="materialSize" value={materialInfo.materialSize} onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재단가">   <Input placeholder="자재 단가를 입력하세요." name="materialPrice" value={materialInfo.materialPrice} onChange={HandleChangeInput} /> </Form.Item>
+      <Form.Item label="자재단위">   <Input placeholder="자재 단위를 입력하세요." name="materialUnit" value={materialInfo.materialUnit} onChange={HandleChangeInput} /> </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }}> 
         <div className="modal-form-button">      <Button type="primary" htmlType="submit">
         추가
