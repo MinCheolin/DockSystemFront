@@ -1,0 +1,74 @@
+.project-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-box {
+  height: 80vh;
+}
+
+.modal-form-item-center {
+  text-align: center;
+}
+
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.details {
+  display: flex;
+  gap: 5px;
+}
+
+.pjt-info {
+  width: 30%;
+  border: 1px solid black;
+}
+
+.pps {
+  width: 70%;
+  border: 1px solid black;
+}
+
+.projects {
+  margin: 15px;
+}
+.ant-collapse {
+  background-color: rgb(255, 255, 255);
+}
+
+.ant-collapse-header {
+  background-color: #efffe1; /* 헤더 색 */
+}
+
+.ant-collapse-item {
+  margin-bottom: 10px;
+  background: white;
+}
+
+.prduction-plan {
+  margin: 5px;
+  border: 1px solid rgb(14, 255, 107);
+  border-radius: 3px;
+}

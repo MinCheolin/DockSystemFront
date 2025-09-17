@@ -152,7 +152,7 @@ const UserPresenter = ({rowSelection, hasSelected, users,departments, roles,upda
      </Form.Item>
      </Form>
       </Modal>
-    
+
         </div>
     );
 
