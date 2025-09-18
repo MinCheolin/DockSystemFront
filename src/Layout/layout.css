@@ -11,8 +11,8 @@
 }
 
 .main-header{
-  display: flex;              /* 가로 배치 */
-  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  display: flex;      
+  justify-content: space-between; 
   align-items: center;        
   padding: 20px;
   background-color: white
@@ -25,11 +25,11 @@
 
 .user-info{
    display: flex;
-  justify-content: space-between; /* 양 끝부터 일정 간격 */
-  align-items: center;           /* 세로 중앙 정렬 */
-  padding: 10px;
+  justify-content: space-between; 
+  align-items: center;           
 }
 
 .info-item{
    padding: 10px 8px;
+   cursor: pointer;
 }

@@ -1,0 +1,90 @@
+.project-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-box {
+  height: 80vh;
+}
+
+.modal-form-item-center {
+  text-align: center;
+}
+
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.details {
+  display: flex;
+  gap: 5px;
+}
+
+.pjt-info {
+  font-weight: 500;
+  font-size: 15px;
+  width: 35%;
+}
+
+.pps {
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.projects {
+  margin: 15px;
+}
+.ant-collapse {
+  background-color: rgb(255, 255, 255);
+}
+
+.ant-collapse-header {
+  background-color: #efffe1; /* 헤더 색 */
+}
+
+.ant-collapse-item {
+  margin-bottom: 10px;
+  background: white;
+}
+
+.prduction-plan {
+  margin: 5px;
+  border: 1px solid rgb(14, 255, 107);
+  border-radius: 3px;
+}
+
+.pp-item {
+  background-color: rgb(219, 237, 253);
+  box-shadow: 0cap;
+  font-weight: 500;
+  border-radius: 8px;
+  display: table;
+}
+.pp-item span {
+  display: table-cell;
+  padding: 5px 20px;
+}

@@ -116,6 +116,7 @@ const BOMPresenter = ({
           </Button>
         </div>
       </div>
+
       <div className="grid-box">
         <Table
           size="small"
@@ -229,6 +230,7 @@ const BOMPresenter = ({
               </>
             )}
           </Form.List>
+
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className="modal-form-button">
               <Button type="primary" htmlType="submit">

@@ -4,7 +4,6 @@ import axios from "axios";
 
 const BOMContainer = () => {
   const API_URL = "http://localhost:8080/api/erp/v1";
-
   // bom 상태값
   const [boms, setBoms] = useState([]);
   const [vessels, setVessels] = useState([]);

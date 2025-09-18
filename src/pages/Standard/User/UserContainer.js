@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const UserContainer = () => {
+  const API_URL = "http://localhost:8080/api/erp/v1";
   const [users, setUsers] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -10,34 +11,12 @@ const UserContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [userInfo, setUserInfo] = useState({
-    userId: "",
-    userPw: "",
-    userName: "",
-    userPhone: "",
-    userWork: "",
-    userSalary: "",
-    departmentNo: "",
-    roleNo: "",
-  });
-
-  const [updateUserInfo, setUpdateUserInfo] = useState({
-    userNo: "",
-    userId: "",
-    userPw: "",
-    userName: "",
-    userPhone: "",
-    userWork: "",
-    userSalary: "",
-    departmentNo: "",
-    roleNo: "",
-  });
+  const [userInfo, setUserInfo] = useState({});
+  const [updateUserInfo, setUpdateUserInfo] = useState({});
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/erp/v1/users"
-      );
+      const response = await axios.get(`${API_URL}/users`);
       setUsers(response.data);
     } catch (err) {
     } finally {
@@ -97,10 +76,8 @@ const UserContainer = () => {
   };
 
   const HandleDoubleClick = async (record) => {
-    const resDep = await axios.get(
-      "http://localhost:8080/api/erp/v1/departments"
-    );
-    const resRol = await axios.get("http://localhost:8080/api/erp/v1/roles");
+    const resDep = await axios.get(`${API_URL}/departments`);
+    const resRol = await axios.get(`${API_URL}/roles`);
     setDepartments(resDep.data);
     setRoles(resRol.data);
     setSelectedRowKeys([record.userNo]);
@@ -125,15 +102,10 @@ const UserContainer = () => {
       departmentNo: Number(userInfo.departmentNo),
       roleNo: Number(userInfo.roleNo),
     };
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/erp/v1/users",
-        finalData
-      );
-      console.log("등록 성공:", response.data);
-    } catch (error) {
-      console.error("등록 실패:", error);
+      await axios.post(`${API_URL}/users`, finalData);
+    } catch (err) {
+      alert("등록 실패");
     }
 
     setIsModalOpen(false);
@@ -147,26 +119,35 @@ const UserContainer = () => {
       roleNo: Number(updateUserInfo.roleNo),
     };
     try {
-      await axios.put(
-        `http://localhost:8080/api/erp/v1/users/${finalData.userNo}`,
-        finalData
-      );
+      await axios.put(`${API_URL}/${finalData.userNo}`, finalData);
     } catch (err) {
-      console.error(err);
-      alert("수정 실패");
+      console.error("등록 실패 : ", err);
     }
     setIsUpdateModalOpen(false);
     fetchData();
   };
 
   const HandleCreateModalOpen = async () => {
-    const resDep = await axios.get(
-      "http://localhost:8080/api/erp/v1/departments"
-    );
-    const resRol = await axios.get("http://localhost:8080/api/erp/v1/roles");
-    setDepartments(resDep.data);
-    setRoles(resRol.data);
-    setIsModalOpen(true);
+    try {
+      const resDep = await axios.get(`${API_URL}/departments`);
+      const resRol = await axios.get(`${API_URL}/roles`);
+      setDepartments(resDep.data);
+      setRoles(resRol.data);
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error("조회 실패 : ", err);
+    }
+  };
+
+  const HandleDeleteUser = async () => {
+    if (selectedRowKeys.length === 0) return;
+    try {
+      await axios.delete(`${API_URL}/users/${selectedRowKeys[0]}`);
+      setSelectedRowKeys([]);
+    } catch (err) {
+      console.error("삭제 실패 : ", err);
+    }
+    fetchData();
   };
 
   const HandleModalClose = () => {
@@ -190,7 +171,8 @@ const UserContainer = () => {
       HandleRowClick={HandleRowClick}
       HandleDoubleClick={HandleDoubleClick}
       HandleCreateUser={HandleCreateUser}
-      HandleUpdateUser={HandleUpdateUser} //HandleDeleteUser={HandleDeleteUser}
+      HandleUpdateUser={HandleUpdateUser}
+      HandleDeleteUser={HandleDeleteUser}
       HandleChangeInput={HandleChangeInput}
       HandleUpdateChangeInput={HandleUpdateChangeInput}
       HandleChangeSelect={HandleChangeSelect}

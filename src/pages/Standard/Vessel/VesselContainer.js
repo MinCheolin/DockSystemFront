@@ -1,44 +1,39 @@
 import VesselPresenter from "./VesselPresenter";
-import { useState,useEffect } from "react";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Form } from "antd";
 
-const VesselContainer = () =>{
+const VesselContainer = () => {
+  const API_URL = "http://localhost:8080/api/erp/v1";
   const [form] = Form.useForm();
-  const [vessels, setVessels] = useState([]); 
+  const [vessels, setVessels] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateVesselInfo,setUpdateVesselInfo] = useState({
-    vesselNo:"",    
-    vesselName:"",
-    vesselType:"",
-    vesselSize:""
-    });
+  const [updateVesselInfo, setUpdateVesselInfo] = useState({
+    vesselNo: "",
+    vesselName: "",
+    vesselType: "",
+    vesselSize: "",
+  });
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  // const [vesselInfo, setVesselInfo] = useState({
-  //       vesselName:"",
-  //       vesselType:"",
-  //       vesselSize:""
-  //   });
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredVessels, setFilteredVessels] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredVessels, setFilteredVessels] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/erp/v1/vessels');
-        setVessels(response.data);    
-      } catch (err) {
-        
-      } finally {
-      }
-    };
-    useEffect(() => {
-      fetchData();
-    }, []); 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/vessels`);
+      setVessels(response.data);
+    } catch (err) {
+      alert("조회 실패");
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
- const rowSelection = {
+  const rowSelection = {
     selectedRowKeys,
     hideSelectAll: true,
     onChange: (selectedRowKeys) => {
@@ -49,95 +44,80 @@ const VesselContainer = () =>{
 
   const HandleRowClick = (record) => {
     if (selectedRowKeys.includes(record.vesselNo)) {
-      setSelectedRowKeys([]);      
+      setSelectedRowKeys([]);
     } else {
-      setSelectedRowKeys([record.vesselNo]); 
+      setSelectedRowKeys([record.vesselNo]);
     }
   };
 
   const hasSelected = selectedRowKeys.length > 0;
 
-  // const HandleChangeInput= (e) => {
-  //       const { name, value } = e.target;
-  //       setVesselInfo(prev => ({
-  //       ...prev,
-  //       [name]: value,
-  //       }));
-  //   };
-
- const HandleDoubleClick = (record) => {
+  const HandleDoubleClick = (record) => {
     setSelectedRowKeys([record.vesselNo]);
     setUpdateVesselInfo({ ...record });
-    setIsUpdateModalOpen(true);    
+    setIsUpdateModalOpen(true);
   };
 
-const HandleUpdateChangeInput = (e) => {
-  const { name, value } = e.target;
-  setUpdateVesselInfo(prev => ({
-    ...prev,
-    [name]: value
-  }));
-};
+  const HandleUpdateChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUpdateVesselInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const HandleCreateVessel = async (values) => {
-       try {
-          const response = await axios.post('http://localhost:8080/api/erp/v1/vessels', values);
-          console.log('등록 성공:', response.data);
-
-          setIsModalOpen(false);
-          form.resetFields();
-          fetchData();
-        } catch (error) {
-        console.error('등록 실패:', error);
-        }
-    // setIsModalOpen(false);
-  }
-  const HandleDeleteVessel = async () =>{
-    if (selectedRowKeys.length === 0) return;  
+    try {
+      await axios.post(`${API_URL}/vessels`, values);
+      setIsModalOpen(false);
+      form.resetFields();
+      fetchData();
+    } catch (err) {
+      alert("등록 실패");
+    }
+  };
+  const HandleDeleteVessel = async () => {
+    if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
-   try {
-    await axios.delete(`http://localhost:8080/api/erp/v1/vessels/${selectedRowKeys[0]}`);
-    setVessels(prev => prev.filter(item => item.vesselNo !== selectedRowKeys[0]));
-    setSelectedRowKeys([]);
-  } catch (err) {
-    console.error(err);
-    alert('삭제 실패');
-  }
-       fetchData();
-  }
+    try {
+      await axios.delete(`${API_URL}/vessels/${selectedRowKeys[0]}`);
+      setSelectedRowKeys([]);
+    } catch (err) {
+      alert("삭제 실패");
+    }
+    fetchData();
+  };
 
-  const HandleUpdateVessel = async () =>{
-        const finalData = {
-            ...updateVesselInfo,
-            vesselNo: Number(updateVesselInfo.vesselNo),        
-        };
-       try {
-          await axios.put(`http://localhost:8080/api/erp/v1/vessels/${finalData.vesselNo}`,finalData);
-        } catch (err) {
-           console.error(err);
-           alert('수정 실패');
-        }
-        setIsUpdateModalOpen(false);
-         fetchData();
-  }
+  const HandleUpdateVessel = async () => {
+    const finalData = {
+      ...updateVesselInfo,
+      vesselNo: Number(updateVesselInfo.vesselNo),
+    };
+    try {
+      await axios.put(`${API_URL}/vessels/${finalData.vesselNo}`, finalData);
+    } catch (err) {
+      alert("수정 실패");
+    }
+    setIsUpdateModalOpen(false);
+    fetchData();
+  };
 
   const handleSearchVessel = () => {
-        const result = vessels.filter(vessel =>
-            vessel.vesselName.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredVessels(result);
-        setIsSearching(true);
-    };
+    const result = vessels.filter((vessel) =>
+      vessel.vesselName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredVessels(result);
+    setIsSearching(true);
+  };
 
-    const handleShowAll = () => {
-        setSearchTerm("");          
-        setFilteredVessels([]);     
-        setIsSearching(false);
-    };
+  const handleShowAll = () => {
+    setSearchTerm("");
+    setFilteredVessels([]);
+    setIsSearching(false);
+  };
 
   const HandleCreateModalOpen = () => {
     form.resetFields();
-    // setVesselInfo('');
     setIsModalOpen(true);
   };
 
@@ -145,37 +125,37 @@ const HandleUpdateChangeInput = (e) => {
     setIsModalOpen(false);
   };
 
-    const HandleUpdateModalClose = () => {
+  const HandleUpdateModalClose = () => {
     setIsUpdateModalOpen(false);
   };
 
   return (
     <VesselPresenter
-        form={form} // form 인스턴스 전달
-        HandleCreateVessel={HandleCreateVessel}
-        HandleDeleteVessel={HandleDeleteVessel}
-        setIsUpdateModalOpen={setIsUpdateModalOpen}
-        updateVesselInfo={updateVesselInfo}
-        HandleUpdateChangeInput ={HandleUpdateChangeInput}
-        HandleUpdateVessel={HandleUpdateVessel}
-        HandleCreateModalOpen={HandleCreateModalOpen}
-        HandleModalClose={HandleModalClose}
-        isModalOpen={isModalOpen}
-        isUpdateModalOpen={isUpdateModalOpen}
-        vessels={vessels}
-        rowSelection={rowSelection}
-        HandleRowClick={HandleRowClick}
-        hasSelected={hasSelected}
-        HandleDoubleClick={HandleDoubleClick}
-        HandleUpdateModalClose={HandleUpdateModalClose}
-        filteredVessels={filteredVessels}
-        isSearching={isSearching}
-        handleSearchVessel={handleSearchVessel}
-        handleShowAll={handleShowAll}
-        setSearchTerm={setSearchTerm}
-        searchTerm={searchTerm}
+      form={form}
+      HandleCreateVessel={HandleCreateVessel}
+      HandleDeleteVessel={HandleDeleteVessel}
+      setIsUpdateModalOpen={setIsUpdateModalOpen}
+      updateVesselInfo={updateVesselInfo}
+      HandleUpdateChangeInput={HandleUpdateChangeInput}
+      HandleUpdateVessel={HandleUpdateVessel}
+      HandleCreateModalOpen={HandleCreateModalOpen}
+      HandleModalClose={HandleModalClose}
+      isModalOpen={isModalOpen}
+      isUpdateModalOpen={isUpdateModalOpen}
+      vessels={vessels}
+      rowSelection={rowSelection}
+      HandleRowClick={HandleRowClick}
+      hasSelected={hasSelected}
+      HandleDoubleClick={HandleDoubleClick}
+      HandleUpdateModalClose={HandleUpdateModalClose}
+      filteredVessels={filteredVessels}
+      isSearching={isSearching}
+      handleSearchVessel={handleSearchVessel}
+      handleShowAll={handleShowAll}
+      setSearchTerm={setSearchTerm}
+      searchTerm={searchTerm}
     />
-  );  
-}
+  );
+};
 
 export default VesselContainer;
