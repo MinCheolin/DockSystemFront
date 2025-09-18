@@ -176,13 +176,9 @@ const BOMPresenter = ({
             {(fields, { add, remove }) => (
               <>
                 {fields.map((field, index) => (
-                  <Space key={field.key} align="baseline">
-                    <Form.Item
-                      label="자재명"
-                      name={[field.name, "materialName"]}
-                      labelCol={{ span: 10 }}
-                      wrapperCol={{ span: 14 }}
-                    >
+                  <div className="bomDetailInput" key={field.key}>
+                    <label>자재명:</label>
+                    <Form.Item name={[field.name, "materialName"]}>
                       <Select
                         placeholder="자재를 선택하세요."
                         options={materials.map((material) => ({
@@ -198,12 +194,8 @@ const BOMPresenter = ({
                         }
                       />
                     </Form.Item>
-                    <Form.Item
-                      label="자재 수량"
-                      name={[field.name, "bomDetailCount"]}
-                      labelCol={{ span: 10 }}
-                      wrapperCol={{ span: 14 }}
-                    >
+                    <label>자재 수량:</label>
+                    <Form.Item name={[field.name, "bomDetailCount"]}>
                       <InputNumber
                         placeholder="자재 수량을 입력하세요"
                         onChange={(value) =>
@@ -216,17 +208,24 @@ const BOMPresenter = ({
                         min={1}
                       />
                     </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
+
+                    {fields.length > 1 ? (
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 ))}
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  자재 추가
-                </Button>
+                <div className="addButtonWrapper">
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    자재 추가
+                  </Button>
+                </div>
               </>
             )}
           </Form.List>
