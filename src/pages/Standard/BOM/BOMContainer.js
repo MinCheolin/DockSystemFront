@@ -1,207 +1,281 @@
 import React, { useState, useEffect } from "react";
-import { Form, message, Button} from 'antd';
 import BOMPresenter from "./BOMPresenter";
-import axios from 'axios';
+import axios from "axios";
 
 const BOMContainer = () => {
-    const baseURL = 'http://localhost:8080/api/erp/v1';
+  const API_URL = "http://localhost:8080/api/erp/v1";
 
-    const [form] = Form.useForm();
-    const [boms, setBoms] = useState([]);
-    const [vessels, setVessels] = useState([]);
-    const [standardProcesses, setStandardProcesses] = useState([]);
-    const [materials, setMaterials] = useState([]);
-    
-    const [loading, setLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);  
-    const [isEditing, setIsEditing] = useState(false);
-    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-    const [selectedBOM, setSelectedBOM] = useState(null);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  // bom 상태값
+  const [boms, setBoms] = useState([]);
+  const [vessels, setVessels] = useState([]);
+  const [standardProcesses, setStandardProcesses] = useState([]);
 
-    const fetchBOMs = async () => {
-        try {
-            const res = await axios.get(`${baseURL}/boms`);
-            setBoms(res.data);
-        } catch (error) {
-            console.error(error);
-            message.error("BOM 목록 조회 실패");
-        }
-    };
+  // bom detail 상태값
+  const [bomdetails, setBomdetails] = useState([]);
+  const [materials, setMaterials] = useState([]);
 
-    // 초기 데이터 로딩
-    useEffect(() => {
-        const fetchInitialData = async () => {
-            setLoading(true);
-            try {
-                const [vesselRes, spRes, materialRes] = await Promise.all([
-                    axios.get(`${baseURL}/vessels`),
-                    axios.get(`${baseURL}/standardprocesses`),
-                    axios.get(`${baseURL}/materials`)
-                ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateBomModalOpen, setIsUpdateBomModalOpen] = useState(false);
+  const [isUpdateBomDetailModalOpen, setIsUpdateBomDetailModalOpen] =
+    useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-                setVessels(vesselRes.data.map(v => ({ value: v.vesselNo, label: v.vesselName })));
-                setStandardProcesses(spRes.data.map(sp => ({ value: sp.spNo, label: sp.spName })));
-                setMaterials(materialRes.data.map(m => ({ value: m.materialNo, label: `${m.materialName} (${m.materialCode})` })));
-                await fetchBOMs();
+  const [bomInfo, setBomInfo] = useState({});
+  const [bomDetailInfo, setBomDetailInfo] = useState([]);
 
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchInitialData();
-    }, []);
+  const [updateBomInfo, setUpdateBomInfo] = useState({});
+  const [updateBomDetailInfo, setUpdateBomDetailInfo] = useState({});
 
-
-    // 신규 등록 모달
-    const handleOpenCreateModal = () => setIsModalOpen(true);
-
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-        form.resetFields();
-    };
-
-    const handleDetailModalClose = () => {
-        setIsDetailModalOpen(false);
-        setSelectedBOM(null);
-        setIsEditing(false);
-        form.resetFields();
+  const fetchData = async () => {
+    try {
+      const responseBom = await axios.get(`${API_URL}/boms`);
+      const responseBomDetail = await axios.get(`${API_URL}/bomdetails`);
+      setBoms(responseBom.data);
+      setBomdetails(responseBomDetail.data);
+    } catch (error) {
+      alert("조회 실패");
     }
-    //Create
-    const handleCreate = async (values) => {
-        try {
-            await axios.post(`${baseURL}/boms`, values);
-            message.success('BOM 등록 완료');
-            handleModalClose();
-            fetchBOMs();
-        } catch (error) {
-            console.error(error);
-            message.error('BOM 등록 실패');
-        }
-    };
+  };
 
-    // BOM 수정
-    const handleUpdate = async (values) => {
-        if (!selectedBOM) return;
-        try {
-            const payload = {bomDetails: values.bomDetails || []};
-            await axios.put(`${baseURL}/boms/${selectedBOM.bomNo}`, payload);
-            message.success("BOM 수정 완료");
-            setIsDetailModalOpen(false);
-            fetchBOMs();
-        }
-         catch (error) {
-            console.error(error);
-            message.error("BOM 수정 실패");
-        }
-    };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-   //bom delete
-   const handleDelete = async () => {
-        if (selectedRowKeys.length === 0) return;
-        const bomNoToDelete = selectedRowKeys[0];
+  const rowSelection = {
+    selectedRowKeys,
+    hideSelectAll: true,
+    onChange: (selectedRowKeys) => {
+      const lastKey = selectedRowKeys.pop();
+      setSelectedRowKeys(lastKey ? [lastKey] : []);
+    },
+  };
 
-        if (window.confirm(`${bomNoToDelete}번 BOM을 정말 삭제하시겠습니까?`)) {
-            try {
-                await axios.delete(`${baseURL}/boms/${bomNoToDelete}`);
-                message.success('BOM이 삭제되었습니다.');
-                setSelectedRowKeys([]); // 선택 초기화
-                fetchBOMs(); // 목록 새로고침
-            } catch (error) {
-                console.error('BOM 삭제 실패:', error);
-                message.error('삭제에 실패했습니다.');
-            }
-        }
-    };
+  const hasSelected = selectedRowKeys.length > 0;
 
-    const rowSelection = {
-        selectedRowKeys,
-        type: 'radio',
-        onChange: (keys) => setSelectedRowKeys(keys),
-    };
-    const hasSelected = selectedRowKeys.length>0;
-    
+  //등록
+  const HandleChangeSelectBomDetail = (index, key, value) => {
+    setBomDetailInfo((prev) => {
+      const newList = [...prev];
+      newList[index] = {
+        ...newList[index],
+        [key]: value,
+      };
+      return newList;
+    });
+  };
 
-     const vesselNameFilter = [...new Set(boms.map(bom => bom.vesselName))].map(name => ({
-        text: name,
-        value: name,
+  const HandleChangeSelectBom = (name, value) => {
+    setBomInfo((prev) => ({
+      ...prev,
+      [name]: value,
     }));
+  };
 
-    // 2. '표준 공정'으로 중복 없는 필터 목록 생성
-    const spNameFilter = [...new Set(boms.map(bom => bom.spName))].map(name => ({
-        text: name,
-        value: name,
+  const HandleChangeInputBomDetail = (index, key, value) => {
+    setBomDetailInfo((prev) => {
+      const newList = [...prev];
+      newList[index] = {
+        ...newList[index],
+        [key]: value,
+      };
+      return newList;
+    });
+  };
+
+  //업데이트
+  const HandleUpdateChangeInputBomDetail = (key, value) => {
+    setUpdateBomDetailInfo((prev) => ({
+      ...prev,
+      [key]: value,
     }));
+  };
 
+  const HandleUpdateChangeSelectBom = (name, value) => {
+    setUpdateBomInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const columns = [
-        { title: '번호', key: 'index', render : (text, record, index) => index + 1, },
-        { title: '선박 이름', dataIndex: 'vesselName', key: 'vesselName', filters: vesselNameFilter, onFilter: (value, record) => record.vesselName.includes(value), },
-        { title: '표준 공정', dataIndex: 'spName', key: 'spName', filters: spNameFilter,onFilter: (value, record) => record.spName.includes(value), },
-        { title: '상세',  
-            key : 'action',
-            render: (_, record)=> (
-                <Button
-                size = "small"
-                onClick={() => {
-                    setSelectedBOM(record);
-                    setIsEditing(false);
-                    setIsDetailModalOpen(true);
-                }}
-                >     
-            상세보기
-            </Button>
-        )
+  const HandleUpdateChangeSelectBomDetail = (name, value) => {
+    setUpdateBomDetailInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-     },
+  const HandleRowClick = (record) => {
+    if (selectedRowKeys.includes(record.userNo)) {
+      setSelectedRowKeys([]);
+    } else {
+      setSelectedRowKeys([record.userNo]);
+    }
+  };
 
-       {
-            title: '관리',
-            key: 'action',
-            render: (_, record) => (                   
-                    <Button
-                        size="small"
-                        onClick={() => {
-                            setSelectedBOM(record);
-                            setIsEditing(true); // 수정 모드
-                            setIsDetailModalOpen(true);
-                        }}
-                    >
-                        수정
-                    </Button>
-            )
-        }
-    ];
+  const HandleDoubleClickBOM = async (record) => {
+    const resVes = await axios.get(`${API_URL}/vessels`);
+    const resSp = await axios.get(`${API_URL}/standardprocesses`);
+    setVessels(resVes.data);
+    setStandardProcesses(resSp.data);
+    setSelectedRowKeys([record.bomNo]);
+    const matchData = {
+      bomNo: record.bomNo,
+      vesselNo: Number(record.vessel.vesselNo),
+      spNo: Number(record.standardProcess.spNo),
+    };
+    setUpdateBomInfo({ ...matchData });
+    setIsUpdateBomModalOpen(true);
+  };
 
-    return (
-        <BOMPresenter
-            loading={loading}
-            boms={boms}
-            columns={columns}
-            rowSelection={rowSelection} 
-            hasSelected={hasSelected}   
-            isModalOpen={isModalOpen}
-            isDetailModalOpen={isDetailModalOpen}
-            isEditing={isEditing}
-            form={form}
-            selectedBOM={selectedBOM}
-            vessels={vessels}
-            standardProcesses={standardProcesses}
-            materials={materials}
-            handleOpenCreateModal={handleOpenCreateModal}
-            handleModalClose={handleModalClose}
-            handleDetailModalClose={handleDetailModalClose}
-            handleCreate={handleCreate}
-            handleUpdate={handleUpdate}
-            handleDelete={handleDelete}
-            spNameFilter={spNameFilter}
-            vesselNameFilter={vesselNameFilter}
+  const HandleDoubleClickBOMDetail = async (record) => {
+    const resMat = await axios.get(`${API_URL}/materials`);
+    setMaterials(resMat.data);
 
+    const matchData = {
+      bomDetailNo: record.bomDetailNo,
+      bomNo: record.bom.bomNo,
+      materialNo: record.material.materialNo,
+      bomDetailCount: record.bomDetailCount,
+    };
+    setUpdateBomDetailInfo({ ...matchData });
+    setIsUpdateBomDetailModalOpen(true);
+  };
 
-        />
-    );
+  const HandleCreateBom = async () => {
+    const finalData = {
+      ...bomInfo,
+      vesselNo: Number(bomInfo.vesselNo),
+      spNo: Number(bomInfo.spNo),
+      bomDetailDtoList: bomDetailInfo,
+    };
+
+    try {
+      await axios.post(`${API_URL}/boms`, finalData);
+    } catch (error) {
+      alert("등록 실패:");
+    }
+    setIsModalOpen(false);
+    fetchData();
+  };
+
+  const HandleDeleteBom = async () => {
+    if (selectedRowKeys.length === 0) return;
+    console.log(selectedRowKeys[0]);
+    try {
+      await axios.delete(`${API_URL}/boms/${selectedRowKeys[0]}`);
+      setBoms((prev) =>
+        prev.filter((item) => item.bomNo !== selectedRowKeys[0])
+      );
+      setSelectedRowKeys([]);
+    } catch (err) {
+      alert("삭제 실패");
+    }
+    fetchData();
+  };
+
+  const HandleDeleteBomDetail = async (bomDetailNo) => {
+    if (!bomDetailNo) return;
+    try {
+      await axios.delete(`${API_URL}/bomdetails/${bomDetailNo}`);
+      setBomdetails((prev) =>
+        prev.filter((item) => item.bomDetailNo !== bomDetailNo)
+      );
+    } catch (err) {
+      alert("삭제 실패");
+    }
+    fetchData();
+  };
+
+  const HandleUpdateBom = async () => {
+    const finalData = {
+      ...updateBomInfo,
+      vesselNo: Number(updateBomInfo.vesselNo),
+      spNo: Number(updateBomInfo.spNo),
+    };
+    try {
+      await axios.put(`${API_URL}/boms/${finalData.bomNo}`, finalData);
+    } catch (err) {
+      alert("수정 실패");
+    }
+    setIsUpdateBomModalOpen(false);
+    fetchData();
+  };
+
+  const HandleUpdateBomDetail = async () => {
+    const finalData = {
+      ...updateBomDetailInfo,
+      materialNo: Number(updateBomDetailInfo.materialNo),
+    };
+    try {
+      await axios.put(
+        `${API_URL}/bomdetails/${finalData.bomDetailNo}`,
+        finalData
+      );
+    } catch (err) {
+      alert("수정 실패");
+    }
+    setIsUpdateBomDetailModalOpen(false);
+    fetchData();
+  };
+
+  const HandleCreateModalOpen = async () => {
+    const resVes = await axios.get(`${API_URL}/vessels`);
+    const resSp = await axios.get(`${API_URL}/standardprocesses`);
+    const resMat = await axios.get(`${API_URL}/materials`);
+    setVessels(resVes.data);
+    setStandardProcesses(resSp.data);
+    setMaterials(resMat.data);
+    setIsModalOpen(true);
+  };
+
+  const HandleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const HandleUpdateBomModalClose = () => {
+    setIsUpdateBomModalOpen(false);
+  };
+
+  const HandleUpdateBomDetailModalClose = () => {
+    setIsUpdateBomDetailModalOpen(false);
+  };
+
+  return (
+    <BOMPresenter
+      rowSelection={rowSelection}
+      hasSelected={hasSelected}
+      boms={boms}
+      vessels={vessels}
+      standardProcesses={standardProcesses}
+      bomdetails={bomdetails}
+      materials={materials}
+      isModalOpen={isModalOpen}
+      isUpdateBomModalOpen={isUpdateBomModalOpen}
+      isUpdateBomDetailModalOpen={isUpdateBomDetailModalOpen}
+      bomInfo={bomInfo}
+      updateBomInfo={updateBomInfo}
+      bomDetailInfo={bomDetailInfo}
+      updateBomDetailInfo={updateBomDetailInfo}
+      HandleRowClick={HandleRowClick}
+      HandleDoubleClickBOM={HandleDoubleClickBOM}
+      HandleDoubleClickBOMDetail={HandleDoubleClickBOMDetail}
+      HandleChangeSelectBomDetail={HandleChangeSelectBomDetail}
+      HandleChangeSelectBom={HandleChangeSelectBom}
+      HandleChangeInputBomDetail={HandleChangeInputBomDetail}
+      HandleUpdateChangeInputBomDetail={HandleUpdateChangeInputBomDetail}
+      HandleUpdateChangeSelectBom={HandleUpdateChangeSelectBom}
+      HandleUpdateChangeSelectBomDetail={HandleUpdateChangeSelectBomDetail}
+      HandleCreateBom={HandleCreateBom}
+      HandleUpdateBom={HandleUpdateBom}
+      HandleDeleteBom={HandleDeleteBom}
+      HandleUpdateBomDetail={HandleUpdateBomDetail}
+      HandleDeleteBomDetail={HandleDeleteBomDetail}
+      HandleCreateModalOpen={HandleCreateModalOpen}
+      HandleModalClose={HandleModalClose}
+      HandleUpdateBomModalClose={HandleUpdateBomModalClose}
+      HandleUpdateBomDetailModalClose={HandleUpdateBomDetailModalClose}
+    />
+  );
 };
 
 export default BOMContainer;
