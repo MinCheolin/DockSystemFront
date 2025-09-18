@@ -1,0 +1,39 @@
+.bom-content{
+     min-height: 100vh;
+    height: auto;
+    border-radius: 15px;
+    background-color: white;
+    padding: 15px;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600; 
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0; /* 제목 아래에 구분선 추가 */
+  margin: -24px -24px 20px -24px; /* 모달 기본 여백에 맞추기 */
+  padding-top: 16px;
+}
+
+/* 선박/공정 정보 박스 */
+.modal-info-box {
+  margin-bottom: 20px;
+  padding: 12px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+
+.modal-info-box p {
+  margin: 4px 0; /* 위아래 여백 살짝 추가 */
+  font-size: 15px;
+}
+
+/* 선박 이름 강조 */
+.modal-info-box .vessel-name {
+  font-size: 16px;
+  color: #1677ff; /* Ant Design의 기본 파란색 */
+  font-weight: 500;
+}

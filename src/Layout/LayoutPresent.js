@@ -5,13 +5,12 @@ import {
   WarningOutlined,
   DatabaseOutlined,
   ProjectOutlined,
-  ShoppingOutlined,
-  MoneyCollectOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -24,7 +23,6 @@ const items = [
   getItem("홈", "/home", <HomeOutlined />),
   getItem("기준 정보 관리", "/erp/standard", <TeamOutlined />, [
     getItem("거래처 관리", "/erp/standard/client"),
-
     getItem("고객사 관리", "/erp/standard/customer"),
     getItem("자재 관리", "/erp/standard/material"),
     getItem("장비 관리", "/erp/standard/equipment"),
@@ -32,6 +30,7 @@ const items = [
     getItem("창고 관리", "/erp/standard/warehouse"),
     getItem("표준 공정 관리", "/erp/standard/StandardProcess"),
     getItem("사원 정보 관리", "/erp/standard/user"),
+    getItem("BOM 관리", "/erp/standard/bom"),
   ]),
   getItem("프로젝트 관리", "/erp/project", <ProjectOutlined />, [
     getItem("프로젝트 등록", "/erp/project/projectCreate"),
@@ -45,9 +44,6 @@ const items = [
 ];
 const LayoutPresent = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   const navigate = useNavigate();
   return (
     <Layout className="layout">

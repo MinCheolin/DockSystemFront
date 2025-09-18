@@ -17,9 +17,11 @@ const formItemLayout = {
 const ProjectCreatePresenter = ({
   customers,
   vessels,
+  boms,
   HandleChangeInput,
   HandleChangeSelect,
   HandleChangeDate,
+  HandleChangeDateProductPlan,
   HandleCreateProject,
   tmpDataTest,
   HandleChangePPinfo,
@@ -28,6 +30,8 @@ const ProjectCreatePresenter = ({
   productionPlans,
 }) => {
   const [form] = Form.useForm();
+
+  //console.log(boms);
 
   return (
     <>
@@ -110,7 +114,7 @@ const ProjectCreatePresenter = ({
                   placeholder="금액을 입력하세요."
                   style={{ width: "100%" }}
                   min={1000000}
-                  n={1000000}
+                  step={1000000}
                 />
               </Form.Item>
 
@@ -127,11 +131,10 @@ const ProjectCreatePresenter = ({
             </div>
             <div className="production-plan">
               <div className="pp-header">생산 계획</div>
-
               {productionPlans.map((plan, index) => (
                 <div className="pp-input" key={index}>
                   <Input
-                    style={{ flex: "0 0 30%" }} // 상위 30%
+                    style={{ flex: "0 0 30%" }}
                     placeholder="생산 계획명"
                     value={plan.ppName || ""}
                     onChange={(e) =>
@@ -139,21 +142,16 @@ const ProjectCreatePresenter = ({
                     }
                   />
                   <RangePicker
-                    value={
-                      plan.ppStartDate && plan.ppEndDate
-                        ? [plan.ppStartDate, plan.ppEndDate]
-                        : []
-                    }
-                    onChange={(dates, dateStrings) =>
-                      HandleChangePPinfo(index, "dateRange", dateStrings)
+                    onChange={(dates) =>
+                      HandleChangeDateProductPlan(index, dates)
                     }
                   />
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    value={plan.description || undefined}
+                    value={plan.bom || undefined}
                     onChange={(value) =>
-                      HandleChangePPinfo(index, "description", value)
+                      HandleChangePPinfo(index, "bom", value)
                     }
                   />
                   {productionPlans.length > 1 && (

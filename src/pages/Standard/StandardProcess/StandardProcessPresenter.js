@@ -44,6 +44,11 @@ const StandardProcessPresenter = ({
     value : time
   }));
 
+  const equipFiler = [... new Set(standardprocesses.map(StandardProcess => StandardProcess.spEquipment))].map(equipment => ({
+    text : equipment,
+    value : equipment
+  }));
+
     const columns = [
    {
       title: '번호',
@@ -56,7 +61,7 @@ const StandardProcessPresenter = ({
     dataIndex: 'spCode',
     key: 'spCode',
     filters: codeFilter,
-    onFilter: (value, record) => record.StandardProcessCode === value
+    onFilter: (value, record) => record.StandardProcess === value
   },
   {
     title: '표준공정명',
@@ -78,6 +83,13 @@ const StandardProcessPresenter = ({
     key: 'spDescription',
     ellipsis: true,
   },
+  {
+    title:"장비",
+    dataIndex: 'spEquipment',
+    key:'spEquipment',
+    filters: equipFiler,
+    onFilter: (value, record) => record.StandardProcess === value
+  }
 ];
 
   return(
@@ -165,6 +177,14 @@ const StandardProcessPresenter = ({
       onChange={HandleChangeInput} />
       </Form.Item>
 
+      <Form.Item label="장비">
+        <Input 
+        placeholder = "공정에 필요한 장비를 입력하세요."
+        name='spEquipment'
+        value={standardprocessInfo.spEquipment} 
+        onChange={HandleChangeInput} />
+      </Form.Item>
+
       <Form.Item wrapperCol={{ span: 24 }}> 
         <div className="modal-form-button">
         <Button type="primary" htmlType="submit">
@@ -196,11 +216,11 @@ const StandardProcessPresenter = ({
      >
 
 
-         <Form.Item label="표준공정코드" name="spCode"
-          value={updateStandardProcessInfo.spCode}
-          onChange={HandleUpdateChangeInput}>
-            <Input readOnly/>
-        </Form.Item>
+      <Form.Item label="표준공정코드" name="spCode"
+      value={updateStandardProcessInfo.spCode}
+      onChange={HandleUpdateChangeInput}>
+        <Input readOnly/>
+      </Form.Item>
 
       <Form.Item label="표준공정명" name="spName"> 
       <Input 
@@ -225,7 +245,12 @@ const StandardProcessPresenter = ({
         onChange={HandleUpdateChangeInput}/>
        </Form.Item>
 
-
+      <Form.Item label="장비" name="spEquipment">
+        <Input
+        placeholder = "공정에 필요한 장비를 입력하세요."
+        value={updateStandardProcessInfo.spEquipment}
+        onChange={HandleUpdateChangeInput}/>
+       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 24 }}> 
         <div className="modal-form-button">      <Button type="primary" htmlType="submit">

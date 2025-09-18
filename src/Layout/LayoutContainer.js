@@ -1,24 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 import LayoutPresent from "./LayoutPresent";
 
-
-const LayoutContainer = () =>{
+const LayoutContainer = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  
-
-
-return (
+  return (
     <div>
-       <LayoutPresent collapsed={collapsed}  setCollapsed={setCollapsed} /> 
+      <LayoutPresent collapsed={collapsed} setCollapsed={setCollapsed} />
     </div>
-);
-
-}
+  );
+};
 
 export default LayoutContainer;
-
-
-
-
-
