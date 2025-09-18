@@ -11,12 +11,11 @@
   font-size: 30px;
   font-weight: 600;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0; /* 제목 아래에 구분선 추가 */
-  margin: -24px -24px 20px -24px; /* 모달 기본 여백에 맞추기 */
+  border-bottom: 1px solid #f0f0f0;
+  margin: -24px -24px 20px -24px;
   padding-top: 16px;
 }
 
-/* 선박/공정 정보 박스 */
 .modal-info-box {
   margin-bottom: 20px;
   padding: 12px;
@@ -27,20 +26,42 @@
 }
 
 .modal-info-box p {
-  margin: 4px 0; /* 위아래 여백 살짝 추가 */
+  margin: 4px 0;
   font-size: 15px;
 }
 
-/* 선박 이름 강조 */
 .modal-info-box .vessel-name {
   font-size: 16px;
-  color: #1677ff; /* Ant Design의 기본 파란색 */
+  color: #1677ff;
   font-weight: 500;
 }
 
 .modal-form-button {
   display: flex;
-  gap: 8px; /* 버튼 간 간격 */
+  gap: 8px;
   justify-content: flex-end;
-  margin-top: 24px; /* 위쪽 여백 */
+  margin-top: 24px;
+}
+
+.bomDetailInput {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bomDetailInput .ant-form-item {
+  margin-top: 3px;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.bomDetailInput .anticon {
+  cursor: pointer;
+}
+
+.addButtonWrapper {
+  margin-top: 20px;
+}
+.bomDetailInput .ant-form-item .ant-select {
+  width: 150px;
 }
