@@ -1,15 +1,15 @@
-.bom-content{
-     min-height: 100vh;
-    height: auto;
-    border-radius: 15px;
-    background-color: white;
-    padding: 15px;
+.bom-content {
+  min-height: 100vh;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
 }
 
 .modal-title {
   text-align: center;
   font-size: 30px;
-  font-weight: 600; 
+  font-weight: 600;
   padding-bottom: 16px;
   border-bottom: 1px solid #f0f0f0; /* 제목 아래에 구분선 추가 */
   margin: -24px -24px 20px -24px; /* 모달 기본 여백에 맞추기 */
@@ -36,4 +36,11 @@
   font-size: 16px;
   color: #1677ff; /* Ant Design의 기본 파란색 */
   font-weight: 500;
+}
+
+.modal-form-button {
+  display: flex;
+  gap: 8px; /* 버튼 간 간격 */
+  justify-content: flex-end;
+  margin-top: 24px; /* 위쪽 여백 */
 }

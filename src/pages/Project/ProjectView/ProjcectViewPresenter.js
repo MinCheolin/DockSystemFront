@@ -1,7 +1,8 @@
 import { Button, Collapse } from "antd";
 import "./projectview.css";
 
-const ProjectViewPresenter = ({ projects }) => {
+const ProjectViewPresenter = ({ projects, productPlans }) => {
+  console.log(productPlans);
   return (
     <>
       <div className="project-content">
@@ -32,15 +33,20 @@ const ProjectViewPresenter = ({ projects }) => {
                     <div>진행 상태 : {project.type}</div>
                   </div>
                   <div className="pps">
-                    <div className="prduction-plan">
-                      생산 계획명 | 시작일 ~ 마감일 | BOM번호
-                    </div>
-                    <div className="prduction-plan">
-                      생산 계획명 | 시작일 ~ 마감일 | BOM번호
-                    </div>
-                    <div className="prduction-plan">
-                      생산 계획명 | 시작일 ~ 마감일 | BOM번호
-                    </div>
+                    {productPlans
+                      .filter(
+                        (pp) => pp.project.projectNo === project.projectNo
+                      )
+                      .map((productPlan) => (
+                        <div className="pp-item" key={productPlan.ppNo}>
+                          <span>{productPlan.ppName} </span>
+                          <span>{productPlan.bom.vessel.vesselName} </span>
+                          <span> {productPlan.bom.standardProcess.spName}</span>
+                          <span> {productPlan.ppStartDate.split("T")[0]} </span>
+                          <span> ~ </span>
+                          <span>{productPlan.ppEndDate.split("T")[0]}</span>
+                        </div>
+                      ))}
                   </div>
                 </div>
               ),

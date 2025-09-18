@@ -23,19 +23,16 @@ const ProjectCreatePresenter = ({
   HandleChangeDate,
   HandleChangeDateProductPlan,
   HandleCreateProject,
-  tmpDataTest,
   HandleChangePPinfo,
   addRow,
   removeRow,
-  productionPlans,
+  productPlans,
 }) => {
   const [form] = Form.useForm();
 
-  //console.log(boms);
-
   return (
     <>
-      <Form {...formItemLayout} form={form} onFinish={tmpDataTest}>
+      <Form {...formItemLayout} form={form} onFinish={HandleCreateProject}>
         <div className="project-content">
           <div className="grid-func">
             <div className="project-list">프로젝트 등록</div>
@@ -131,7 +128,7 @@ const ProjectCreatePresenter = ({
             </div>
             <div className="production-plan">
               <div className="pp-header">생산 계획</div>
-              {productionPlans.map((plan, index) => (
+              {productPlans.map((plan, index) => (
                 <div className="pp-input" key={index}>
                   <Input
                     style={{ flex: "0 0 30%" }}
@@ -149,12 +146,15 @@ const ProjectCreatePresenter = ({
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    value={plan.bom || undefined}
+                    options={boms.map((bom) => ({
+                      value: bom.bomNo,
+                      label: `${bom.vessel.vesselName} - ${bom.standardProcess.spName}`,
+                    }))}
                     onChange={(value) =>
-                      HandleChangePPinfo(index, "bom", value)
+                      HandleChangePPinfo(index, "bomNo", value)
                     }
                   />
-                  {productionPlans.length > 1 && (
+                  {productPlans.length > 1 && (
                     <CloseOutlined onClick={() => removeRow(index)} />
                   )}
                 </div>

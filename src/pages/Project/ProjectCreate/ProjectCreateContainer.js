@@ -9,7 +9,7 @@ const ProjectCreateContainer = () => {
   const [vessels, setVessels] = useState([]);
   const [boms, setBoms] = useState([]);
   const [projectInfo, setProjectInfo] = useState([]);
-  const [productionPlans, setProductionPlans] = useState([
+  const [productPlans, setProductPlans] = useState([
     { ppName: "", ppStartDate: null, ppEndDate: null, bom: "" },
   ]);
 
@@ -45,7 +45,7 @@ const ProjectCreateContainer = () => {
   };
 
   const HandleChangeDateProductPlan = (index, dates) => {
-    setProductionPlans((prev) =>
+    setProductPlans((prev) =>
       prev.map((plan, i) =>
         i === index
           ? {
@@ -59,30 +59,22 @@ const ProjectCreateContainer = () => {
   };
 
   const HandleChangePPinfo = (index, name, value) => {
-    const newPlans = [...productionPlans];
+    const newPlans = [...productPlans];
     if (name === "dateRange") {
       newPlans[index].ppStartDate = dayjs(value[0]);
       newPlans[index].ppEndDate = dayjs(value[1]);
     } else {
       newPlans[index][name] = value;
     }
-    setProductionPlans(newPlans);
-  };
-
-  const tmpDataTest = () => {
-    const finalData = {
-      ...projectInfo,
-      productionPlan: productionPlans,
-    };
-    console.log(finalData);
+    setProductPlans(newPlans);
   };
 
   const addRow = () => {
-    setProductionPlans([...productionPlans, {}]);
+    setProductPlans([...productPlans, {}]);
   };
 
   const removeRow = (index) => {
-    setProductionPlans(productionPlans.filter((_, i) => i !== index));
+    setProductPlans(productPlans.filter((_, i) => i !== index));
   };
 
   const fetchData = async () => {
@@ -100,12 +92,16 @@ const ProjectCreateContainer = () => {
   }, []);
 
   const HandleCreateProject = async () => {
-    console.log(projectInfo);
-    /*try {
-      await axios.post(`${API_URL}/projects`, projectInfo);
+    const finalData = {
+      ...projectInfo,
+      productPlans: productPlans,
+    };
+    console.log(finalData);
+    try {
+      await axios.post(`${API_URL}/projects`, finalData);
     } catch (err) {
       alert("등록 실패");
-    }*/
+    }
   };
 
   return (
@@ -121,8 +117,7 @@ const ProjectCreateContainer = () => {
       HandleChangePPinfo={HandleChangePPinfo}
       addRow={addRow}
       removeRow={removeRow}
-      productionPlans={productionPlans}
-      tmpDataTest={tmpDataTest}
+      productPlans={productPlans}
     />
   );
 };

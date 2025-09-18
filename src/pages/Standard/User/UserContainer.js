@@ -102,7 +102,6 @@ const UserContainer = () => {
       departmentNo: Number(userInfo.departmentNo),
       roleNo: Number(userInfo.roleNo),
     };
-
     try {
       await axios.post(`${API_URL}/users`, finalData);
     } catch (err) {

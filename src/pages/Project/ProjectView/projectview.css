@@ -42,13 +42,17 @@
 }
 
 .pjt-info {
-  width: 30%;
-  border: 1px solid black;
+  font-weight: 500;
+  font-size: 15px;
+  width: 35%;
 }
 
 .pps {
-  width: 70%;
-  border: 1px solid black;
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .projects {
@@ -71,4 +75,16 @@
   margin: 5px;
   border: 1px solid rgb(14, 255, 107);
   border-radius: 3px;
+}
+
+.pp-item {
+  background-color: rgb(219, 237, 253);
+  box-shadow: 0cap;
+  font-weight: 500;
+  border-radius: 8px;
+  display: table;
+}
+.pp-item span {
+  display: table-cell;
+  padding: 5px 20px;
 }
