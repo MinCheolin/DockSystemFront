@@ -28,7 +28,6 @@ const StandardProcessContainer = () => {
     } finally {
     }
   };
-  console.log(standardprocesses);
   useEffect(() => {
     fetchData();
   }, []);

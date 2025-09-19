@@ -21,7 +21,7 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("홈", "/home", <HomeOutlined />),
+  getItem("홈", "/erp/home", <HomeOutlined />),
   getItem("기준 정보 관리", "/erp/standard", <TeamOutlined />, [
     getItem("거래처 관리", "/erp/standard/client"),
     getItem("고객사 관리", "/erp/standard/customer"),
