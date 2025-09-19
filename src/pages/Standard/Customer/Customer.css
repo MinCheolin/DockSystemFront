@@ -1,51 +1,49 @@
-.customer-content{
-    height: 100vh;
-    border-radius: 15px;
-    background-color: white;
-    padding: 15px;
+.customer-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
 }
 
-
-.grid-func{
-    height: 70px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.customer-list{
-    font-size: 22px;
-    font-weight: 500;
+.customer-list {
+  font-size: 22px;
+  font-weight: 500;
 }
 
-
-.func-button{
-    display: flex;
-    gap : 15px
+.func-button {
+  display: flex;
+  gap: 15px;
 }
 
-.grid-box{
-    height: 80vh;
+.grid-box {
+  height: 80vh;
 }
 
 .modal-form-item-center {
   text-align: center;
 }
 
-.modal-form-button{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    gap: 15px;
-    
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 .customer-search {
-    display: flex;         
-    align-items: center;     
-    gap: 8px;                
-    margin-bottom: 16px;     
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 16px;
 }
 
 .customer-search input {
-    flex: 1;                 
+  flex: 1;
 }

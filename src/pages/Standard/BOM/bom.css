@@ -65,3 +65,15 @@
 .bomDetailInput .ant-form-item .ant-select {
   width: 150px;
 }
+
+.bom-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.bom-search input {
+  flex: 1;
+}
