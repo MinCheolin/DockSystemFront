@@ -40,13 +40,4 @@
   align-items: center;
   gap: 15px;
 }
-.warehouse-search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
 
-.warehouse-search input {
-  flex: 1;
-}

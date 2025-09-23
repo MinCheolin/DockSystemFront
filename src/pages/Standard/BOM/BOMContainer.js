@@ -25,6 +25,10 @@ const BOMContainer = () => {
   const [updateBomInfo, setUpdateBomInfo] = useState({});
   const [updateBomDetailInfo, setUpdateBomDetailInfo] = useState({});
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredBoms, setFilteredBoms] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
   const fetchData = async () => {
     try {
       const responseBom = await axios.get(`${API_URL}/boms`);
@@ -217,6 +221,20 @@ const BOMContainer = () => {
     fetchData();
   };
 
+  const handleSearchBom = () => {
+    const result = boms.filter((bom) =>
+      bom.vessel.vesselName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredBoms(result);
+    setIsSearching(true);
+  };
+
+  const handleShowAll = () => {
+    setSearchTerm("");
+    setFilteredBoms([]);
+    setIsSearching(false);
+  };
+
   const HandleCreateModalOpen = async () => {
     const resVes = await axios.get(`${API_URL}/vessels`);
     const resSp = await axios.get(`${API_URL}/standardprocesses`);
@@ -243,6 +261,12 @@ const BOMContainer = () => {
     <BOMPresenter
       rowSelection={rowSelection}
       hasSelected={hasSelected}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      filteredBoms={filteredBoms}
+      isSearching={isSearching}
+      handleSearchBom={handleSearchBom}
+      handleShowAll={handleShowAll}
       boms={boms}
       vessels={vessels}
       standardProcesses={standardProcesses}

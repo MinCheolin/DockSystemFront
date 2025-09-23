@@ -1,9 +1,12 @@
 import "./bom.css";
-import { Button, Table, Modal, Form, Select, InputNumber } from "antd";
+import { Button, Table, Modal, Form, Select, Input, InputNumber } from "antd";
+
 import {
   MinusCircleOutlined,
   PlusOutlined,
   CloseOutlined,
+  SearchOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 
 const BOMPresenter = ({
@@ -11,6 +14,12 @@ const BOMPresenter = ({
   hasSelected,
   HandleDoubleClickBOM,
   HandleDoubleClickBOMDetail,
+  searchTerm,
+  setSearchTerm,
+  filteredBoms,
+  isSearching,
+  handleSearchBom,
+  handleShowAll,
   rowSelection,
   boms,
   bomdetails,
@@ -40,9 +49,22 @@ const BOMPresenter = ({
 }) => {
   const [form] = Form.useForm();
 
+  const vesselFilter = [
+    ...new Set(boms.map((bom) => bom.vessel.vesselName)),
+  ].map((name) => ({
+    text: name,
+    value: name,
+  }));
+
   const BomColumns = [
     { title: "번호", key: "index", render: (text, record, index) => index + 1 },
-    { title: "선박명", dataIndex: ["vessel", "vesselName"], key: "vessel" },
+    {
+      title: "선박명",
+      dataIndex: ["vessel", "vesselName"],
+      key: "vessel",
+      filters: vesselFilter,
+      onFilter: (value, record) => record.vesselName === value,
+    },
     {
       title: "표준 공정명",
       dataIndex: ["standardProcess", "spName"],
@@ -117,13 +139,30 @@ const BOMPresenter = ({
         </div>
       </div>
 
+      <div className="bom-search">
+        <Input
+          placeholder="선박 입력"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Button
+          type="primary"
+          icon={<SearchOutlined />}
+          onClick={handleSearchBom}
+        ></Button>
+        <Button
+          icon={<UnorderedListOutlined />}
+          onClick={handleShowAll}
+        ></Button>
+      </div>
+
       <div className="grid-box">
         <Table
           size="small"
           pagination={false}
           rowSelection={rowSelection}
           columns={BomColumns}
-          dataSource={boms}
+          dataSource={isSearching ? filteredBoms : boms}
           rowKey="bomNo"
           expandable={{
             expandedRowRender: bomDetailRowRender,
