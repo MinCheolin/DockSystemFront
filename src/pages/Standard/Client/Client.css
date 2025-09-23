@@ -36,14 +36,3 @@
   align-items: center;
   gap: 15px;
 }
-.client-search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  margin-bottom: 16px;
-}
-
-.client-search input {
-  flex: 1;
-}
