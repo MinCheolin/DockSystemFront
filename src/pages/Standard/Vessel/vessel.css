@@ -17,11 +17,6 @@
   font-weight: 500;
 }
 
-
-.vessel-search {
-  margin-top: 15px;
-}
-
 .func-button {
   display: flex;
   gap: 15px;
@@ -40,6 +35,17 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.vessel-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.vessel-search input {
+  flex: 1;
 }
 
 /* 선박 모달부분 예외 처리 */

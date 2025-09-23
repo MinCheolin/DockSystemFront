@@ -12,16 +12,10 @@
   align-items: center;
 }
 
-
 .standardprocess-list {
   font-size: 22px;
   font-weight: 500;
 }
-
-.standardprocess-search {
-  margin-top: 15px;
-}
-
 
 .func-button {
   display: flex;
@@ -43,6 +37,12 @@
   gap: 15px;
 }
 
+.standardprocess-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
 
 .standardprocess-search input {
   flex: 1;

@@ -17,11 +17,6 @@
   font-weight: 500;
 }
 
-.equipment-search {
-  margin-top: 15px;
-}
-
-
 .func-button {
   display: flex;
   gap: 15px;
@@ -40,6 +35,12 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+.equipment-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .equipment-search input {
