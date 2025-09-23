@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.client-list {
+.standardprocess-list {
   font-size: 22px;
   font-weight: 500;
 }
@@ -36,12 +36,12 @@
   align-items: center;
   gap: 15px;
 }
+
 .standardprocess-search {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
-  margin-bottom: 16px;
+  margin-top: 15px;
 }
 
 .standardprocess-search input {

@@ -1,5 +1,6 @@
 import "./bom.css";
 import { Button, Table, Modal, Form, Select, Input, InputNumber } from "antd";
+
 import {
   MinusCircleOutlined,
   PlusOutlined,

@@ -56,35 +56,88 @@
 }
 
 .projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
   margin: 15px;
 }
-.ant-collapse {
-  background-color: rgb(255, 255, 255);
+
+.card-inner-div {
+  display: flex;
+  gap: 8px;
 }
 
-.ant-collapse-header {
-  background-color: #efffe1; /* 헤더 색 */
+.project-card {
+  width: 800px;
+
+  transition: box-shadow 0.3s ease-in-out;
+  border: 1px solid rgb(204, 204, 204);
 }
 
-.ant-collapse-item {
-  margin-bottom: 10px;
-  background: white;
+.project-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
-.prduction-plan {
-  margin: 5px;
-  border: 1px solid rgb(14, 255, 107);
-  border-radius: 3px;
+.item-row-container {
+  width: 30%;
+}
+
+.item-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 5px 0;
+  gap: 5px;
+}
+
+.item-title {
+  font-weight: bold;
+  width: 60px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.item-data {
+  flex-grow: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.all-pp-title {
+  width: 200px;
+  margin: 0 auto;
+  font-size: 22px;
+}
+
+.product-plans {
+  width: 70%;
+}
+
+.card-title-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pp-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .pp-item {
-  background-color: rgb(219, 237, 253);
-  box-shadow: 0cap;
-  font-weight: 500;
+  display: flex;
   border-radius: 8px;
-  display: table;
+  border: 1px solid black;
+  justify-content: space-evenly;
+  margin: 0 10px;
 }
-.pp-item span {
-  display: table-cell;
-  padding: 5px 20px;
+
+.button-area {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 15px;
+  margin-left: 20px;
 }
