@@ -17,10 +17,6 @@
   font-weight: 500;
 }
 
-.warehouse-search {
-  margin-top: 15px;
-}
-
 .func-button {
   display: flex;
   gap: 15px;
@@ -41,3 +37,13 @@
   gap: 15px;
 }
 
+.warehouse-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.warehouse-search input {
+  flex: 1;
+}
