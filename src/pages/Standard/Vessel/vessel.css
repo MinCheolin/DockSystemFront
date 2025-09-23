@@ -1,54 +1,55 @@
-.vessel-content{
-    height: 100vh;
-    border-radius: 15px;
-    background-color: white;
-    padding: 15px;
+.vessel-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
 }
 
-
-.grid-func{
-    height: 70px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.vessel-list{
-    font-size: 22px;
-    font-weight: 500;
+.vessel-list {
+  font-size: 22px;
+  font-weight: 500;
 }
 
-
-.func-button{
-    display: flex;
-    gap : 15px
+.vessel-search {
+  margin-top: 15px;
 }
 
-.grid-box{
-    height: 80vh;
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-box {
+  height: 80vh;
 }
 
 .modal-form-item-center {
   text-align: center;
 }
 
-.modal-form-button{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    gap: 15px;
-    
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .vessel-search {
-    display: flex;         
-    align-items: center;     
-    gap: 8px;                
-    margin-bottom: 16px;     
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .vessel-search input {
-    flex: 1;                 
+  flex: 1;
 }
 
 /* 선박 모달부분 예외 처리 */
@@ -56,13 +57,21 @@
   animation: shake 0.5s ease-in-out;
 }
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-5px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(5px);
   }
 }
