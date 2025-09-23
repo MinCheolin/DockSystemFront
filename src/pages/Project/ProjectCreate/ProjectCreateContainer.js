@@ -2,9 +2,11 @@ import ProjectCreatePresenter from "./ProjectCreatePresenter";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectCreateContainer = () => {
   const API_URL = "http://localhost:8080/api/erp/v1";
+  const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [vessels, setVessels] = useState([]);
   const [boms, setBoms] = useState([]);
@@ -96,9 +98,9 @@ const ProjectCreateContainer = () => {
       ...projectInfo,
       productPlans: productPlans,
     };
-    console.log(finalData);
     try {
       await axios.post(`${API_URL}/projects`, finalData);
+      navigate("erp/project/projectView");
     } catch (err) {
       alert("등록 실패");
     }

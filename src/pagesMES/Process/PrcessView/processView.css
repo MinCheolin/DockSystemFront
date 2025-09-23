@@ -1,27 +1,25 @@
-.warehouse-content {
-  height: 100vh;
+.process-content {
+  min-height: 100vh;
+  height: auto;
   border-radius: 15px;
   background-color: white;
   padding: 15px;
 }
 
 .grid-func {
-  height: 70px;
   display: flex;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
 }
 
-.warehouse-list {
+.productPlan-list {
   font-size: 22px;
   font-weight: 500;
 }
 
-.warehouse-search {
-  margin-top: 15px;
-}
-
 .func-button {
+  margin-bottom: 25px;
   display: flex;
   gap: 15px;
 }
@@ -30,14 +28,6 @@
   height: 80vh;
 }
 
-.modal-form-item-center {
-  text-align: center;
+.process-search {
+  margin-top: 15px;
 }
-
-.modal-form-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-

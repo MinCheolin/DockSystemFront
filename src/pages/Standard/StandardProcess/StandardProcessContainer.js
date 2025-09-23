@@ -95,13 +95,10 @@ const StandardProcessContainer = () => {
 
   const HandleDeleteStandardProcess = async () => {
     if (selectedRowKeys.length === 0) return;
-    console.log(selectedRowKeys[0]);
-
     try {
       await axios.delete(`${API_URL}/standardprocesses/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
-      console.error(err);
       alert("삭제 실패");
     }
     fetchData();

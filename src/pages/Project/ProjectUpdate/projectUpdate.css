@@ -1,0 +1,11 @@
+.period {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.date-picker {
+  flex: none; /* 고정 너비 사용 */
+  width: 120px; /* 원하는 폭으로 지정 */
+}
