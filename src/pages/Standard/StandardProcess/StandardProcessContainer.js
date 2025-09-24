@@ -1,9 +1,9 @@
 import StandardProcessPresenter from "./StandardProcessPresenter";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ERP_API } from "../../../config";
 
 const StandardProcessContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const [standardprocesses, setStandardProcesses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateStandardProcessInfo, setUpdateStandardProcessInfo] = useState(
@@ -22,7 +22,7 @@ const StandardProcessContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/standardprocesses`);
+      const response = await axios.get(`${ERP_API}/standardprocesses`);
       setStandardProcesses(response.data);
     } catch (err) {
     } finally {
@@ -85,7 +85,7 @@ const StandardProcessContainer = () => {
       ...standardprocessInfo,
     };
     try {
-      await axios.post(`${API_URL}/standardprocesses`, finalData);
+      await axios.post(`${ERP_API}/standardprocesses`, finalData);
     } catch (err) {
       alert(`등록 실패 ${err}`);
     }
@@ -96,7 +96,7 @@ const StandardProcessContainer = () => {
   const HandleDeleteStandardProcess = async () => {
     if (selectedRowKeys.length === 0) return;
     try {
-      await axios.delete(`${API_URL}/standardprocesses/${selectedRowKeys[0]}`);
+      await axios.delete(`${ERP_API}/standardprocesses/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
       alert("삭제 실패");
@@ -112,7 +112,7 @@ const StandardProcessContainer = () => {
     };
     try {
       await axios.put(
-        `${API_URL}/standardprocesses/${finalData.spNo}`,
+        `${ERP_API}/standardprocesses/${finalData.spNo}`,
         finalData
       );
     } catch (err) {

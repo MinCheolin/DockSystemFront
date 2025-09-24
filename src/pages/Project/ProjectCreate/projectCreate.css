@@ -1,3 +1,12 @@
+.custom-form-item .ant-form-item-label {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.custom-form-item .ant-form-item-control {
+  flex: 0 0 60%;
+  max-width: 60%;
+}
+
 .project-content {
   min-height: 100vh;
   height: auto;

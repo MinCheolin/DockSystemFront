@@ -2,9 +2,9 @@ import VesselPresenter from "./VesselPresenter";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Form } from "antd";
+import { ERP_API } from "../../../config";
 
 const VesselContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const [form] = Form.useForm();
   const [vessels, setVessels] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +23,7 @@ const VesselContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/vessels`);
+      const response = await axios.get(`${ERP_API}/vessels`);
       setVessels(response.data);
     } catch (err) {
       alert("조회 실패");
@@ -68,7 +68,7 @@ const VesselContainer = () => {
 
   const HandleCreateVessel = async (values) => {
     try {
-      await axios.post(`${API_URL}/vessels`, values);
+      await axios.post(`${ERP_API}/vessels`, values);
       setIsModalOpen(false);
       form.resetFields();
       fetchData();
@@ -80,7 +80,7 @@ const VesselContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${API_URL}/vessels/${selectedRowKeys[0]}`);
+      await axios.delete(`${ERP_API}/vessels/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
       alert("삭제 실패");
@@ -94,7 +94,7 @@ const VesselContainer = () => {
       vesselNo: Number(updateVesselInfo.vesselNo),
     };
     try {
-      await axios.put(`${API_URL}/vessels/${finalData.vesselNo}`, finalData);
+      await axios.put(`${ERP_API}/vessels/${finalData.vesselNo}`, finalData);
     } catch (err) {
       alert("수정 실패");
     }

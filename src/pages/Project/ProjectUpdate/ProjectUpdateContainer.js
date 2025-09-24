@@ -3,9 +3,9 @@ import ProjectUpdatePresenter from "./ProjectUpdatePresenter";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
+import { ERP_API } from "../../../config";
 
 const ProjectUpdateContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const { id } = useParams();
   const [updateProject, setUpdateProject] = useState({});
   const [customers, setCustomers] = useState([]);
@@ -18,11 +18,11 @@ const ProjectUpdateContainer = () => {
 
   const fetchData = async () => {
     try {
-      const resData = await axios.get(`${API_URL}/projects/${id}`);
-      const resBom = await axios.get(`${API_URL}/boms`);
-      const resCustomer = await axios.get(`${API_URL}/customers`);
-      const resVessel = await axios.get(`${API_URL}/vessels`);
-      const resPP = await axios.get(`${API_URL}/product_plans/${id}`);
+      const resData = await axios.get(`${ERP_API}/projects/${id}`);
+      const resBom = await axios.get(`${ERP_API}/boms`);
+      const resCustomer = await axios.get(`${ERP_API}/customers`);
+      const resVessel = await axios.get(`${ERP_API}/vessels`);
+      const resPP = await axios.get(`${ERP_API}/product_plans/${id}`);
       setUpdateProject({
         projectNo: resData.data.projectNo,
         projectName: resData.data.projectName,
@@ -133,7 +133,7 @@ const ProjectUpdateContainer = () => {
     };
     console.log(finalData);
     try {
-      await axios.put(`${API_URL}/projects/${id}`, finalData);
+      await axios.put(`${ERP_API}/projects/${id}`, finalData);
       navigate("/erp/project/projectView");
     } catch (err) {
       alert("수정 실패");

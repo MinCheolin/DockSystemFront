@@ -2,53 +2,67 @@ import { Button, Table } from "antd";
 import dayjs from "dayjs";
 import "./productPlanMes.css";
 
-const columns = [
+const subColumns = [
   {
-    title: "번호",
-    key: "index",
-    render: (text, record, index) => index + 1,
+    title: "작업 지시명",
+    dataIndex: "date",
+    key: "woName",
   },
   {
-    title: "생산 계획명",
-    dataIndex: "ppName",
-    key: "name",
-  },
-  {
-    title: "기간",
-    render: (_, record) => {
-      const start = dayjs(record.startDate).format("YYYY-MM-DD");
-      const end = dayjs(record.endDate).format("YYYY-MM-DD");
-      return `${start} ~ ${end}`;
-    },
-    key: "period",
-  },
-  {
-    title: "공정명",
-    dataIndex: ["bom", "standardProcess", "spName"],
-    key: "spName",
-  },
-  {
-    title: "선박명",
-    dataIndex: ["bom", "vessel", "vesselName"],
-    key: "bom",
-  },
-  {
-    title: "임시버튼",
-    key: "action",
-    render: (_, record) => (
-      <Button
-        type="primary"
-        onClick={() => {
-          console.log("수정할 데이터:", record);
-        }}
-      >
-        공정 추가{" "}
-      </Button>
-    ),
+    title: "작업 지시 내용",
+    dataIndex: "detail",
+    key: "woDetail",
   },
 ];
 
-const ProductPlanMesPresenter = ({ productplans }) => {
+const ProductPlanMesPresenter = ({ productplans, HandleAddWorkOrder }) => {
+  const columns = [
+    {
+      title: "번호",
+      align: "center",
+      key: "index",
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "생산 계획명",
+      align: "center",
+      dataIndex: "ppName",
+      key: "name",
+    },
+    {
+      title: "기간",
+      align: "center",
+      render: (_, record) => {
+        const start = dayjs(record.startDate).format("YYYY-MM-DD");
+        const end = dayjs(record.endDate).format("YYYY-MM-DD");
+        return `${start} ~ ${end}`;
+      },
+      key: "period",
+    },
+    {
+      title: "공정명",
+      align: "center",
+      dataIndex: ["bom", "standardProcess", "spName"],
+      key: "spName",
+    },
+    {
+      title: "선박명",
+      align: "center",
+      dataIndex: ["bom", "vessel", "vesselName"],
+      key: "bom",
+    },
+    {
+      title: "작업 지시",
+      align: "center",
+      width: 150,
+      key: "action",
+      render: (_, record) => (
+        <Button type="primary" onClick={() => HandleAddWorkOrder(record.ppNo)}>
+          작업 지시 등록
+        </Button>
+      ),
+    },
+  ];
   return (
     <div className="productPlan-content">
       <div className="grid-func">

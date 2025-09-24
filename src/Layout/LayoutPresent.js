@@ -6,6 +6,7 @@ import {
   DatabaseOutlined,
   ProjectOutlined,
   HomeOutlined,
+  ExportOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -42,6 +43,7 @@ const items = [
     getItem("재고 관리", "/4-2"),
   ]),
   getItem("안전 관리", "/safety", <WarningOutlined />),
+  getItem("MES로 이동", "/mes", <ExportOutlined />),
 ];
 const LayoutPresent = () => {
   const [collapsed, setCollapsed] = useState(false);
