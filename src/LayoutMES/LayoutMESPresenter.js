@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./layout.css";
 import {
-  TeamOutlined,
   WarningOutlined,
-  DatabaseOutlined,
-  ProjectOutlined,
+  FileOutlined,
   HomeOutlined,
+  ExportOutlined,
+  ContainerOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -22,20 +22,10 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("홈", "/mes/home", <HomeOutlined />),
-  getItem("공정 관리", "/mes/process", <TeamOutlined />, [
-    getItem("생산 계획 조회 ", "/mes/process/productPlan"),
-    getItem("공정 조회", "/mes/process/processView"),
-    getItem("공정 등록", "/mes/process/processCreate"),
-  ]),
-  getItem("프로젝트 관리", "/erp/project", <ProjectOutlined />, [
-    getItem("프로젝트 등록", "/erp/project/projectCreate"),
-    getItem("프로젝트 조회", "/erp/project/projectView"),
-  ]),
-  getItem("작업 지시", "/material", <DatabaseOutlined />, [
-    getItem("발주 관리", "/4-1"),
-    getItem("재고 관리", "/4-2"),
-  ]),
+  getItem("생산 계획 조회 ", "/mes/productPlan", <ContainerOutlined />),
+  getItem("작업 조회", "/mes/workOrder", <FileOutlined />),
   getItem("품질", "/safety", <WarningOutlined />),
+  getItem("ERP로 이동", "/erp", <ExportOutlined />),
 ];
 const LayoutMESPresent = () => {
   const [collapsed, setCollapsed] = useState(false);

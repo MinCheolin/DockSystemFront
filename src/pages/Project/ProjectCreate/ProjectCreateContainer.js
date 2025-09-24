@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ERP_API } from "../../../config";
 
 const ProjectCreateContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [vessels, setVessels] = useState([]);
@@ -81,11 +81,11 @@ const ProjectCreateContainer = () => {
 
   const fetchData = async () => {
     try {
-      const resCustomers = await axios.get(`${API_URL}/customers`);
+      const resCustomers = await axios.get(`${ERP_API}/customers`);
       setCustomers(resCustomers.data);
-      const resVessels = await axios.get(`${API_URL}/vessels`);
+      const resVessels = await axios.get(`${ERP_API}/vessels`);
       setVessels(resVessels.data);
-      const resBoms = await axios.get(`${API_URL}/boms`);
+      const resBoms = await axios.get(`${ERP_API}/boms`);
       setBoms(resBoms.data);
     } catch (err) {}
   };
@@ -99,7 +99,7 @@ const ProjectCreateContainer = () => {
       productPlans: productPlans,
     };
     try {
-      await axios.post(`${API_URL}/projects`, finalData);
+      await axios.post(`${ERP_API}/projects`, finalData);
       navigate("erp/project/projectView");
     } catch (err) {
       alert("등록 실패");

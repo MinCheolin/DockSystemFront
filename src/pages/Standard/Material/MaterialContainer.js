@@ -1,9 +1,9 @@
 import MaterialPresenter from "./MaterialPresenter";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ERP_API } from "../../../config";
 
 const MaterialContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const [materials, setMaterials] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateMaterialInfo, setUpdateMaterialInfo] = useState({
@@ -32,7 +32,7 @@ const MaterialContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/materials`);
+      const response = await axios.get(`${ERP_API}/materials`);
       setMaterials(response.data);
     } catch (err) {
       alert("조회 실패");

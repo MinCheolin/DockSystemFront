@@ -3,16 +3,6 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import "./projectCreate.css";
 
 const { RangePicker } = DatePicker;
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
 
 const ProjectCreatePresenter = ({
   customers,
@@ -32,7 +22,11 @@ const ProjectCreatePresenter = ({
 
   return (
     <>
-      <Form {...formItemLayout} form={form} onFinish={HandleCreateProject}>
+      <Form
+        className="custom-form-item"
+        form={form}
+        onFinish={HandleCreateProject}
+      >
         <div className="project-content">
           <div className="grid-func">
             <div className="project-list">프로젝트 등록</div>

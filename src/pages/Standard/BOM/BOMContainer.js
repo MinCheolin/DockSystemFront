@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import BOMPresenter from "./BOMPresenter";
 import axios from "axios";
+import { ERP_API } from "../../../config";
 
 const BOMContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   // bom 상태값
   const [boms, setBoms] = useState([]);
   const [vessels, setVessels] = useState([]);
@@ -31,8 +31,8 @@ const BOMContainer = () => {
 
   const fetchData = async () => {
     try {
-      const responseBom = await axios.get(`${API_URL}/boms`);
-      const responseBomDetail = await axios.get(`${API_URL}/bomdetails`);
+      const responseBom = await axios.get(`${ERP_API}/boms`);
+      const responseBomDetail = await axios.get(`${ERP_API}/bomdetails`);
       setBoms(responseBom.data);
       setBomdetails(responseBomDetail.data);
     } catch (error) {
@@ -116,8 +116,8 @@ const BOMContainer = () => {
   };
 
   const HandleDoubleClickBOM = async (record) => {
-    const resVes = await axios.get(`${API_URL}/vessels`);
-    const resSp = await axios.get(`${API_URL}/standardprocesses`);
+    const resVes = await axios.get(`${ERP_API}/vessels`);
+    const resSp = await axios.get(`${ERP_API}/standardprocesses`);
     setVessels(resVes.data);
     setStandardProcesses(resSp.data);
     setSelectedRowKeys([record.bomNo]);
@@ -131,7 +131,7 @@ const BOMContainer = () => {
   };
 
   const HandleDoubleClickBOMDetail = async (record) => {
-    const resMat = await axios.get(`${API_URL}/materials`);
+    const resMat = await axios.get(`${ERP_API}/materials`);
     setMaterials(resMat.data);
 
     const matchData = {
@@ -153,7 +153,7 @@ const BOMContainer = () => {
     };
 
     try {
-      await axios.post(`${API_URL}/boms`, finalData);
+      await axios.post(`${ERP_API}/boms`, finalData);
     } catch (error) {
       alert("등록 실패:");
     }
@@ -165,7 +165,7 @@ const BOMContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${API_URL}/boms/${selectedRowKeys[0]}`);
+      await axios.delete(`${ERP_API}/boms/${selectedRowKeys[0]}`);
       setBoms((prev) =>
         prev.filter((item) => item.bomNo !== selectedRowKeys[0])
       );
@@ -179,7 +179,7 @@ const BOMContainer = () => {
   const HandleDeleteBomDetail = async (bomDetailNo) => {
     if (!bomDetailNo) return;
     try {
-      await axios.delete(`${API_URL}/bomdetails/${bomDetailNo}`);
+      await axios.delete(`${ERP_API}/bomdetails/${bomDetailNo}`);
       setBomdetails((prev) =>
         prev.filter((item) => item.bomDetailNo !== bomDetailNo)
       );
@@ -196,7 +196,7 @@ const BOMContainer = () => {
       spNo: Number(updateBomInfo.spNo),
     };
     try {
-      await axios.put(`${API_URL}/boms/${finalData.bomNo}`, finalData);
+      await axios.put(`${ERP_API}/boms/${finalData.bomNo}`, finalData);
     } catch (err) {
       alert("수정 실패");
     }
@@ -211,7 +211,7 @@ const BOMContainer = () => {
     };
     try {
       await axios.put(
-        `${API_URL}/bomdetails/${finalData.bomDetailNo}`,
+        `${ERP_API}/bomdetails/${finalData.bomDetailNo}`,
         finalData
       );
     } catch (err) {
@@ -236,9 +236,9 @@ const BOMContainer = () => {
   };
 
   const HandleCreateModalOpen = async () => {
-    const resVes = await axios.get(`${API_URL}/vessels`);
-    const resSp = await axios.get(`${API_URL}/standardprocesses`);
-    const resMat = await axios.get(`${API_URL}/materials`);
+    const resVes = await axios.get(`${ERP_API}/vessels`);
+    const resSp = await axios.get(`${ERP_API}/standardprocesses`);
+    const resMat = await axios.get(`${ERP_API}/materials`);
     setVessels(resVes.data);
     setStandardProcesses(resSp.data);
     setMaterials(resMat.data);

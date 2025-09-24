@@ -1,5 +1,5 @@
-import { Button, Table } from "antd";
-import "./processView.css";
+import { Table } from "antd";
+import "./workOrderView.css";
 const columns = [
   {
     title: "col1",
@@ -26,7 +26,7 @@ const columns = [
     key: "col6",
   },
 ];
-const ProcessViewPresenter = () => {
+const WorkOrderViewPresenter = () => {
   return (
     <div className="productPlan-content">
       <div className="grid-func">
@@ -45,4 +45,4 @@ const ProcessViewPresenter = () => {
   );
 };
 
-export default ProcessViewPresenter;
+export default WorkOrderViewPresenter;

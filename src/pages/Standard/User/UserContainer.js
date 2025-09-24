@@ -1,9 +1,9 @@
 import UserPresenter from "./UserPresenter";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ERP_API } from "../../../config";
 
 const UserContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const [users, setUsers] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -16,7 +16,7 @@ const UserContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/users`);
+      const response = await axios.get(`${ERP_API}/users`);
       setUsers(response.data);
     } catch (err) {
     } finally {
@@ -76,8 +76,8 @@ const UserContainer = () => {
   };
 
   const HandleDoubleClick = async (record) => {
-    const resDep = await axios.get(`${API_URL}/departments`);
-    const resRol = await axios.get(`${API_URL}/roles`);
+    const resDep = await axios.get(`${ERP_API}/departments`);
+    const resRol = await axios.get(`${ERP_API}/roles`);
     setDepartments(resDep.data);
     setRoles(resRol.data);
     setSelectedRowKeys([record.userNo]);
@@ -103,7 +103,7 @@ const UserContainer = () => {
       roleNo: Number(userInfo.roleNo),
     };
     try {
-      await axios.post(`${API_URL}/users`, finalData);
+      await axios.post(`${ERP_API}/users`, finalData);
     } catch (err) {
       alert("등록 실패");
     }
@@ -119,7 +119,7 @@ const UserContainer = () => {
       roleNo: Number(updateUserInfo.roleNo),
     };
     try {
-      await axios.put(`${API_URL}/${finalData.userNo}`, finalData);
+      await axios.put(`${ERP_API}/${finalData.userNo}`, finalData);
     } catch (err) {
       console.error("등록 실패 : ", err);
     }
@@ -129,8 +129,8 @@ const UserContainer = () => {
 
   const HandleCreateModalOpen = async () => {
     try {
-      const resDep = await axios.get(`${API_URL}/departments`);
-      const resRol = await axios.get(`${API_URL}/roles`);
+      const resDep = await axios.get(`${ERP_API}/departments`);
+      const resRol = await axios.get(`${ERP_API}/roles`);
       setDepartments(resDep.data);
       setRoles(resRol.data);
       setIsModalOpen(true);
@@ -142,7 +142,7 @@ const UserContainer = () => {
   const HandleDeleteUser = async () => {
     if (selectedRowKeys.length === 0) return;
     try {
-      await axios.delete(`${API_URL}/users/${selectedRowKeys[0]}`);
+      await axios.delete(`${ERP_API}/users/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
       console.error("삭제 실패 : ", err);
