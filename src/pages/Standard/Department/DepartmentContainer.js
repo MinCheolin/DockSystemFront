@@ -1,8 +1,9 @@
 import DepartmentPresenter from "./DepartmentPresenter";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ERP_API } from "../../../config";
+
 const DepartmentContainer = () => {
-  const API_URL = "http://localhost:8080/api/erp/v1";
   const [departments, setDepartments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -12,7 +13,7 @@ const DepartmentContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/departments`);
+      const response = await axios.get(`${ERP_API}/departments`);
       setDepartments(response.data);
     } catch (err) {
       alert(`조회 실패 ${err}`);
@@ -66,7 +67,7 @@ const DepartmentContainer = () => {
   const HandleCreateDepartment = async () => {
     console.log(departmentInfo.departmentName);
     try {
-      await axios.post(`${API_URL}/departments`, departmentInfo);
+      await axios.post(`${ERP_API}/departments`, departmentInfo);
     } catch (err) {
       alert(`등록 실패 ${err}`);
     }
@@ -81,7 +82,7 @@ const DepartmentContainer = () => {
     };
     try {
       await axios.put(
-        `${API_URL}/departments/${finalData.departmentNo}`,
+        `${ERP_API}/departments/${finalData.departmentNo}`,
         finalData
       );
     } catch (err) {
@@ -95,7 +96,7 @@ const DepartmentContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${API_URL}/departments/${selectedRowKeys[0]}`);
+      await axios.delete(`${ERP_API}/departments/${selectedRowKeys[0]}`);
       setDepartments((prev) =>
         prev.filter((item) => item.departmentNo !== selectedRowKeys[0])
       );

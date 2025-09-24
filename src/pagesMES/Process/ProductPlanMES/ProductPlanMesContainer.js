@@ -1,9 +1,12 @@
 import ProductPlanMesPresenter from "./ProductPlanMesPresenter";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ERP_API } from "../../../config";
+
 const ProductPlanMesContainer = () => {
-  const ERP_API = "http://localhost:8080/api/erp/v1";
   const [productplans, setProductPlans] = useState([]);
+  const navigate = useNavigate();
   const fetchDate = async () => {
     try {
       const response = await axios.get(`${ERP_API}/product_plans`);
@@ -16,8 +19,17 @@ const ProductPlanMesContainer = () => {
   useEffect(() => {
     fetchDate();
   }, []);
-  console.log(productplans);
-  return <ProductPlanMesPresenter productplans={productplans} />;
+
+  const HandleAddWorkOrder = (ppNo) => {
+    navigate("/mes/workorderCreate", { state: { ppNo } });
+  };
+
+  return (
+    <ProductPlanMesPresenter
+      productplans={productplans}
+      HandleAddWorkOrder={HandleAddWorkOrder}
+    />
+  );
 };
 
 export default ProductPlanMesContainer;

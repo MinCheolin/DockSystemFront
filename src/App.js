@@ -18,8 +18,8 @@ import Vessel from "./pages/Standard/Vessel";
 import Material from "./pages/Standard/Material";
 import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
-import ProcessCreate from "./pagesMES/Process/ProcessCreate";
-import ProcessView from "./pagesMES/Process/PrcessView";
+import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
+import WorkOrderView from "./pagesMES/Process/WorkOrderView";
 
 const App = () => {
   return (
@@ -52,15 +52,9 @@ const App = () => {
           </Route>
           <Route path="/mes" element={<LayoutMES />}>
             <Route index element={<MesHome />} />
-            <Route
-              path="process/productPlan"
-              element={<ProductPlanMES />}
-            ></Route>
-            <Route path="process/processView" element={<ProcessView />}></Route>
-            <Route
-              path="process/processCreate"
-              element={<ProcessCreate />}
-            ></Route>
+            <Route path="productPlan" element={<ProductPlanMES />} />
+            <Route path="workOrder" element={<WorkOrderView />} />
+            <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
