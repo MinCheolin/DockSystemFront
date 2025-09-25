@@ -20,6 +20,8 @@ import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
 import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
 import WorkOrderView from "./pagesMES/Process/WorkOrderView";
+import EquipmentMes from "./pagesMES/standard/EquipmentMes";
+import MaterialMes from "./pagesMES/standard/MaterialMes";
 
 const App = () => {
   return (
@@ -52,6 +54,8 @@ const App = () => {
           </Route>
           <Route path="/mes" element={<LayoutMES />}>
             <Route index element={<MesHome />} />
+            <Route path="standard/equipment" element={<EquipmentMes />} />
+            <Route path="standard/material" element={<MaterialMes />} />
             <Route path="productPlan" element={<ProductPlanMES />} />
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>

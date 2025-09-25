@@ -5,6 +5,7 @@ import {
   FileOutlined,
   HomeOutlined,
   ExportOutlined,
+  TeamOutlined,
   ContainerOutlined,
 } from "@ant-design/icons";
 
@@ -22,6 +23,10 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("홈", "/mes/home", <HomeOutlined />),
+  getItem("기준 정보 관리", "/mes/standard", <TeamOutlined />, [
+    getItem("자재 관리", "/mes/standard/material"),
+    getItem("장비 관리", "/mes/standard/equipment"),
+  ]),
   getItem("생산 계획 조회 ", "/mes/productPlan", <ContainerOutlined />),
   getItem("작업 조회", "/mes/workOrder", <FileOutlined />),
   getItem("품질", "/safety", <WarningOutlined />),
