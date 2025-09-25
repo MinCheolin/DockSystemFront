@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
-import LayoutPresent from "./Layout/LayoutPresent";
+import Layout from "./Layout";
 import LayoutMES from "./LayoutMES";
 import SafetyBoard from "./pages/SafetyBoard";
 import Home from "./pages/Home";
@@ -20,6 +20,7 @@ import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
 import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
 import WorkOrderView from "./pagesMES/Process/WorkOrderView";
+import WorkOrderDetail from "./pagesMES/Process/WorkOrderDetail";
 import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
 
@@ -29,7 +30,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/erp" element={<LayoutPresent />}>
+          <Route path="/erp" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="standard/user" element={<Tab />} />
@@ -54,11 +55,16 @@ const App = () => {
           </Route>
           <Route path="/mes" element={<LayoutMES />}>
             <Route index element={<MesHome />} />
+            <Route path="home" element={<MesHome />} />
             <Route path="standard/equipment" element={<EquipmentMes />} />
             <Route path="standard/material" element={<MaterialMes />} />
             <Route path="productPlan" element={<ProductPlanMES />} />
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
+            <Route
+              path="workorderDetail/:id"
+              element={<WorkOrderDetail />}
+            ></Route>
           </Route>
         </Routes>
       </BrowserRouter>
