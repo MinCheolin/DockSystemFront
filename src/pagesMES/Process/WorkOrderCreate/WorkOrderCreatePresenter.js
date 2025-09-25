@@ -4,12 +4,24 @@ import "./workOrderCreate.css";
 const { RangePicker } = DatePicker;
 const WorkOrderPresenter = ({
   ppNo,
+  equipments,
+  materials,
+  workOrder,
   HandleChangeInput,
   HandleChangeDate,
   HandleCreateWorkOrder,
   HandleChangeSelect,
+  HandleChangeSelectType,
 }) => {
   const [form] = Form.useForm();
+
+  const typeOptions = [
+    { value: "대기", label: "대기" },
+    { value: "진행", label: "진행" },
+    { value: "품질", label: "품질" },
+    { value: "완료", label: "완료" },
+  ];
+
   return (
     <>
       <Form
@@ -56,18 +68,30 @@ const WorkOrderPresenter = ({
 
             <Form.Item label="사용 장비">
               <Select
-                onChange={(value) => HandleChangeSelect("equip", value)}
+                onChange={(value) => HandleChangeSelect("equipNo", value)}
+                options={equipments.map((equipment) => ({
+                  value: equipment.equipNo,
+                  label: equipment.equipName,
+                }))}
               />
             </Form.Item>
 
             <Form.Item label="사용 자재">
               <Select
-                onChange={(value) => HandleChangeSelect("matrial", value)}
+                onChange={(value) => HandleChangeSelect("materialNo", value)}
+                options={materials.map((material) => ({
+                  value: material.materialNo,
+                  label: material.materialName,
+                }))}
               />
             </Form.Item>
 
             <Form.Item label="작업 상태">
-              <Input className="underline-input" readOnly value="대기" />
+              <Select
+                onChange={(value) => HandleChangeSelectType("type", value)}
+                options={typeOptions}
+                value={workOrder.type}
+              />
             </Form.Item>
           </div>
         </div>
