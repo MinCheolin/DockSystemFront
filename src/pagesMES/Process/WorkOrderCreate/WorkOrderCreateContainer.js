@@ -1,13 +1,25 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import WorkOrderCreatePresenter from "./WorkOrderCreatePresenter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { MES_API } from "../../../config";
 
 const WorkOrderCreateContainer = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { ppNo } = location.state || {};
+  const [equipments, setEquipments] = useState([]);
+  const [materials, setMaterials] = useState([]);
   const [workOrder, setWorkOrder] = useState({
-    ppNo: { ppNo },
-    type: "대기",
+    woName: "",
+    woStartDate: "",
+    woEndDate: "",
+    woDetail: "",
+    woDescription: "",
+    type: null,
+    ppNo: String(ppNo),
+    equipNo: "",
+    materialNo: "",
   });
 
   const HandleChangeInput = (e) => {
@@ -18,6 +30,13 @@ const WorkOrderCreateContainer = () => {
     }));
   };
   const HandleChangeSelect = (name, value) => {
+    setWorkOrder((prev) => ({
+      ...prev,
+      [name]: Number(value),
+    }));
+  };
+
+  const HandleChangeSelectType = (name, value) => {
     setWorkOrder((prev) => ({
       ...prev,
       [name]: value,
@@ -40,15 +59,38 @@ const WorkOrderCreateContainer = () => {
     }
   };
 
-  const HandleCreateWorkOrder = () => {
-    console.log(workOrder);
+  const fetchData = async () => {
+    try {
+      const resEquipments = await axios.get(`${MES_API}/equipments`);
+      setEquipments(resEquipments.data);
+      const resMaterials = await axios.get(`${MES_API}/materials`);
+      setMaterials(resMaterials.data);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const HandleCreateWorkOrder = async () => {
+    try {
+      console.log(workOrder);
+      await axios.post(`${MES_API}/work_orders`, workOrder);
+      navigate("/mes/workOrder");
+    } catch (err) {
+      alert("등록 실패");
+    }
   };
 
   return (
     <WorkOrderCreatePresenter
+      workOrder={workOrder}
+      materials={materials}
+      equipments={equipments}
       ppNo={ppNo}
       HandleChangeInput={HandleChangeInput}
       HandleChangeSelect={HandleChangeSelect}
+      HandleChangeSelectType={HandleChangeSelectType}
       HandleChangeDate={HandleChangeDate}
       HandleCreateWorkOrder={HandleCreateWorkOrder}
     />
