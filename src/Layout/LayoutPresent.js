@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./layout.css";
 import {
   TeamOutlined,
@@ -10,7 +9,7 @@ import {
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -22,7 +21,7 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("홈", "/erp/home", <HomeOutlined />),
+  getItem("ERP 홈", "/erp/home", <HomeOutlined />),
   getItem("기준 정보 관리", "/erp/standard", <TeamOutlined />, [
     getItem("거래처 관리", "/erp/standard/client"),
     getItem("고객사 관리", "/erp/standard/customer"),
@@ -45,9 +44,13 @@ const items = [
   getItem("안전 관리", "/safety", <WarningOutlined />),
   getItem("MES로 이동", "/mes", <ExportOutlined />),
 ];
-const LayoutPresent = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
+const LayoutPresent = ({
+  collapsed,
+  setCollapsed,
+  loginUser,
+  navigate,
+  HandleLogout,
+}) => {
   return (
     <Layout className="layout">
       <Sider
@@ -68,9 +71,11 @@ const LayoutPresent = () => {
         <Header className="main-header">
           <div></div>
           <div className="user-info">
-            <div>사용자 님</div>
+            <div>{loginUser} 님</div>
             <div className="info-item">마이페이지</div>
-            <div className="info-item">로그아웃</div>
+            <div onClick={HandleLogout} className="info-item">
+              로그아웃
+            </div>
           </div>
         </Header>
         <Content className="main-content">

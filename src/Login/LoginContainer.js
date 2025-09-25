@@ -1,24 +1,21 @@
 import LoginPresenter from "./LoginPresenter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { LOGIN_API } from "../config";
+import { useNavigate } from "react-router-dom";
 
 const LoginContainer = () => {
-  const [tab1Status, setTab1Status] = useState(true);
-  const [tab2Status, setTab2Status] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("erp");
   const [loginInfo, setLoginInfo] = useState({});
+  const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
 
-  const SelectTab1 = () => {
-    if (tab1Status === false) {
-      setTab1Status(true);
-      setTab2Status(false);
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("username");
+    if (savedUsername) {
+      setUsername(savedUsername);
     }
-  };
-
-  const SelectTab2 = () => {
-    if (tab2Status === false) {
-      setTab2Status(true);
-      setTab1Status(false);
-    }
-  };
+  }, []);
 
   const HandleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -28,18 +25,36 @@ const LoginContainer = () => {
     }));
   };
 
-  const HandleLogin = () => {
-    console.log(loginInfo);
+  const HandleLogin = async () => {
+    try {
+      const response = await axios.post(`${LOGIN_API}`, loginInfo);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.userName);
+      navigate(`/${selectedTab}`);
+    } catch (err) {
+      alert("로그인 실패");
+    }
+  };
+
+  const HandleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+  const HandleTabSelect = (value) => {
+    if (value === selectedTab) {
+    } else setSelectedTab(value);
   };
 
   return (
     <LoginPresenter
-      tab1Status={tab1Status}
-      tab2Status={tab2Status}
-      SelectTab1={SelectTab1}
-      SelectTab2={SelectTab2}
+      username={username}
+      selectedTab={selectedTab}
       HandleChangeInput={HandleChangeInput}
       HandleLogin={HandleLogin}
+      HandleLogout={HandleLogout}
+      HandleTabSelect={HandleTabSelect}
     />
   );
 };

@@ -1,44 +1,47 @@
-import { Table } from "antd";
+import { List } from "antd";
 import "./workOrderView.css";
-const columns = [
-  {
-    title: "col1",
-    key: "col1",
-  },
-  {
-    title: "col2",
-    key: "col2",
-  },
-  {
-    title: "col3",
-    key: "col3",
-  },
-  {
-    title: "col4",
-    key: "col4",
-  },
-  {
-    title: "col5",
-    key: "col5",
-  },
-  {
-    title: "col6",
-    key: "col6",
-  },
+
+const data = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
 ];
-const WorkOrderViewPresenter = () => {
+
+const WorkOrderViewPresenter = ({ HandleMoveDetail }) => {
   return (
     <div className="productPlan-content">
       <div className="grid-func">
-        <div className="productPlan-list">공정 목록</div>
+        <div className="productPlan-list">작업 목록</div>
         <div className="func-button"></div>
       </div>
       <div className="process-content">
-        <Table
-          size="small"
-          pagination={false}
-          columns={columns}
-          rowClassName="clickable-row"
+        <List
+          bordered
+          dataSource={data}
+          renderItem={(item, key) => (
+            <List.Item
+              key={key}
+              onClick={() => HandleMoveDetail(key)}
+              className="wo-item"
+            >
+              [칼럼명_1] 칼럼명_2
+            </List.Item>
+          )}
         />
       </div>
     </div>
