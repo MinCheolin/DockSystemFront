@@ -21,7 +21,6 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("MES 홈", "/mes/home", <HomeOutlined />),
   getItem("홈", "/mes/home", <HomeOutlined />),
   getItem("기준 정보 관리", "/mes/standard", <TeamOutlined />, [
     getItem("자재 관리", "/mes/standard/material"),

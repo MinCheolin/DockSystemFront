@@ -1,89 +1,74 @@
-import { Button, Descriptions, Modal, Dropdown } from "antd";
+import { Button, Descriptions, Modal } from "antd";
+import dayjs from "dayjs";
 import "./workOrderDetail.css";
 
-const statusItems = [
-  {
-    key: "1",
-    label: "대기",
-  },
-  {
-    key: "2",
-    label: "품질",
-  },
-  {
-    key: "3",
-    label: "완료",
-  },
-];
-
-const items = [
-  {
-    label: "작업지시번호",
-    children: "000000000001",
-  },
-  {
-    label: "작업상태",
-    children: "진행",
-  },
-  {
-    label: "시작일",
-    children: "2025-01-01",
-  },
-  {
-    label: "종료일",
-    children: "2025-12-31",
-  },
-  {
-    label: "작업지시명",
-    span: { xl: 2, xxl: 2 },
-    children: "선박조립",
-  },
-  {
-    label: "기간",
-    span: { xl: 2, xxl: 2 },
-    children: "2025-01-01 ~ 2025-12-31",
-  },
-  {
-    label: "자재",
-    span: { xl: 2, xxl: 2 },
-    children: "미스릴",
-  },
-  {
-    label: "장비",
-    span: { xl: 2, xxl: 2 },
-    children: "절단기1번",
-  },
-  {
-    label: "작업 지시 내용",
-    span: { xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2 },
-    children: (
-      <>
-        자른거
-        <br />
-        전부
-        <br />
-        붙여
-      </>
-    ),
-  },
-  {
-    label: "특이사항",
-    span: { xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2 },
-    children: (
-      <>
-        밖에 더움
-        <br />
-        파도 많이침
-        <br />
-        태풍 조심
-        <br />
-        수고~
-      </>
-    ),
-  },
-];
-
-const WorkOrderDetailPresenter = ({ isModalOpen, HandleModalStatusChange }) => {
+const WorkOrderDetailPresenter = ({
+  woNo,
+  isModalOpen,
+  HandleModalStatusChange,
+  selectedWorkOrder,
+  selectedMaterial,
+  selectedEquipment,
+  HandleMoveUpdate,
+}) => {
+  const items = [
+    {
+      label: "작업지시번호",
+      children: woNo,
+    },
+    {
+      label: "작업상태",
+      children: selectedWorkOrder?.type,
+    },
+    {
+      label: "시작일",
+      children: selectedWorkOrder?.woStartDate
+        ? dayjs(selectedWorkOrder.woStartDate).format("YYYY-MM-DD")
+        : "",
+    },
+    {
+      label: "종료일",
+      children: selectedWorkOrder?.woEndDate
+        ? dayjs(selectedWorkOrder.woEndDate).format("YYYY-MM-DD")
+        : "",
+    },
+    {
+      label: "작업지시명",
+      span: { xl: 2, xxl: 2 },
+      children: selectedWorkOrder?.woName,
+    },
+    {
+      label: "기간",
+      span: { xl: 2, xxl: 2 },
+      children: selectedWorkOrder
+        ? `${dayjs(selectedWorkOrder.woStartDate).format(
+            "YYYY-MM-DD"
+          )} ~ ${dayjs(selectedWorkOrder.woEndDate).format("YYYY-MM-DD")}`
+        : "",
+    },
+    {
+      label: "자재",
+      span: { xl: 2, xxl: 2 },
+      children: selectedMaterial()?.materialName,
+    },
+    {
+      label: "장비",
+      span: { xl: 2, xxl: 2 },
+      children: `${selectedEquipment()?.equipName} (${
+        selectedEquipment()?.equipCode
+      })`,
+    },
+    {
+      label: "작업 지시 내용",
+      span: { xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2 },
+      children: selectedWorkOrder?.woDetail,
+    },
+    {
+      label: "특이사항",
+      span: { xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2 },
+      children: selectedWorkOrder?.woDescription,
+    },
+  ];
   return (
     <div className="work-order-detail-content">
       <Descriptions
@@ -93,11 +78,9 @@ const WorkOrderDetailPresenter = ({ isModalOpen, HandleModalStatusChange }) => {
         items={items}
       />
       <div className="btn-area">
-        <Dropdown.Button menu={{ items: statusItems }}>
-          상태변경
-        </Dropdown.Button>
-        <Button onClick={HandleModalStatusChange}>버튼 1</Button>
-        <Button>버튼 2</Button>
+        <Button onClick={HandleModalStatusChange}>작업 결과</Button>
+        <Button onClick={() => HandleMoveUpdate(woNo)}>수정</Button>
+        <Button>뒤로 가기</Button>
       </div>
       <Modal
         okText="품질 등록"
