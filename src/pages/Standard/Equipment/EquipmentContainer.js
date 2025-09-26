@@ -1,7 +1,7 @@
 import EquipmentPresenter from "./EquipmentPresenter";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const EquipmentContainer = () => {
   const [equipments, setEquipments] = useState([]);
@@ -34,7 +34,7 @@ const EquipmentContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/equipments`);
+      const response = await ERPapi.get(`${ERP_API}/equipments`);
       setEquipments(response.data);
     } catch (err) {
     } finally {
@@ -42,7 +42,7 @@ const EquipmentContainer = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [equipments]);
 
   const rowSelection = {
     selectedRowKeys,
@@ -104,7 +104,7 @@ const EquipmentContainer = () => {
 
   const HandleCreateEquipment = async () => {
     try {
-      await axios.post(`${ERP_API}/equipments`, equipmentInfo);
+      await ERPapi.post(`${ERP_API}/equipments`, equipmentInfo);
     } catch (error) {
       console.error("등록 실패:", error);
     }
@@ -116,7 +116,7 @@ const EquipmentContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${ERP_API}/equipments/${selectedRowKeys[0]}`);
+      await ERPapi.delete(`${ERP_API}/equipments/${selectedRowKeys[0]}`);
       setEquipments((prev) =>
         prev.filter((item) => item.equipNo !== selectedRowKeys[0])
       );
@@ -134,7 +134,7 @@ const EquipmentContainer = () => {
       equipNo: Number(updateEquipmentInfo.equipNo),
     };
     try {
-      await axios.put(`${ERP_API}/equipments/${finalData.equipNo}`, finalData);
+      await ERPapi.put(`${ERP_API}/equipments/${finalData.equipNo}`, finalData);
     } catch (err) {
       console.error(err);
       alert("수정 실패");

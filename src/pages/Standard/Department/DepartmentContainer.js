@@ -1,7 +1,7 @@
 import DepartmentPresenter from "./DepartmentPresenter";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const DepartmentContainer = () => {
   const [departments, setDepartments] = useState([]);
@@ -13,7 +13,7 @@ const DepartmentContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/departments`);
+      const response = await ERPapi.get(`${ERP_API}/departments`);
       setDepartments(response.data);
     } catch (err) {
       alert(`조회 실패 ${err}`);
@@ -67,7 +67,7 @@ const DepartmentContainer = () => {
   const HandleCreateDepartment = async () => {
     console.log(departmentInfo.departmentName);
     try {
-      await axios.post(`${ERP_API}/departments`, departmentInfo);
+      await ERPapi.post(`${ERP_API}/departments`, departmentInfo);
     } catch (err) {
       alert(`등록 실패 ${err}`);
     }
@@ -81,7 +81,7 @@ const DepartmentContainer = () => {
       roleNo: Number(updateDepartmentInfo.departmentNo),
     };
     try {
-      await axios.put(
+      await ERPapi.put(
         `${ERP_API}/departments/${finalData.departmentNo}`,
         finalData
       );
@@ -96,7 +96,7 @@ const DepartmentContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${ERP_API}/departments/${selectedRowKeys[0]}`);
+      await ERPapi.delete(`${ERP_API}/departments/${selectedRowKeys[0]}`);
       setDepartments((prev) =>
         prev.filter((item) => item.departmentNo !== selectedRowKeys[0])
       );

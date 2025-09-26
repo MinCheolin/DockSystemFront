@@ -28,6 +28,7 @@
   height: 80vh;
 }
 
-.process-search {
-  margin-top: 15px;
+.wo-item:hover {
+  background-color: #e6f7ff;
+  cursor: pointer;
 }

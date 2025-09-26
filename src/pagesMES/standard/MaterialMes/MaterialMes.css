@@ -1,0 +1,33 @@
+.material-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.material-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.grid-box {
+  height: 80vh;
+}
+
+.material-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.material-search input {
+  flex: 1;
+}

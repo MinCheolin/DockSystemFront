@@ -1,35 +1,48 @@
-.layout{
-  minHeight: 100vh; 
+.layout {
+  minheight: 100vh;
 }
 
 .layout > .ant-layout {
   min-height: 100vh; /* 내부 Layout도 화면 전체 */
 }
 
-.main-content{
+.main-content {
   margin: 10px 16px;
 }
 
-.main-header{
-  display: flex;      
-  justify-content: space-between; 
-  align-items: center;        
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
-  background-color: white
+  background-color: white;
 }
 
-.main-footer
-{
+.main-footer {
   text-align: center;
 }
 
-.user-info{
-   display: flex;
-  justify-content: space-between; 
-  align-items: center;           
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.info-item{
-   padding: 10px 8px;
-   cursor: pointer;
+.info-item {
+  padding: 10px 8px;
+  cursor: pointer;
+}
+
+.custom-sider {
+  font-weight: 500;
+  background-color: #8b2b1f !important;
+}
+.custom-sider > .ant-layout-sider-trigger {
+  background-color: #8b2b1f !important;
+  color: white;
+}
+
+.custom-sider > .ant-menu-item-selected {
+  background-color: #f7282c !important;
+  color: white !important;
 }

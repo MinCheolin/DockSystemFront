@@ -1,8 +1,8 @@
-import axios from "axios";
 import ProjectViewPresenter from "./ProjcectViewPresenter";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const ProjectViewContainer = () => {
   const [projects, setProjects] = useState([]);
@@ -15,8 +15,8 @@ const ProjectViewContainer = () => {
 
   const fetchData = async () => {
     try {
-      const resProjects = await axios.get(`${ERP_API}/projects`);
-      const resProductPlans = await axios.get(`${ERP_API}/product_plans`);
+      const resProjects = await ERPapi.get(`${ERP_API}/projects`);
+      const resProductPlans = await ERPapi.get(`${ERP_API}/product_plans`);
       setProjects(resProjects.data);
       setProductPlans(resProductPlans.data);
     } catch (err) {
@@ -26,7 +26,7 @@ const ProjectViewContainer = () => {
 
   const HandleDeleteProject = async (id) => {
     try {
-      await axios.delete(`${ERP_API}/projects/${id}`);
+      await ERPapi.delete(`${ERP_API}/projects/${id}`);
       fetchData();
     } catch (err) {
       alert("삭제 실패");
