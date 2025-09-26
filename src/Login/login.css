@@ -1,11 +1,36 @@
 .login-container {
   display: flex;
-  gap: 10px;
+  gap: 50px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f7fafd;
+  background-color: #c2e0ff;
+}
+.header-area {
+  display: flex;
+  gap: 20px;
+}
+.logo-img {
+  width: 100px;
+  height: 100px;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.system-name {
+  font-size: 44px;
+  font-weight: 500;
+  font-style: italic;
+}
+.system-desc {
+  font-weight: 500;
 }
 
 .login-box {
@@ -72,7 +97,7 @@
   width: 500px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  background-color: rgb(115, 181, 241);
+  background-color: rgba(173, 189, 171, 0.486);
   box-shadow: 5px 5px 10px rgba(0.3, 0.3, 0.3, 0.3);
   display: flex;
   flex-direction: column;
@@ -102,13 +127,13 @@
 }
 
 .move-erp {
-  background-color: #01cf04ff;
+  background-color: #1962a5;
   color: #fff;
   border: none;
 }
 
 .move-mes {
-  background-color: #e0bf00e3;
+  background-color: #c45f53;
   color: #fff;
   border: none;
 }

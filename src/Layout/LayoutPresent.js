@@ -37,11 +37,11 @@ const items = [
     getItem("프로젝트 등록", "/erp/project/projectCreate"),
     getItem("프로젝트 조회", "/erp/project/projectView"),
   ]),
-  getItem("자재 관리", "/material", <DatabaseOutlined />, [
-    getItem("발주 관리", "/4-1"),
-    getItem("재고 관리", "/4-2"),
-  ]),
-  getItem("안전 관리", "/safety", <WarningOutlined />),
+  // getItem("자재 관리", "/material", <DatabaseOutlined />, [
+  //   getItem("발주 관리", "/4-1"),
+  //   getItem("재고 관리", "/4-2"),
+  // ]),
+  getItem("안전 관리", "/erp/safety", <WarningOutlined />),
   getItem("MES로 이동", "/mes", <ExportOutlined />),
 ];
 const LayoutPresent = ({

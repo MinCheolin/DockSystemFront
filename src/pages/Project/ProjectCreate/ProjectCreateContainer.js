@@ -1,9 +1,9 @@
 import ProjectCreatePresenter from "./ProjectCreatePresenter";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const ProjectCreateContainer = () => {
   const navigate = useNavigate();
@@ -81,11 +81,11 @@ const ProjectCreateContainer = () => {
 
   const fetchData = async () => {
     try {
-      const resCustomers = await axios.get(`${ERP_API}/customers`);
+      const resCustomers = await ERPapi.get(`${ERP_API}/customers`);
       setCustomers(resCustomers.data);
-      const resVessels = await axios.get(`${ERP_API}/vessels`);
+      const resVessels = await ERPapi.get(`${ERP_API}/vessels`);
       setVessels(resVessels.data);
-      const resBoms = await axios.get(`${ERP_API}/boms`);
+      const resBoms = await ERPapi.get(`${ERP_API}/boms`);
       setBoms(resBoms.data);
     } catch (err) {}
   };
@@ -99,7 +99,7 @@ const ProjectCreateContainer = () => {
       productPlans: productPlans,
     };
     try {
-      await axios.post(`${ERP_API}/projects`, finalData);
+      await ERPapi.post(`${ERP_API}/projects`, finalData);
       navigate("erp/project/projectView");
     } catch (err) {
       alert("등록 실패");

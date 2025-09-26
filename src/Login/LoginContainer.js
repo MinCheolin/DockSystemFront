@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { LOGIN_API } from "../config";
 import { useNavigate } from "react-router-dom";
+import { LOGINapi } from "../components/api/api";
 
 const LoginContainer = () => {
   const [selectedTab, setSelectedTab] = useState("erp");
@@ -27,7 +28,7 @@ const LoginContainer = () => {
 
   const HandleLogin = async () => {
     try {
-      const response = await axios.post(`${LOGIN_API}`, loginInfo);
+      const response = await LOGINapi.post(`${LOGIN_API}`, loginInfo);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.userName);
       navigate(`/${selectedTab}`);
@@ -47,6 +48,10 @@ const LoginContainer = () => {
     } else setSelectedTab(value);
   };
 
+  const HandleMoveSystemHome = (value) => {
+    navigate(`/${value}`);
+  };
+
   return (
     <LoginPresenter
       username={username}
@@ -55,6 +60,7 @@ const LoginContainer = () => {
       HandleLogin={HandleLogin}
       HandleLogout={HandleLogout}
       HandleTabSelect={HandleTabSelect}
+      HandleMoveSystemHome={HandleMoveSystemHome}
     />
   );
 };

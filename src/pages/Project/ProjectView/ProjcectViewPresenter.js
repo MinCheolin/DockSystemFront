@@ -1,4 +1,5 @@
-import { Button, Card, Dropdown } from "antd";
+import { Button, Card, Segmented } from "antd";
+import { useState } from "react";
 import "./projectview.css";
 
 const ProjectViewPresenter = ({
@@ -7,17 +8,18 @@ const ProjectViewPresenter = ({
   HandleProjectUpdate,
   HandleDeleteProject,
 }) => {
+  const [value, setValue] = useState("대기");
   const items = [
     {
-      key: "1",
+      key: "900",
       label: "대기",
     },
     {
-      key: "2",
+      key: "901",
       label: "진행중",
     },
     {
-      key: "3",
+      key: "902",
       label: "완료",
     },
   ];
@@ -25,7 +27,14 @@ const ProjectViewPresenter = ({
   return (
     <div className="project-content">
       <div className="grid-func">
-        <div className="project-list">프로젝트 목록</div>
+        <div className="project-list">
+          <div>프로젝트 목록</div>
+          <Segmented
+            options={["대기", "진행", "완료"]}
+            value={value}
+            onChange={setValue}
+          />
+        </div>
         <div className="func-button">
           <Button>새 프로젝트 등록</Button>
         </div>
@@ -93,15 +102,13 @@ const ProjectViewPresenter = ({
               </div>
             </div>
             <div className="button-area">
-              <Button
-                key={project.projectNo}
-                onClick={() => HandleProjectUpdate(project.projectNo)}
-              >
+              <Button onClick={() => HandleProjectUpdate(project.projectNo)}>
                 프로젝트 수정
               </Button>
-              <Dropdown.Button menu={{ items }}>상태변경</Dropdown.Button>
+              {/* <Dropdown.Button menu={{ items: items }}>
+                상태변경
+              </Dropdown.Button> */}
               <Button
-                key={project.projectNo}
                 onClick={() => HandleDeleteProject(project.projectNo)}
                 type="primary"
                 danger

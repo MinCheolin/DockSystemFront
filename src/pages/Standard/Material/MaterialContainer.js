@@ -1,7 +1,7 @@
 import MaterialPresenter from "./MaterialPresenter";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const MaterialContainer = () => {
   const [materials, setMaterials] = useState([]);
@@ -32,7 +32,7 @@ const MaterialContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/materials`);
+      const response = await ERPapi.get(`${ERP_API}/materials`);
       setMaterials(response.data);
     } catch (err) {
       alert("조회 실패");
@@ -85,25 +85,18 @@ const MaterialContainer = () => {
 
   const HandleCreateMaterial = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/erp/v1/materials",
-        materialInfo
-      );
-      console.log(materialInfo);
-      console.log("등록 성공:", response.data);
+      const response = await ERPapi.post(`${ERP_API}/materials`, materialInfo);
     } catch (error) {
-      console.error("등록 실패:", error);
+      alert("등록 실패");
     }
     fetchData();
     setIsModalOpen(false);
   };
   const HandleDeleteMaterial = async () => {
     if (selectedRowKeys.length === 0) return;
-    console.log(selectedRowKeys[0]);
+
     try {
-      await axios.delete(
-        `http://localhost:8080/api/erp/v1/materials/${selectedRowKeys[0]}`
-      );
+      await ERPapi.delete(`${ERP_API}/materials/${selectedRowKeys[0]}`);
       setMaterials((prev) =>
         prev.filter((item) => item.materialNo !== selectedRowKeys[0])
       );
@@ -121,8 +114,8 @@ const MaterialContainer = () => {
       materialNo: Number(updateMaterialInfo.materialNo),
     };
     try {
-      await axios.put(
-        `http://localhost:8080/api/erp/v1/materials/${finalData.materialNo}`,
+      await ERPapi.put(
+        `${ERP_API}/materials/${finalData.materialNo}`,
         finalData
       );
     } catch (err) {

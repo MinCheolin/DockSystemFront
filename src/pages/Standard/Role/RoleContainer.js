@@ -1,7 +1,7 @@
 import RolePresenter from "./RolePresenter";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const RoleContainer = () => {
   const [roles, setRoles] = useState([]);
@@ -13,7 +13,7 @@ const RoleContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/roles`);
+      const response = await ERPapi.get(`${ERP_API}/roles`);
       setRoles(response.data);
     } catch (err) {
       alert(`조회 실패 ${err}`);
@@ -66,7 +66,7 @@ const RoleContainer = () => {
 
   const HandleCreateRole = async () => {
     try {
-      await axios.post(`${ERP_API}/roles`, roleInfo);
+      await ERPapi.post(`${ERP_API}/roles`, roleInfo);
     } catch (err) {
       alert(`등록 실패 ${err}`);
     }
@@ -80,7 +80,7 @@ const RoleContainer = () => {
       roleNo: Number(updateRoleInfo.roleNo),
     };
     try {
-      await axios.put(`${ERP_API}/roles/${finalData.roleNo}`, finalData);
+      await ERPapi.put(`${ERP_API}/roles/${finalData.roleNo}`, finalData);
     } catch (err) {
       alert(`수정 실패 ${err}`);
     }
@@ -92,7 +92,7 @@ const RoleContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await axios.delete(`${ERP_API}/roles/${selectedRowKeys[0]}`);
+      await ERPapi.delete(`${ERP_API}/roles/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
       alert(`삭제 실패 ${err}`);

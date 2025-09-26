@@ -46,7 +46,11 @@ const ProjectUpdatePresenter = ({
 
   return (
     <div>
-      <Form {...formItemLayout} form={form} onFinish={HandleUpdateProjectInfo}>
+      <Form
+        className="custom-form-item"
+        form={form}
+        onFinish={HandleUpdateProjectInfo}
+      >
         <div className="project-content">
           <div className="grid-func">
             <div className="project-list">프로젝트 정보 수정</div>

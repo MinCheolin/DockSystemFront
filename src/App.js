@@ -23,14 +23,25 @@ import WorkOrderView from "./pagesMES/Process/WorkOrderView";
 import WorkOrderDetail from "./pagesMES/Process/WorkOrderDetail";
 import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import NotFound from "./components/NotFound";
+import QualityControll from "./pagesMES/QualityControll";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Login />} />
-          <Route path="/erp" element={<Layout />}>
+          <Route
+            path="/erp"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="standard/user" element={<Tab />} />
@@ -53,7 +64,14 @@ const App = () => {
             <Route path="standard/bom" element={<BOM />} />
             <Route path="standard/warehouse" element={<Warehouse />}></Route>
           </Route>
-          <Route path="/mes" element={<LayoutMES />}>
+          <Route
+            path="/mes"
+            element={
+              <ProtectedRoute>
+                <LayoutMES />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<MesHome />} />
             <Route path="home" element={<MesHome />} />
             <Route path="standard/equipment" element={<EquipmentMes />} />
@@ -61,6 +79,7 @@ const App = () => {
             <Route path="productPlan" element={<ProductPlanMES />} />
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
+            <Route path="qualityControl" element={<QualityControll />}></Route>
             <Route
               path="workorderDetail/:id"
               element={<WorkOrderDetail />}
