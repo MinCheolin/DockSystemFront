@@ -42,7 +42,7 @@ const EquipmentContainer = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [equipments]);
 
   const rowSelection = {
     selectedRowKeys,

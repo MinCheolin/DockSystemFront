@@ -19,6 +19,7 @@ import Material from "./pages/Standard/Material";
 import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
 import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
+import WorkOrderUpdate from "./pagesMES/Process/WorkOrderUpdate";
 import WorkOrderView from "./pagesMES/Process/WorkOrderView";
 import WorkOrderDetail from "./pagesMES/Process/WorkOrderDetail";
 import EquipmentMes from "./pagesMES/standard/EquipmentMes";
@@ -81,7 +82,11 @@ const App = () => {
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
             <Route path="qualityControl" element={<QualityControll />}></Route>
             <Route
-              path="workorderDetail/:id"
+              path="workOrderUpdate/:woNo"
+              element={<WorkOrderUpdate />}
+            ></Route>
+            <Route
+              path="workorderDetail/:woNo"
               element={<WorkOrderDetail />}
             ></Route>
           </Route>

@@ -1,28 +1,7 @@
 import { List } from "antd";
 import "./workOrderView.css";
 
-const data = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-];
-
-const WorkOrderViewPresenter = ({ HandleMoveDetail }) => {
+const WorkOrderViewPresenter = ({ HandleMoveDetail, workOrder }) => {
   return (
     <div className="productPlan-content">
       <div className="grid-func">
@@ -32,14 +11,14 @@ const WorkOrderViewPresenter = ({ HandleMoveDetail }) => {
       <div className="process-content">
         <List
           bordered
-          dataSource={data}
+          dataSource={workOrder}
           renderItem={(item, key) => (
             <List.Item
-              key={key}
-              onClick={() => HandleMoveDetail(key)}
+              key={item.woNo}
+              onClick={() => HandleMoveDetail(item.woNo)}
               className="wo-item"
             >
-              [칼럼명_1] 칼럼명_2
+              {item.woName}
             </List.Item>
           )}
         />
