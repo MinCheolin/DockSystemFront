@@ -1,15 +1,15 @@
 import ProductPlanMesPresenter from "./ProductPlanMesPresenter";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const ProductPlanMesContainer = () => {
   const [productplans, setProductPlans] = useState([]);
   const navigate = useNavigate();
   const fetchDate = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/product_plans`);
+      const response = await ERPapi.get(`${ERP_API}/product_plans`);
       setProductPlans(response.data);
     } catch (err) {
       alert("조회 실패");

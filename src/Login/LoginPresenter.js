@@ -1,5 +1,6 @@
 import { Button, Input } from "antd";
 import { ExportOutlined } from "@ant-design/icons";
+import logoImg from "../assets/dockon.png";
 import "./login.css";
 const LoginPresenter = ({
   username,
@@ -8,11 +9,22 @@ const LoginPresenter = ({
   HandleLogin,
   HandleLogout,
   HandleTabSelect,
+  HandleMoveSystemHome,
 }) => {
   if (username) {
     return (
       <div>
         <div className="login-container">
+          <div className="header-area">
+            <div className="header-img">
+              <img className="logo-img" src={logoImg} />
+            </div>
+            <div className="header-text">
+              <div className="system-name">DockON</div>
+              <div className="system-desc">조선소 통합 관리 시스템</div>
+            </div>
+          </div>
+
           <div className="userinfo-area">
             <div className="main-area">
               <div className="username-area">
@@ -22,6 +34,7 @@ const LoginPresenter = ({
                 <Button
                   className="move-erp"
                   size="large"
+                  onClick={() => HandleMoveSystemHome("erp")}
                   icon={<ExportOutlined />}
                 >
                   ERP로 이동
@@ -29,6 +42,7 @@ const LoginPresenter = ({
                 <Button
                   className="move-mes"
                   size="large"
+                  onClick={() => HandleMoveSystemHome("mes")}
                   icon={<ExportOutlined />}
                 >
                   MES로 이동
@@ -50,6 +64,15 @@ const LoginPresenter = ({
 
   return (
     <div className="login-container">
+      <div className="header-area">
+        <div className="header-img">
+          <img className="logo-img" src={logoImg} />
+        </div>
+        <div className="header-text">
+          <div className="system-name">DockON</div>
+          <div className="system-desc">조선소 통합 관리 시스템</div>
+        </div>
+      </div>
       <div className="login-box">
         <div className="login-tabs">
           <div

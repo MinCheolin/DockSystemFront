@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import WorkOrderCreatePresenter from "./WorkOrderCreatePresenter";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { MES_API } from "../../../config";
+import { MESapi } from "../../../components/api/api";
 
 const WorkOrderCreateContainer = () => {
   const location = useLocation();
@@ -61,9 +61,9 @@ const WorkOrderCreateContainer = () => {
 
   const fetchData = async () => {
     try {
-      const resEquipments = await axios.get(`${MES_API}/equipments`);
+      const resEquipments = await MESapi.get(`${MES_API}/equipments`);
       setEquipments(resEquipments.data);
-      const resMaterials = await axios.get(`${MES_API}/materials`);
+      const resMaterials = await MESapi.get(`${MES_API}/materials`);
       setMaterials(resMaterials.data);
     } catch (err) {}
   };
@@ -75,7 +75,7 @@ const WorkOrderCreateContainer = () => {
   const HandleCreateWorkOrder = async () => {
     try {
       console.log(workOrder);
-      await axios.post(`${MES_API}/work_orders`, workOrder);
+      await MESapi.post(`${MES_API}/work_orders`, workOrder);
       navigate("/mes/workOrder");
     } catch (err) {
       alert("등록 실패");

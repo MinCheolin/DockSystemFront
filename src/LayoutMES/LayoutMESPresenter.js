@@ -21,14 +21,14 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("홈", "/mes/home", <HomeOutlined />),
+  getItem("MES 홈", "/mes/home", <HomeOutlined />),
   getItem("기준 정보 관리", "/mes/standard", <TeamOutlined />, [
     getItem("자재 관리", "/mes/standard/material"),
     getItem("장비 관리", "/mes/standard/equipment"),
   ]),
   getItem("생산 계획 조회 ", "/mes/productPlan", <ContainerOutlined />),
   getItem("작업 조회", "/mes/workOrder", <FileOutlined />),
-  getItem("품질", "/safety", <SafetyOutlined />),
+  getItem("품질", "/mes/qualityControl", <SafetyOutlined />),
   getItem("ERP로 이동", "/erp", <ExportOutlined />),
 ];
 const LayoutMESPresent = ({
@@ -41,6 +41,7 @@ const LayoutMESPresent = ({
   return (
     <Layout className="layout">
       <Sider
+        className="custom-sider"
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -48,6 +49,7 @@ const LayoutMESPresent = ({
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
+          className="custom-sider"
           defaultSelectedKeys={["/home"]}
           onClick={({ key }) => navigate(key)}
           mode="inline"

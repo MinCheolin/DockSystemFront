@@ -1,7 +1,7 @@
 import CustomerPresenter from "./CustomerPresenter";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ERP_API } from "../../../config";
+import { ERPapi } from "../../../components/api/api";
 
 const CustomerContainer = () => {
   const [customers, setCustomers] = useState([]);
@@ -18,7 +18,7 @@ const CustomerContainer = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${ERP_API}/customers`);
+      const response = await ERPapi.get(`${ERP_API}/customers`);
       setCustomers(response.data);
     } catch (err) {
       alert("조회 실패");
@@ -74,7 +74,7 @@ const CustomerContainer = () => {
 
   const HandleCreateCustomer = async () => {
     try {
-      await axios.post(`${ERP_API}/customers`, customerInfo);
+      await ERPapi.post(`${ERP_API}/customers`, customerInfo);
     } catch (error) {
       alert("등록 실패");
     }
@@ -85,7 +85,7 @@ const CustomerContainer = () => {
   const HandleDeleteCustomer = async () => {
     if (selectedRowKeys.length === 0) return;
     try {
-      await axios.delete(`${ERP_API}/customers/${selectedRowKeys[0]}`);
+      await ERPapi.delete(`${ERP_API}/customers/${selectedRowKeys[0]}`);
       setSelectedRowKeys([]);
     } catch (err) {
       alert("삭제 실패");
@@ -99,7 +99,10 @@ const CustomerContainer = () => {
       customerNo: Number(updateCustomerInfo.customerNo),
     };
     try {
-      await axios.put(`${ERP_API}/customers${finalData.customerNo}`, finalData);
+      await ERPapi.put(
+        `${ERP_API}/customers${finalData.customerNo}`,
+        finalData
+      );
     } catch (err) {
       alert("수정 실패");
     }

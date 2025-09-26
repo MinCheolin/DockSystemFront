@@ -1,0 +1,29 @@
+.quality-content {
+  min-height: 100vh;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+.header-phrase {
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+  font-weight: 500;
+  gap: 15px;
+}
+.quality-list {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-func {
+  display: flex;
+}
+
+.card-btn-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
