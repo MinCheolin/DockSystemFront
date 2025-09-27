@@ -27,10 +27,11 @@ import MaterialMes from "./pagesMES/standard/MaterialMes";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound";
 import QualityControll from "./pagesMES/QualityControll";
+import { ChatbotProvider } from "./context/ChatbotContext";
 
 const App = () => {
   return (
-    <div>
+    <ChatbotProvider>
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
@@ -38,9 +39,9 @@ const App = () => {
           <Route
             path="/erp"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <Layout />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           >
             <Route index element={<Home />} />
@@ -68,9 +69,9 @@ const App = () => {
           <Route
             path="/mes"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <LayoutMES />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           >
             <Route index element={<MesHome />} />
@@ -92,7 +93,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </ChatbotProvider>
   );
 };
 export default App;
