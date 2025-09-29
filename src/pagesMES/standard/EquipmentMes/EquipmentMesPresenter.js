@@ -28,6 +28,7 @@ const EquipmentMesPresenter = ({
       filters: nameFilter,
       onFilter: (value, record) => record.equipName === value,
     },
+    { title: "장비 상태", dataIndex: "type", key: "type" },
   ];
 
   return (

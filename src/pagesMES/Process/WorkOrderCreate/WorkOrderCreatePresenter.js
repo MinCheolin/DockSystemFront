@@ -5,7 +5,6 @@ const { RangePicker } = DatePicker;
 const WorkOrderPresenter = ({
   ppNo,
   equipments,
-  materials,
   workOrder,
   HandleChangeInput,
   HandleChangeDate,
@@ -72,16 +71,6 @@ const WorkOrderPresenter = ({
                 options={equipments.map((equipment) => ({
                   value: equipment.equipNo,
                   label: equipment.equipName,
-                }))}
-              />
-            </Form.Item>
-
-            <Form.Item label="사용 자재">
-              <Select
-                onChange={(value) => HandleChangeSelect("materialNo", value)}
-                options={materials.map((material) => ({
-                  value: material.materialNo,
-                  label: material.materialName,
                 }))}
               />
             </Form.Item>

@@ -33,8 +33,7 @@ const EquipmentPresenter = ({
   setEquipmentInfo,
 }) => {
   const typeOptions = [
-    { value: "가동", label: "가동" },
-    { value: "비가동", label: "비가동" },
+    { value: "사용가능", label: "사용가능" },
     { value: "수리", label: "수리" },
     { value: "폐기", label: "폐기" },
   ];

@@ -9,7 +9,6 @@ const WorkOrderCreateContainer = () => {
   const navigate = useNavigate();
   const { ppNo } = location.state || {};
   const [equipments, setEquipments] = useState([]);
-  const [materials, setMaterials] = useState([]);
   const [workOrder, setWorkOrder] = useState({
     woName: "",
     woStartDate: "",
@@ -19,7 +18,6 @@ const WorkOrderCreateContainer = () => {
     type: null,
     ppNo: String(ppNo),
     equipNo: "",
-    materialNo: "",
   });
 
   const HandleChangeInput = (e) => {
@@ -63,8 +61,6 @@ const WorkOrderCreateContainer = () => {
     try {
       const resEquipments = await MESapi.get(`${MES_API}/equipments`);
       setEquipments(resEquipments.data);
-      const resMaterials = await MESapi.get(`${MES_API}/materials`);
-      setMaterials(resMaterials.data);
     } catch (err) {}
   };
 
@@ -74,7 +70,6 @@ const WorkOrderCreateContainer = () => {
 
   const HandleCreateWorkOrder = async () => {
     try {
-      console.log(workOrder);
       await MESapi.post(`${MES_API}/work_orders`, workOrder);
       navigate("/mes/workOrder");
     } catch (err) {
@@ -85,7 +80,6 @@ const WorkOrderCreateContainer = () => {
   return (
     <WorkOrderCreatePresenter
       workOrder={workOrder}
-      materials={materials}
       equipments={equipments}
       ppNo={ppNo}
       HandleChangeInput={HandleChangeInput}

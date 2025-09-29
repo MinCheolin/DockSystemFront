@@ -19,9 +19,7 @@ import Material from "./pages/Standard/Material";
 import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
 import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
-import WorkOrderUpdate from "./pagesMES/Process/WorkOrderUpdate";
 import WorkOrderView from "./pagesMES/Process/WorkOrderView";
-import WorkOrderDetail from "./pagesMES/Process/WorkOrderDetail";
 import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -38,9 +36,9 @@ const App = () => {
           <Route
             path="/erp"
             element={
-              <ProtectedRoute>
-                <Layout />
-              </ProtectedRoute>
+              //<ProtectedRoute>
+              <Layout />
+              //</ProtectedRoute>
             }
           >
             <Route index element={<Home />} />
@@ -68,9 +66,9 @@ const App = () => {
           <Route
             path="/mes"
             element={
-              <ProtectedRoute>
-                <LayoutMES />
-              </ProtectedRoute>
+              //<ProtectedRoute>
+              <LayoutMES />
+              //</ProtectedRoute>
             }
           >
             <Route index element={<MesHome />} />
@@ -81,14 +79,6 @@ const App = () => {
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
             <Route path="qualityControl" element={<QualityControll />}></Route>
-            <Route
-              path="workOrderUpdate/:woNo"
-              element={<WorkOrderUpdate />}
-            ></Route>
-            <Route
-              path="workorderDetail/:woNo"
-              element={<WorkOrderDetail />}
-            ></Route>
           </Route>
         </Routes>
       </BrowserRouter>
