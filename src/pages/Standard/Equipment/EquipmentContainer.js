@@ -37,12 +37,12 @@ const EquipmentContainer = () => {
       const response = await ERPapi.get(`${ERP_API}/equipments`);
       setEquipments(response.data);
     } catch (err) {
-    } finally {
+      alert("조회 실패");
     }
   };
   useEffect(() => {
     fetchData();
-  }, [equipments]);
+  }, []);
 
   const rowSelection = {
     selectedRowKeys,
@@ -105,6 +105,7 @@ const EquipmentContainer = () => {
   const HandleCreateEquipment = async () => {
     try {
       await ERPapi.post(`${ERP_API}/equipments`, equipmentInfo);
+      console.log();
     } catch (error) {
       console.error("등록 실패:", error);
     }

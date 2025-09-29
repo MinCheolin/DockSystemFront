@@ -100,7 +100,7 @@ const ProjectCreateContainer = () => {
     };
     try {
       await ERPapi.post(`${ERP_API}/projects`, finalData);
-      navigate("erp/project/projectView");
+      navigate("/erp/project/projectView");
     } catch (err) {
       alert("등록 실패");
     }
