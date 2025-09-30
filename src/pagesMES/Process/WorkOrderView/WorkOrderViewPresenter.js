@@ -14,42 +14,52 @@ const WorkOrderViewPresenter = ({
     label: `작업지시 ${wo.woNo}`,
     children: (
       <Descriptions
-        title="작업 지시 정보"
+        title="작업 지시 상세"
         bordered
-        column={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }}
-        items={[
-          { label: "작업지시번호", children: wo.woNo },
-          { label: "작업상태", children: wo.type },
-          { label: "생산 계획 번호", children: wo.ppNo },
-          { label: "작업지시명", children: wo.woName },
-          {
-            label: "기간",
-            children: `${dayjs(wo.woStartDate).format("YYYY-MM-DD")} ~ ${dayjs(
-              wo.woEndDate
-            ).format("YYYY-MM-DD")}`,
-          },
-          { label: "작업 지시 내용", children: wo.woDetail },
-          { label: "특이사항", children: wo.woDescription },
-          { label: "장비", children: wo.equipment?.equipName || "-" },
-          {
-            label: "bom Detail",
-            children: (() => {
-              const pp = productPlans.find((pp) => pp.ppNo === Number(wo.ppNo));
-              const bomdetails = bomDetails.filter(
-                (bd) => bd.bom?.bomNo === pp.bomNo
-              );
-              return (
-                bomdetails
-                  ?.map(
-                    (bd) =>
-                      `${bd?.material?.materialName} (${bd.bomDetailCount})`
-                  )
-                  .join(", ") || "-"
-              );
-            })(),
-          },
-        ]}
-      />
+        column={2} // 한 줄에 두 개씩
+      >
+        <Descriptions.Item label="작업지시번호" span={1}>
+          {wo.woNo}
+        </Descriptions.Item>
+        <Descriptions.Item label="생산 계획 번호" span={1}>
+          {wo.ppNo}
+        </Descriptions.Item>
+        <Descriptions.Item label="작업지시명" span={1}>
+          {wo.woName}
+        </Descriptions.Item>
+        <Descriptions.Item label="작업상태" span={1}>
+          {wo.type}
+        </Descriptions.Item>
+        <Descriptions.Item label="기간" span={2}>
+          {`${dayjs(wo.woStartDate).format("YYYY-MM-DD")} ~ ${dayjs(
+            wo.woEndDate
+          ).format("YYYY-MM-DD")}`}
+        </Descriptions.Item>
+        <Descriptions.Item label="작업 지시 내용" span={2}>
+          {wo.woDetail}
+        </Descriptions.Item>
+        <Descriptions.Item label="특이사항" span={2}>
+          {wo.woDescription}
+        </Descriptions.Item>
+        <Descriptions.Item label="장비" span={1}>
+          {wo.equipment?.equipName || "-"}
+        </Descriptions.Item>
+        <Descriptions.Item label="BOM Detail" span={2}>
+          {(() => {
+            const bomNo = productPlans.find((pp) => pp.ppNo === Number(wo.ppNo))
+              ?.bom?.bomNo;
+            const bomDetailsForWO = bomNo ? bomDetails[bomNo] : null;
+            if (!bomDetailsForWO || bomDetailsForWO.length === 0) {
+              return "-";
+            }
+            return bomDetailsForWO.map((bd) => (
+              <div key={bd.bomDetailNo}>
+                {bd?.material?.materialName} ({bd?.bomDetailCount})
+              </div>
+            ));
+          })()}
+        </Descriptions.Item>
+      </Descriptions>
     ),
   }));
 
