@@ -111,6 +111,7 @@ const ProjectCreateContainer = () => {
       customers={customers}
       vessels={vessels}
       boms={boms}
+      projectInfo={projectInfo}
       HandleChangeInput={HandleChangeInput}
       HandleChangeSelect={HandleChangeSelect}
       HandleChangeDate={HandleChangeDate}

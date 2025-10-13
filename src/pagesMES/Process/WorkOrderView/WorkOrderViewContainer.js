@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ERP_API } from "../../../config";
 import { MES_API } from "../../../config";
+import { MESapi } from "../../../components/api/api";
 
 const WorkOrderViewContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [workOrder, setWorkOrder] = useState([]);
+  const [stocks, setStocks] = useState([]);
   const [productPlans, setProductPlans] = useState([]);
   const [bomDetails, setBomDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [woStatus, setWoStatus] = useState("");
+  const [qcInfo, setQcInfo] = useState({ type: "대기" });
 
   const fetchData = async () => {
     setLoading(true);
@@ -18,6 +22,8 @@ const WorkOrderViewContainer = () => {
       setWorkOrder(resWork.data);
       const resPP = await axios.get(`${ERP_API}/product_plans`);
       setProductPlans(resPP.data);
+      const response = await MESapi.get(`${MES_API}/stocks`);
+      setStocks(response.data);
     } catch (err) {
       alert("조회 실패");
     } finally {
@@ -56,13 +62,44 @@ const WorkOrderViewContainer = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const HandleWoStatusChange = (value) => {
+    setWoStatus(value);
+  };
+
+  const HandleStockChange = (name, value) => {
+    setQcInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const HandleNumberChange = (woNo, value) => {
+    setQcInfo((prev) => ({ ...prev, woNo: woNo, totalQuantity: value }));
+  };
+  const HandleStatusUpdate = async (woNo) => {
+    if (woStatus === "품질") {
+      await MESapi.post(`${MES_API}/quality_controls`, qcInfo);
+    }
+    await MESapi.patch(`${MES_API}/work_orders/${woNo}/type`, {
+      type: woStatus,
+    });
+    setIsModalOpen(false);
+    fetchData();
+  };
+
   return (
     <WorkOrderViewPresenter
       workOrder={workOrder}
       productPlans={productPlans}
+      stocks={stocks}
       bomDetails={bomDetails}
-      HandleModalStatusChange={HandleModalStatusChange}
       isModalOpen={isModalOpen}
+      woStatus={woStatus}
+      HandleModalStatusChange={HandleModalStatusChange}
+      HandleWoStatusChange={HandleWoStatusChange}
+      HandleNumberChange={HandleNumberChange}
+      HandleStatusUpdate={HandleStatusUpdate}
+      HandleStockChange={HandleStockChange}
     />
   );
 };

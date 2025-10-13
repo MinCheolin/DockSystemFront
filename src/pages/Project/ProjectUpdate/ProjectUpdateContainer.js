@@ -12,7 +12,7 @@ const ProjectUpdateContainer = () => {
   const [vessels, setVessels] = useState([]);
   const [boms, setBoms] = useState([]);
   const [productPlans, setProductPlans] = useState([
-    { ppName: "", ppStartDate: null, ppEndDate: null, bomNo: "" },
+    { ppName: "", ppStartDate: null, ppEndDate: null },
   ]);
   const navigate = useNavigate();
 
@@ -35,20 +35,19 @@ const ProjectUpdateContainer = () => {
         projectDescription: resData.data.projectDescription,
       });
       setProductPlans(
-        resPP.data.map(({ bom, ...rest }) => ({
+        resPP.data.map(({ pp, ...rest }) => ({
           ...rest,
-          bomNo: bom.bomNo,
+          bomNo: pp?.bom.bomNo,
         }))
       );
+
       setCustomers(resCustomer.data);
       setVessels(resVessel.data);
       setBoms(resBom.data);
     } catch (err) {
-      console.log(err);
-      alert("조회 실패");
+      alert(`조회 실패 : ${err}`);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -131,7 +130,6 @@ const ProjectUpdateContainer = () => {
       ...updateProject,
       productPlans: productPlans,
     };
-    console.log(finalData);
     try {
       await ERPapi.put(`${ERP_API}/projects/${id}`, finalData);
       navigate("/erp/project/projectView");

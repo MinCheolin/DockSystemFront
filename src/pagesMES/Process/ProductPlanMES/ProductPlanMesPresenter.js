@@ -5,17 +5,31 @@ import "./productPlanMes.css";
 const subColumns = [
   {
     title: "작업 지시명",
-    dataIndex: "date",
+    width: "15%",
+    dataIndex: "woName",
     key: "woName",
   },
   {
+    title: "작업 상태",
+    width: "10%",
+    dataIndex: "type",
+    key: "type",
+  },
+  {
     title: "작업 지시 내용",
-    dataIndex: "detail",
+    dataIndex: "woDetail",
     key: "woDetail",
   },
 ];
 
-const ProductPlanMesPresenter = ({ productplans, HandleAddWorkOrder }) => {
+const ProductPlanMesPresenter = ({
+  productplans,
+  workOrders,
+  expandedRowKeys,
+  HandleAddWorkOrder,
+  setExpandedRowKeys,
+  HandleExpand,
+}) => {
   const columns = [
     {
       title: "번호",
@@ -71,11 +85,31 @@ const ProductPlanMesPresenter = ({ productplans, HandleAddWorkOrder }) => {
       </div>
       <div className="grid-box">
         <Table
+          className="main-table"
+          rowKey="ppNo"
           size="small"
           pagination={false}
           dataSource={productplans}
           columns={columns}
           rowClassName="clickable-row"
+          expandable={{
+            expandedRowRender: (record) => {
+              const filteredWorkorders = workOrders.filter(
+                (w) => Number(w.ppNo) === Number(record.ppNo)
+              );
+              return (
+                <Table
+                  rowKey="woNo"
+                  dataSource={filteredWorkorders}
+                  columns={subColumns}
+                  pagination={false}
+                  size="small"
+                />
+              );
+            },
+            expandedRowKeys: expandedRowKeys,
+            onExpand: HandleExpand,
+          }}
         />
       </div>
     </div>

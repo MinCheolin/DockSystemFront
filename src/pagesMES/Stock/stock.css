@@ -1,0 +1,61 @@
+.stock-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.modal-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(87, 87, 87);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-body-row {
+  display: flex;
+  gap: 5px;
+}
+
+.item-name {
+  display: flex;
+  justify-content: flex-end;
+  width: 20%;
+}
+.item-input {
+  width: 75%;
+}
