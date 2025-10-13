@@ -10,6 +10,8 @@ const EquipmentMesContainer = () => {
   const [filteredEquipments, setFilteredEquipments] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${MES_API}/equipments`);
@@ -31,6 +33,14 @@ const EquipmentMesContainer = () => {
     setIsSearching(true);
   };
 
+  const HandleCheckbox = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
   const handleShowAll = () => {
     setSearchTerm("");
     setFilteredEquipments([]);
@@ -45,6 +55,8 @@ const EquipmentMesContainer = () => {
       isSearching={isSearching}
       handleSearchEquipment={handleSearchEquipment}
       handleShowAll={handleShowAll}
+      selectedCategories={selectedCategories}
+      HandleCheckbox={HandleCheckbox}
     />
   );
 };

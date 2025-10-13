@@ -90,7 +90,7 @@ const ClientContainer = () => {
     try {
       await ERPapi.post(`${ERP_API}/clients`, clientInfo);
     } catch (err) {
-      alert(`등록 실패 : ${err}`);
+      alert(err.response.data.message);
     }
     fetchData();
     setIsModalOpen(false);
@@ -100,10 +100,13 @@ const ClientContainer = () => {
     if (selectedRowKeys.length === 0) return;
     console.log(selectedRowKeys[0]);
     try {
-      await ERPapi.delete(`${ERP_API}/clients/${selectedRowKeys[0]}`);
+      const res = await ERPapi.delete(
+        `${ERP_API}/clients/${selectedRowKeys[0]}`
+      );
       setSelectedRowKeys([]);
+      alert(res.data.message);
     } catch (err) {
-      alert(`삭제 실패 : ${err}`);
+      alert(err.response.data.message);
     }
     fetchData();
   };
@@ -114,9 +117,13 @@ const ClientContainer = () => {
       clientNo: Number(updateClientInfo.clientNo),
     };
     try {
-      await ERPapi.put(`${ERP_API}/clients/${finalData.clientNo}`, finalData);
+      const res = await ERPapi.put(
+        `${ERP_API}/clients/${finalData.clientNo}`,
+        finalData
+      );
+      alert(res.data.message);
     } catch (err) {
-      alert(`수정 실패 : ${err}`);
+      alert(err.response.data.message);
     }
     setIsUpdateModalOpen(false);
     fetchData();

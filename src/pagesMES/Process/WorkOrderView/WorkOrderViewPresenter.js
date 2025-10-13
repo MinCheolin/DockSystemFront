@@ -11,7 +11,7 @@ const WorkOrderViewPresenter = ({
 }) => {
   const collapseItems = workOrder.map((wo) => ({
     key: wo.woNo,
-    label: `작업지시 ${wo.woNo}`,
+    label: `${wo.woName}`,
     children: (
       <Descriptions
         title="작업 지시 상세"

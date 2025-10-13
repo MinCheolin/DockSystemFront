@@ -124,19 +124,6 @@ const ProjectCreatePresenter = ({
               <div className="pp-header">생산 계획</div>
               {productPlans.map((plan, index) => (
                 <div className="pp-input" key={index}>
-                  <Input
-                    style={{ flex: "0 0 30%" }}
-                    placeholder="생산 계획명"
-                    value={plan.ppName || ""}
-                    onChange={(e) =>
-                      HandleChangePPinfo(index, "ppName", e.target.value)
-                    }
-                  />
-                  <RangePicker
-                    onChange={(dates) =>
-                      HandleChangeDateProductPlan(index, dates)
-                    }
-                  />
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
@@ -146,6 +133,19 @@ const ProjectCreatePresenter = ({
                     }))}
                     onChange={(value) =>
                       HandleChangePPinfo(index, "bomNo", value)
+                    }
+                  />
+                  <RangePicker
+                    onChange={(dates) =>
+                      HandleChangeDateProductPlan(index, dates)
+                    }
+                  />
+                  <Input
+                    style={{ flex: "0 0 30%" }}
+                    placeholder="생산 계획명"
+                    value={plan.ppName || ""}
+                    onChange={(e) =>
+                      HandleChangePPinfo(index, "ppName", e.target.value)
                     }
                   />
                   {productPlans.length > 1 && (

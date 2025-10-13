@@ -6,6 +6,7 @@ const WorkOrderPresenter = ({
   ppNo,
   equipments,
   workOrder,
+  productPlans,
   HandleChangeInput,
   HandleChangeDate,
   HandleCreateWorkOrder,
@@ -42,6 +43,10 @@ const WorkOrderPresenter = ({
           <div className="processInfo-Input">
             <Form.Item label="생산 계획 번호">
               <Input className="underline-input" readOnly value={ppNo} />
+            </Form.Item>
+
+            <Form.Item label="생산 계획명">
+              <Input className="underline-input" value={productPlans?.ppName} />
             </Form.Item>
 
             <Form.Item label="작업 지시명">

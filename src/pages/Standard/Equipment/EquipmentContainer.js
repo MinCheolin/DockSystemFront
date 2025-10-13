@@ -32,6 +32,8 @@ const EquipmentContainer = () => {
   const [filteredEquipments, setFilteredEquipments] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const fetchData = async () => {
     try {
       const response = await ERPapi.get(`${ERP_API}/equipments`);
@@ -157,6 +159,15 @@ const EquipmentContainer = () => {
     setFilteredEquipments([]);
     setIsSearching(false);
   };
+
+  const HandleCheckbox = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
   const HandleCreateModalOpen = () => {
     setEquipmentInfo({
       equipCode: "",
@@ -184,6 +195,8 @@ const EquipmentContainer = () => {
       HandleCreateEquipment={HandleCreateEquipment}
       HandleUpdateEquipment={HandleUpdateEquipment}
       filteredEquipments={filteredEquipments}
+      selectedCategories={selectedCategories}
+      HandleCheckbox={HandleCheckbox}
       updateEquipmentInfo={updateEquipmentInfo}
       HandleUpdateChangeInput={HandleUpdateChangeInput}
       HandleDeleteEquipment={HandleDeleteEquipment}
