@@ -1,0 +1,77 @@
+.quality-content {
+  min-height: 100vh;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+.header-phrase {
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+  font-weight: 500;
+  gap: 15px;
+}
+.quality-list {
+  display: flex;
+  gap: 15px;
+  padding-top: 15px;
+}
+
+.grid-func {
+  display: flex;
+}
+
+.attribute-title {
+  margin: 0;
+  font-weight: bold;
+  width: 60px;
+  text-align: right;
+}
+
+.item-data {
+  flex-grow: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.qc-card-item {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  border: 1px solid rgb(211, 211, 211);
+  border-radius: 15px;
+  gap: 5px;
+  padding: 15px;
+}
+.qc-card-title {
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.item-row-container {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.item-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  gap: 20px;
+}
+
+.card-btn-area {
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

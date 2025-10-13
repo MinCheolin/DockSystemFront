@@ -4,8 +4,10 @@ import {
   FileOutlined,
   HomeOutlined,
   ExportOutlined,
-  TeamOutlined,
+  ToolOutlined,
+  ExperimentOutlined,
   ContainerOutlined,
+  DropboxOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -22,13 +24,12 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("MES 홈", "/mes/home", <HomeOutlined />),
-  getItem("기준 정보 관리", "/mes/standard", <TeamOutlined />, [
-    getItem("자재 관리", "/mes/standard/material"),
-    getItem("장비 관리", "/mes/standard/equipment"),
-  ]),
+  getItem("자재 조회", "/mes/standard/material", <ExperimentOutlined />),
+  getItem("장비 조회", "/mes/standard/equipment", <ToolOutlined />),
   getItem("생산 계획 조회 ", "/mes/productPlan", <ContainerOutlined />),
   getItem("작업 조회", "/mes/workOrder", <FileOutlined />),
   getItem("품질", "/mes/qualityControl", <SafetyOutlined />),
+  getItem("재고", "/mes/stock", <DropboxOutlined />),
   getItem("ERP로 이동", "/erp", <ExportOutlined />),
 ];
 const LayoutMESPresent = ({

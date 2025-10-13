@@ -34,7 +34,7 @@ const ProjectUpdatePresenter = ({
 }) => {
   const [form] = Form.useForm();
   const [range, setRange] = useState([null, null]);
-
+  console.log(productPlans);
   useEffect(() => {
     if (project?.projectStartDate && project?.projectEndDate) {
       setRange([
@@ -162,14 +162,22 @@ const ProjectUpdatePresenter = ({
                       HandleChangeDateProductPlan(index, dates)
                     }
                   />
+
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    value={plan?.bomNo}
-                    options={boms?.map((bom) => ({
-                      value: bom.bomNo,
-                      label: `${bom.vessel.vesselName} - ${bom.standardProcess.spName}`,
-                    }))}
+                    value={plan.bom ? plan.bom.bomNo : ""}
+                    options={[
+                      { value: "", label: "BOM 없음" },
+                      ...boms
+                        .filter(
+                          (bom) => bom.vessel.vesselNo === project.vesselNo
+                        )
+                        .map((bom) => ({
+                          value: bom.bomNo,
+                          label: `${bom.vessel.vesselName} - ${bom.standardProcess.spName}`,
+                        })),
+                    ]}
                     onChange={(value) =>
                       HandleChangePPinfo(index, "bomNo", value)
                     }

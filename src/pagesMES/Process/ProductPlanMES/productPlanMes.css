@@ -31,3 +31,11 @@
 .client-search {
   margin-top: 15px;
 }
+
+.main-table .ant-table-expanded-row .ant-table-thead > tr > th {
+  background-color: #eaeaea;
+}
+
+.main-table .ant-table-expanded-row .ant-table-tbody > tr > td {
+  background-color: #feecec;
+}

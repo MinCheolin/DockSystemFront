@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HomePresenter from "./HomePresenter";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ const HomeContainer = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/news");
+        const res = await axios.get("http://localhost:8080/api/erp/v1/news");
         const newsData = res.data.map((item, idx) => ({
           id: idx,
           title: item.title,
@@ -24,16 +24,20 @@ const HomeContainer = () => {
 
     const fetchRateSummary = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/exchange-rate/summary");
+        const res = await axios.get(
+          "http://localhost:8080/api/exchange-rate/summary"
+        );
         const summaryData = res.data;
 
         if (summaryData && summaryData.historicalData) {
-          summaryData.historicalData = summaryData.historicalData.map(item => ({
-            ...item,
-            rate: parseFloat(item.rate)
-          }));
+          summaryData.historicalData = summaryData.historicalData.map(
+            (item) => ({
+              ...item,
+              rate: parseFloat(item.rate),
+            })
+          );
         }
-        
+
         // 데이터를 모두 가공한 후, 마지막에 한번만 state를 업데이트합니다.
         setRateSummary(summaryData);
       } catch (err) {
@@ -41,9 +45,11 @@ const HomeContainer = () => {
       }
     };
 
-     const fetchOilPrices = async () => {
+    const fetchOilPrices = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/oil-price/latest-all");
+        const res = await axios.get(
+          "http://localhost:8080/api/oil-price/latest-all"
+        );
         setOilPrices(res.data);
       } catch (err) {
         console.error("국제 유가 정보를 가져오는 데 실패했습니다:", err);

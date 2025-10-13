@@ -8,6 +8,7 @@ const ProjectCreatePresenter = ({
   customers,
   vessels,
   boms,
+  projectInfo,
   HandleChangeInput,
   HandleChangeSelect,
   HandleChangeDate,
@@ -127,10 +128,17 @@ const ProjectCreatePresenter = ({
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    options={boms.map((bom) => ({
-                      value: bom.bomNo,
-                      label: `${bom.vessel.vesselName} - ${bom.standardProcess.spName}`,
-                    }))}
+                    options={[
+                      { value: "", label: "BOM 없음" },
+                      ...boms
+                        .filter(
+                          (bom) => bom.vessel.vesselNo === projectInfo.vesselNo
+                        )
+                        .map((bom) => ({
+                          value: bom.bomNo,
+                          label: `${bom.vessel.vesselName} - ${bom.standardProcess.spName}`,
+                        })),
+                    ]}
                     onChange={(value) =>
                       HandleChangePPinfo(index, "bomNo", value)
                     }

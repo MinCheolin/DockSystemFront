@@ -1,0 +1,50 @@
+.work-order-detail-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.wo-status {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 100px;
+}
+
+.modal-header {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid black;
+}
+
+.wo-status-input-row {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  display: flex;
+}
+.wo-status-input {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 100%;
+  gap: 15px;
+}
+
+.footer-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.additional-input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

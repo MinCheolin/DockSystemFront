@@ -24,7 +24,8 @@ import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound";
-import QualityControll from "./pagesMES/QualityControll";
+import QualityControl from "./pagesMES/QualityControl";
+import Stock from "./pagesMES/Stock";
 
 const App = () => {
   return (
@@ -78,7 +79,8 @@ const App = () => {
             <Route path="productPlan" element={<ProductPlanMES />} />
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
-            <Route path="qualityControl" element={<QualityControll />}></Route>
+            <Route path="qualityControl" element={<QualityControl />}></Route>
+            <Route path="stock" element={<Stock />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
