@@ -23,7 +23,7 @@
 }
 
 .grid-box {
-  height: 80vh;
+  max-height: 300px;
 }
 
 .modal-form-item-center {

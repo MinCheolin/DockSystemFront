@@ -10,6 +10,8 @@ const EquipmentPresenter = ({
   HandleCreateModalOpen,
   HandleModalClose,
   isModalOpen,
+  HandleCheckbox,
+  selectedCategories,
   HandleUpdateModalClose,
   handleSearchEquipment,
   HandleUpdateEquipment,
@@ -65,6 +67,24 @@ const EquipmentPresenter = ({
     text: inspected,
     value: inspected,
   }));
+
+  const categories = {
+    "절단 장비": ["절단기"],
+    "성형/가공": ["벤딩", "프레스", "그라인더"],
+    "용접 장비": ["용접"],
+    "크레인/운반": ["크레인", "트랜스포터", "지게차"],
+    "도장/표면 처리": ["블라스팅", "스프레이", "도장"],
+    "설비/인프라": ["환기", "모니터링", "케이블"],
+    "엔진/발전": ["엔진", "발전기"],
+    "펌프/유압": ["펌프", "압축기"],
+    "항해/제어": ["항해", "GPS"],
+  };
+
+  const getCategoryByEquip = (equipName) => {
+    return Object.keys(categories).find((cat) =>
+      categories[cat].some((keyword) => equipName.includes(keyword))
+    );
+  };
 
   const columns = [
     { title: "번호", key: "index", render: (text, record, index) => index + 1 },
@@ -142,6 +162,7 @@ const EquipmentPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
+            scroll={{ y: 200 }}
             pagination={false}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
@@ -155,6 +176,56 @@ const EquipmentPresenter = ({
               },
             })}
           />
+        </div>
+        <div className="category">
+          <div>
+            <h1>장비 카테고리</h1>
+            {Object.keys(categories).map((cat) => (
+              <div key={cat}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => HandleCheckbox(cat)}
+                  />
+                  {cat}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="category-list">
+            <h1>선택된 장비 목록</h1>
+            {selectedCategories.length > 0 ? (
+              (() => {
+                const renderedCategories = selectedCategories.map((cat) => {
+                  const equipmentInCategory = equipments.filter(
+                    (eq) => getCategoryByEquip(eq.equipName) === cat
+                  );
+
+                  if (equipmentInCategory.length === 0) return null;
+
+                  return (
+                    <div key={cat} className="selected-category">
+                      <h4>{cat}</h4>
+                      <ul>
+                        {equipmentInCategory.map((eq) => (
+                          <li key={eq.equip_No}>{eq.equipName}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                });
+
+                if (renderedCategories.every((el) => el === null)) {
+                  return <p>선택된 장비가 없습니다</p>;
+                }
+
+                return renderedCategories;
+              })()
+            ) : (
+              <p>선택된 장비가 없습니다</p>
+            )}
+          </div>
         </div>
 
         <Modal
