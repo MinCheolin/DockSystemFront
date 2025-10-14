@@ -12,6 +12,7 @@ import {
 
 import { Layout, Menu } from "antd";
 import { Outlet } from "react-router-dom";
+import Chatbot from "../components/Chatbot/Chatbot";
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -76,6 +77,7 @@ const LayoutMESPresent = ({
           Ant UED
         </Footer>
       </Layout>
+      <Chatbot />
     </Layout>
   );
 };

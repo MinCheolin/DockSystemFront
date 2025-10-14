@@ -24,12 +24,14 @@ import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound";
+import { ChatbotProvider } from "./context/ChatbotContext";
 import QualityControl from "./pagesMES/QualityControl";
 import Stock from "./pagesMES/Stock";
 
+
 const App = () => {
   return (
-    <div>
+    <ChatbotProvider>
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
@@ -37,9 +39,9 @@ const App = () => {
           <Route
             path="/erp"
             element={
-              //<ProtectedRoute>
-              <Layout />
-              //</ProtectedRoute>
+              // <ProtectedRoute>
+                <Layout />
+              // </ProtectedRoute>
             }
           >
             <Route index element={<Home />} />
@@ -84,7 +86,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </ChatbotProvider>
   );
 };
 export default App;
