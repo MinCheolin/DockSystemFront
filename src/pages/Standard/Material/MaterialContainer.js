@@ -125,9 +125,16 @@ const MaterialContainer = () => {
     setIsSearching(false);
   };
 
+  const HandleCheckbox = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
   const HandleChangeModalStatus = () => {
     setIsModalOpen(!isModalOpen);
-
   };
 
   const HandleUpdateModalClose = () => {

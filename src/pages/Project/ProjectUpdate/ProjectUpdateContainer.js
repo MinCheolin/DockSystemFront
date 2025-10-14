@@ -48,6 +48,7 @@ const ProjectUpdateContainer = () => {
       alert(`조회 실패 : ${err}`);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -101,9 +102,18 @@ const ProjectUpdateContainer = () => {
     if (name === "dateRange") {
       newPlans[index].ppStartDate = dayjs(value[0]);
       newPlans[index].ppEndDate = dayjs(value[1]);
+    } else if (name === "bomNo") {
+      newPlans[index] = {
+        ...newPlans[index],
+        bom: {
+          ...newPlans[index].bom,
+          bomNo: value,
+        },
+      };
     } else {
       newPlans[index][name] = value;
     }
+
     setProductPlans(newPlans);
   };
 
@@ -130,6 +140,7 @@ const ProjectUpdateContainer = () => {
       ...updateProject,
       productPlans: productPlans,
     };
+    console.log(productPlans);
     try {
       await ERPapi.put(`${ERP_API}/projects/${id}`, finalData);
       navigate("/erp/project/projectView");

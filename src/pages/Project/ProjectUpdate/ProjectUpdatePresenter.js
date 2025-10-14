@@ -5,16 +5,6 @@ import { useState, useEffect } from "react";
 import "./projectUpdate.css";
 
 const { RangePicker } = DatePicker;
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
 
 const ProjectUpdatePresenter = ({
   productPlans,
@@ -34,7 +24,7 @@ const ProjectUpdatePresenter = ({
 }) => {
   const [form] = Form.useForm();
   const [range, setRange] = useState([null, null]);
-  console.log(productPlans);
+
   useEffect(() => {
     if (project?.projectStartDate && project?.projectEndDate) {
       setRange([
@@ -46,21 +36,15 @@ const ProjectUpdatePresenter = ({
 
   return (
     <div>
-      <Form
-        className="custom-form-item"
-        form={form}
-        onFinish={HandleUpdateProjectInfo}
-      >
+      <Form className="custom-form-item" form={form}>
         <div className="project-content">
           <div className="grid-func">
             <div className="project-list">프로젝트 정보 수정</div>
             <div className="func-button">
               <Button onClick={HandleMoveList}> 목록으로 이동</Button>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  프로젝트 수정
-                </Button>
-              </Form.Item>
+              <Button type="primary" onClick={HandleUpdateProjectInfo}>
+                프로젝트 수정
+              </Button>
             </div>
           </div>
           <div className="project-form">
@@ -166,7 +150,7 @@ const ProjectUpdatePresenter = ({
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    value={plan.bom ? plan.bom.bomNo : ""}
+                    value={plan.bom?.bomNo ?? ""}
                     options={[
                       { value: "", label: "BOM 없음" },
                       ...boms
