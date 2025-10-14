@@ -31,6 +31,7 @@ const WorkOrderViewContainer = () => {
       setLoading(false);
     }
   };
+  console.log(workOrder);
 
   const fetchBomDetails = async (ppBomNo) => {
     try {
@@ -53,8 +54,10 @@ const WorkOrderViewContainer = () => {
 
     workOrder.forEach((wo) => {
       const pp = productPlans.find((pp) => pp.ppNo === Number(wo.ppNo));
-      if (pp && !bomDetails[pp.bom.bomNo]) {
-        fetchBomDetails(pp.bom.bomNo);
+      if (pp.bom != null) {
+        if (pp && !bomDetails[pp.bom.bomNo]) {
+          fetchBomDetails(pp.bom.bomNo);
+        }
       }
     });
   }, [workOrder, productPlans]);
