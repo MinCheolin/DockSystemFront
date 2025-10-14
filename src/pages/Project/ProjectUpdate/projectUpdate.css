@@ -18,3 +18,10 @@
   flex: none; /* 고정 너비 사용 */
   width: 120px; /* 원하는 폭으로 지정 */
 }
+
+.func-button {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
