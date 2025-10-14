@@ -6,6 +6,10 @@
   padding: 15px;
 }
 
+.bom-create-modal {
+  width: 650;
+}
+
 .modal-title {
   text-align: center;
   font-size: 30px;
@@ -71,6 +75,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .bom-search input {

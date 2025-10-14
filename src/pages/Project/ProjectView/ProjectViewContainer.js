@@ -7,10 +7,22 @@ import { ERPapi } from "../../../components/api/api";
 const ProjectViewContainer = () => {
   const [projects, setProjects] = useState([]);
   const [productPlans, setProductPlans] = useState([]);
+  const [value, setValue] = useState("대기");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectStatus, setSelectStatus] = useState(null);
   const navigate = useNavigate();
 
   const HandleProjectUpdate = (key) => {
     navigate(`/erp/project/projectUpdate/${key}`);
+  };
+
+  const getStatusClass = (value) => {
+    switch (value) {
+      case "미완료":
+        return "incomplete";
+      case "완료":
+        return "complete";
+    }
   };
 
   const fetchData = async () => {
@@ -33,16 +45,44 @@ const ProjectViewContainer = () => {
     }
   };
 
+  const HandleModalStatusChange = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const HandleStatusChangeBtnClick = (status) => {
+    setSelectStatus(status);
+    setIsModalOpen(!isModalOpen);
+  };
+  const HandleChangeType = async (pjtNo) => {
+    try {
+      await ERPapi.patch(`${ERP_API}/projects/${pjtNo}/type`, {
+        type: selectStatus,
+      });
+      setIsModalOpen(!isModalOpen);
+      fetchData();
+    } catch (err) {
+      alert("상태 변경 실패");
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
     <ProjectViewPresenter
+      isModalOpen={isModalOpen}
       projects={projects}
+      value={value}
       productPlans={productPlans}
+      selectStatus={selectStatus}
+      setValue={setValue}
       HandleProjectUpdate={HandleProjectUpdate}
       HandleDeleteProject={HandleDeleteProject}
+      HandleModalStatusChange={HandleModalStatusChange}
+      HandleStatusChangeBtnClick={HandleStatusChangeBtnClick}
+      HandleChangeType={HandleChangeType}
+      getStatusClass={getStatusClass}
     />
   );
 };

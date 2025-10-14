@@ -50,12 +50,11 @@
 
 .pp-input {
   display: flex;
-  gap: 8px;
+  gap: 5px;
   margin-bottom: 15px;
   align-items: center;
   justify-content: center;
 }
-
 .remove {
   margin-left: 4px;
   margin-bottom: 28px;

@@ -19,15 +19,15 @@ import Material from "./pages/Standard/Material";
 import MesHome from "./pagesMES/MesHome";
 import ProductPlanMES from "./pagesMES/Process/ProductPlanMES";
 import WorkOrderCreate from "./pagesMES/Process/WorkOrderCreate";
-import WorkOrderUpdate from "./pagesMES/Process/WorkOrderUpdate";
 import WorkOrderView from "./pagesMES/Process/WorkOrderView";
-import WorkOrderDetail from "./pagesMES/Process/WorkOrderDetail";
 import EquipmentMes from "./pagesMES/standard/EquipmentMes";
 import MaterialMes from "./pagesMES/standard/MaterialMes";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound";
-import QualityControll from "./pagesMES/QualityControll";
 import { ChatbotProvider } from "./context/ChatbotContext";
+import QualityControl from "./pagesMES/QualityControl";
+import Stock from "./pagesMES/Stock";
+
 
 const App = () => {
   return (
@@ -69,9 +69,9 @@ const App = () => {
           <Route
             path="/mes"
             element={
-              // <ProtectedRoute>
-                <LayoutMES />
-              // </ProtectedRoute>
+              //<ProtectedRoute>
+              <LayoutMES />
+              //</ProtectedRoute>
             }
           >
             <Route index element={<MesHome />} />
@@ -81,15 +81,8 @@ const App = () => {
             <Route path="productPlan" element={<ProductPlanMES />} />
             <Route path="workOrder" element={<WorkOrderView />} />
             <Route path="workorderCreate" element={<WorkOrderCreate />}></Route>
-            <Route path="qualityControl" element={<QualityControll />}></Route>
-            <Route
-              path="workOrderUpdate/:woNo"
-              element={<WorkOrderUpdate />}
-            ></Route>
-            <Route
-              path="workorderDetail/:woNo"
-              element={<WorkOrderDetail />}
-            ></Route>
+            <Route path="qualityControl" element={<QualityControl />}></Route>
+            <Route path="stock" element={<Stock />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

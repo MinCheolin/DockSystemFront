@@ -6,29 +6,16 @@ import { ERPapi } from "../../../components/api/api";
 const MaterialContainer = () => {
   const [materials, setMaterials] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateMaterialInfo, setUpdateMaterialInfo] = useState({
-    materialNo: "",
-    materialCode: "",
-    materialName: "",
-    materialType: "",
-    materialSize: "",
-    materialPrice: "",
-    materialUnit: "",
-  });
+  const [updateMaterialInfo, setUpdateMaterialInfo] = useState({});
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [materialInfo, setMaterialInfo] = useState({
-    materialCode: "",
-    materialName: "",
-    materialType: "",
-    materialSize: "",
-    materialPrice: "",
-    materialUnit: "",
-  });
+  const [materialInfo, setMaterialInfo] = useState({});
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -61,9 +48,15 @@ const MaterialContainer = () => {
 
   const hasSelected = selectedRowKeys.length > 0;
 
-  const HandleChangeInput = (e) => {
-    const { name, value } = e.target;
+  const HandleChangeInput = (name, value) => {
     setMaterialInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const HandleUpdateChangeInput = (name, value) => {
+    setUpdateMaterialInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -75,17 +68,9 @@ const MaterialContainer = () => {
     setIsUpdateModalOpen(true);
   };
 
-  const HandleUpdateChangeInput = (e) => {
-    const { name, value } = e.target;
-    setUpdateMaterialInfo((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const HandleCreateMaterial = async () => {
     try {
-      const response = await ERPapi.post(`${ERP_API}/materials`, materialInfo);
+      await ERPapi.post(`${ERP_API}/materials`, materialInfo);
     } catch (error) {
       alert("등록 실패");
     }
@@ -140,20 +125,9 @@ const MaterialContainer = () => {
     setIsSearching(false);
   };
 
-  const HandleCreateModalOpen = () => {
-    setMaterialInfo({
-      materialCode: "",
-      materialName: "",
-      materialType: "",
-      materialSize: "",
-      materialPrice: "",
-      materialUnit: "",
-    });
-    setIsModalOpen(true);
-  };
+  const HandleChangeModalStatus = () => {
+    setIsModalOpen(!isModalOpen);
 
-  const HandleModalClose = () => {
-    setIsModalOpen(false);
   };
 
   const HandleUpdateModalClose = () => {
@@ -167,11 +141,12 @@ const MaterialContainer = () => {
       HandleDeleteMaterial={HandleDeleteMaterial}
       setIsUpdateModalOpen={setIsUpdateModalOpen}
       updateMaterialInfo={updateMaterialInfo}
+      selectedCategories={selectedCategories}
+      HandleCheckbox={HandleCheckbox}
       HandleUpdateChangeInput={HandleUpdateChangeInput}
       HandleUpdateMaterial={HandleUpdateMaterial}
       handleShowAll={handleShowAll}
-      HandleCreateModalOpen={HandleCreateModalOpen}
-      HandleModalClose={HandleModalClose}
+      HandleChangeModalStatus={HandleChangeModalStatus}
       isModalOpen={isModalOpen}
       isUpdateModalOpen={isUpdateModalOpen}
       materials={materials}

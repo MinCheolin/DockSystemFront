@@ -112,7 +112,10 @@ const CustomerPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
-            pagination={false}
+            pagination={{
+              pageSize: 13,
+              position: ["bottomCenter"],
+            }}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
             columns={columns}

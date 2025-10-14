@@ -13,6 +13,14 @@
   align-items: center;
 }
 
+.header-phrase {
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+  font-weight: 500;
+  gap: 15px;
+}
+
 .productPlan-list {
   font-size: 22px;
   font-weight: 500;
@@ -30,4 +38,12 @@
 
 .client-search {
   margin-top: 15px;
+}
+
+.main-table .ant-table-expanded-row .ant-table-thead > tr > th {
+  background-color: #eaeaea;
+}
+
+.main-table .ant-table-expanded-row .ant-table-tbody > tr > td {
+  background-color: #feecec;
 }

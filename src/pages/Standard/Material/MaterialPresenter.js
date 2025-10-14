@@ -1,4 +1,4 @@
-import { Button, Table, Modal, Form, Input } from "antd";
+import { Button, Table, Modal, Form, Input, Select, InputNumber } from "antd";
 import { SearchOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import "./material.css";
 
@@ -6,9 +6,10 @@ const MaterialPresenter = ({
   materials,
   HandleChangeInput,
   HandleCreateMaterial,
-  HandleCreateModalOpen,
-  HandleModalClose,
+  HandleChangeModalStatus,
   isModalOpen,
+  selectedCategories,
+  HandleCheckbox,
   HandleUpdateModalClose,
   handleSearchMaterial,
   HandleUpdateMaterial,
@@ -27,6 +28,14 @@ const MaterialPresenter = ({
   isSearching,
   materialInfo,
 }) => {
+  const [form] = Form.useForm();
+  const typeOpt = [
+    { value: "철강", label: "철강" },
+    { value: "화학", label: "화학" },
+    { value: "전기/전자", label: "전기/전자" },
+    { value: "기계/엔진 부품", label: "기계/엔진 부품" },
+    { value: "기타 자재", label: "기타 자재" },
+  ];
   const codeFilter = [
     ...new Set(materials.map((material) => material.materialCode)),
   ].map((code) => ({
@@ -63,6 +72,26 @@ const MaterialPresenter = ({
     text: unit,
     value: unit,
   }));
+
+  const categories = {
+    철강: ["형강", "합금판", "강판"],
+    화학: ["페인트", "코팅제", "접착제", "윤활유"],
+    "전기/전자": ["전선", "케이블", "센서"],
+    "기계/엔진 부품": ["터반", "펌프", "밸브", "볼트"],
+    "기타 자재": ["단열재", "고무", "유리", "감지기"],
+  };
+
+  const getCategoryByMaterial = (materialName) => {
+    return Object.keys(categories).find((cat) =>
+      categories[cat].some((keyword) => materialName.includes(keyword))
+    );
+  };
+
+  const fileteredCategory = materials.filter((mat) =>
+    selectedCategories.some((cat) =>
+      categories[cat].some((keyword) => mat.materialName.includes(keyword))
+    )
+  );
 
   const columns = [
     {
@@ -121,7 +150,7 @@ const MaterialPresenter = ({
         <div className="grid-func">
           <div className="material-list">자재 목록</div>
           <div className="func-button">
-            <Button onClick={HandleCreateModalOpen}>추가</Button>
+            <Button onClick={HandleChangeModalStatus}>추가</Button>
             <Button
               type="primary"
               danger
@@ -151,6 +180,7 @@ const MaterialPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
+            scroll={{ y: 200 }}
             pagination={false}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
@@ -166,11 +196,63 @@ const MaterialPresenter = ({
           />
         </div>
 
+        <div className="category">
+          <div>
+            <h1>자재 카테고리</h1>
+            {Object.keys(categories).map((cat) => (
+              <div key={cat}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => HandleCheckbox(cat)}
+                  />
+                  {cat}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="category-list">
+            <h1>선택된 자재 목록</h1>
+            {selectedCategories.length > 0 ? (
+              (() => {
+                const renderedCategories = selectedCategories.map((cat) => {
+                  const materialsInCategory = fileteredCategory.filter(
+                    (mat) => getCategoryByMaterial(mat.materialName) === cat
+                  );
+
+                  if (materialsInCategory.length === 0) return null;
+
+                  return (
+                    <div key={cat} className="selected-category">
+                      <h4>{cat}</h4>
+                      <ul>
+                        {materialsInCategory.map((mat) => (
+                          <li key={mat.materialName}>{mat.materialName}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                });
+
+                if (renderedCategories.every((el) => el === null)) {
+                  return <p>선택된 자재가 없습니다</p>;
+                }
+
+                return renderedCategories;
+              })()
+            ) : (
+              <p>선택된 자재가 없습니다</p>
+            )}
+          </div>
+        </div>
+
         <Modal
           title="자재 추가"
           open={isModalOpen}
           footer={null}
-          onCancel={HandleModalClose}
+          onCancel={HandleChangeModalStatus}
+          afterClose={() => form.resetFields()}
         >
           <Form
             labelCol={{ span: 4 }}
@@ -178,66 +260,63 @@ const MaterialPresenter = ({
             onFinish={HandleCreateMaterial}
           >
             <Form.Item label="자재코드">
-              {" "}
               <Input
                 placeholder="자재 코드를 입력하세요."
-                name="materialCode"
                 value={materialInfo.materialCode}
-                onChange={HandleChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleChangeInput("materialCode", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재명">
-              {" "}
               <Input
                 placeholder="자재 명을 입력하세요."
-                name="materialName"
                 value={materialInfo.materialName}
-                onChange={HandleChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleChangeInput("materialName", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재유형">
-              {" "}
-              <Input
+              <Select
                 placeholder="자재 유형를 입력하세요."
-                name="materialType"
-                value={materialInfo.materialType}
-                onChange={HandleChangeInput}
-              />{" "}
+                options={typeOpt}
+                onChange={(value) => HandleChangeInput("materialType", value)}
+              />
             </Form.Item>
             <Form.Item label="자재규격">
-              {" "}
               <Input
                 placeholder="자재 규격을 입력하세요."
-                name="materialSize"
                 value={materialInfo.materialSize}
-                onChange={HandleChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleChangeInput("materialSize", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재단가">
-              {" "}
-              <Input
+              <InputNumber
+                style={{ width: 393 }}
                 placeholder="자재 단가를 입력하세요."
-                name="materialPrice"
                 value={materialInfo.materialPrice}
-                onChange={HandleChangeInput}
-              />{" "}
+                min={1}
+                onChange={(value) => HandleChangeInput("materialPrice", value)}
+              />
             </Form.Item>
             <Form.Item label="자재단위">
-              {" "}
               <Input
                 placeholder="자재 단위를 입력하세요."
-                name="materialUnit"
                 value={materialInfo.materialUnit}
-                onChange={HandleChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleChangeInput("materialUnit", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item wrapperCol={{ span: 24 }}>
               <div className="modal-form-button">
-                {" "}
                 <Button type="primary" htmlType="submit">
                   추가
                 </Button>
-                <Button onClick={HandleModalClose}>닫기</Button>
+                <Button onClick={HandleChangeModalStatus}>닫기</Button>
               </div>
             </Form.Item>
           </Form>
@@ -255,62 +334,63 @@ const MaterialPresenter = ({
             onFinish={HandleUpdateMaterial}
           >
             <Form.Item label="자재코드">
-              {" "}
               <Input
                 placeholder="자재 코드를 입력하세요."
-                name="materialCode"
                 value={updateMaterialInfo.materialCode}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleUpdateChangeInput("materialCode", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재명">
-              {" "}
               <Input
                 placeholder="자재 명을 입력하세요."
-                name="materialName"
                 value={updateMaterialInfo.materialName}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleUpdateChangeInput("materialName", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재유형">
-              {" "}
-              <Input
+              <Select
                 placeholder="자재 유형를 입력하세요."
-                name="materialType"
+                options={typeOpt}
                 value={updateMaterialInfo.materialType}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(value) =>
+                  HandleUpdateChangeInput("materialType", value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재규격">
-              {" "}
               <Input
                 placeholder="자재 규격을 입력하세요."
-                name="materialSize"
                 value={updateMaterialInfo.materialSize}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleUpdateChangeInput("materialSize", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재단가">
-              {" "}
-              <Input
+              <InputNumber
+                style={{ width: 393 }}
                 placeholder="자재 단가를 입력하세요."
-                name="materialPrice"
                 value={updateMaterialInfo.materialPrice}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(value) =>
+                  HandleUpdateChangeInput("materialPrice", value)
+                }
+              />
             </Form.Item>
             <Form.Item label="자재단위">
-              {" "}
               <Input
                 placeholder="자재 단위를 입력하세요."
-                name="materialUnit"
                 value={updateMaterialInfo.materialUnit}
-                onChange={HandleUpdateChangeInput}
-              />{" "}
+                onChange={(e) =>
+                  HandleUpdateChangeInput("materialUnit", e.target.value)
+                }
+              />
             </Form.Item>
             <Form.Item wrapperCol={{ span: 24 }}>
               <div className="modal-form-button">
-                {" "}
                 <Button type="primary" htmlType="submit">
                   수정
                 </Button>

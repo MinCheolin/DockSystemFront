@@ -104,7 +104,7 @@ const UserContainer = () => {
     try {
       await ERPapi.post(`${ERP_API}/users`, finalData);
     } catch (err) {
-      alert("등록 실패");
+      alert("수정 실패");
     }
 
     setIsModalOpen(false);
@@ -120,7 +120,7 @@ const UserContainer = () => {
     try {
       await ERPapi.put(`${ERP_API}/${finalData.userNo}`, finalData);
     } catch (err) {
-      console.error("등록 실패 : ", err);
+      console.error("수정 실패 : ", err);
     }
     setIsUpdateModalOpen(false);
     fetchData();

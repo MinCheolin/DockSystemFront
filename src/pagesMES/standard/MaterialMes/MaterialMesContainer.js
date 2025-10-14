@@ -10,6 +10,8 @@ const MaterialMesContainer = () => {
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${MES_API}/materials`);
@@ -31,6 +33,14 @@ const MaterialMesContainer = () => {
     setIsSearching(true);
   };
 
+  const HandleCheckbox = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
   const handleShowAll = () => {
     setSearchTerm("");
     setFilteredMaterials([]);
@@ -43,6 +53,8 @@ const MaterialMesContainer = () => {
       setSearchTerm={setSearchTerm}
       filteredMaterials={filteredMaterials}
       isSearching={isSearching}
+      selectedCategories={selectedCategories}
+      HandleCheckbox={HandleCheckbox}
       handleSearchMaterial={handleSearchMaterial}
       handleShowAll={handleShowAll}
     />

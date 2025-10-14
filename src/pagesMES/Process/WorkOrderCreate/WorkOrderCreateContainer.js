@@ -1,25 +1,24 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import WorkOrderCreatePresenter from "./WorkOrderCreatePresenter";
 import { useEffect, useState } from "react";
-import { MES_API } from "../../../config";
-import { MESapi } from "../../../components/api/api";
+import { ERP_API, MES_API } from "../../../config";
+import { ERPapi, MESapi } from "../../../components/api/api";
 
 const WorkOrderCreateContainer = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { ppNo } = location.state || {};
+  const { ppNo, ppName, spName, vesselName } = location.state || {};
   const [equipments, setEquipments] = useState([]);
-  const [materials, setMaterials] = useState([]);
+  const [productPlans, setProductPlans] = useState([]);
   const [workOrder, setWorkOrder] = useState({
     woName: "",
     woStartDate: "",
     woEndDate: "",
     woDetail: "",
     woDescription: "",
-    type: null,
+    type: "대기",
     ppNo: String(ppNo),
     equipNo: "",
-    materialNo: "",
   });
 
   const HandleChangeInput = (e) => {
@@ -63,8 +62,8 @@ const WorkOrderCreateContainer = () => {
     try {
       const resEquipments = await MESapi.get(`${MES_API}/equipments`);
       setEquipments(resEquipments.data);
-      const resMaterials = await MESapi.get(`${MES_API}/materials`);
-      setMaterials(resMaterials.data);
+      const resPp = await ERPapi.get(`${ERP_API}/product_plans/mes/${ppNo}`);
+      setProductPlans(resPp.data);
     } catch (err) {}
   };
 
@@ -74,20 +73,22 @@ const WorkOrderCreateContainer = () => {
 
   const HandleCreateWorkOrder = async () => {
     try {
-      console.log(workOrder);
       await MESapi.post(`${MES_API}/work_orders`, workOrder);
       navigate("/mes/workOrder");
     } catch (err) {
-      alert("등록 실패");
+      alert(err.response.data.message);
     }
   };
 
   return (
     <WorkOrderCreatePresenter
       workOrder={workOrder}
-      materials={materials}
       equipments={equipments}
+      ppName={ppName}
+      spName={spName}
+      vesselName={vesselName}
       ppNo={ppNo}
+      productPlans={productPlans}
       HandleChangeInput={HandleChangeInput}
       HandleChangeSelect={HandleChangeSelect}
       HandleChangeSelectType={HandleChangeSelectType}

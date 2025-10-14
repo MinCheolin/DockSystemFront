@@ -54,6 +54,7 @@ const ProjectCreateContainer = () => {
               ...plan,
               ppStartDate: dates ? dates[0]?.format("YYYY-MM-DD") : null,
               ppEndDate: dates ? dates[1]?.format("YYYY-MM-DD") : null,
+              ppStatus: "미완료",
             }
           : plan
       )
@@ -100,7 +101,7 @@ const ProjectCreateContainer = () => {
     };
     try {
       await ERPapi.post(`${ERP_API}/projects`, finalData);
-      navigate("erp/project/projectView");
+      navigate("/erp/project/projectView");
     } catch (err) {
       alert("등록 실패");
     }
@@ -111,6 +112,7 @@ const ProjectCreateContainer = () => {
       customers={customers}
       vessels={vessels}
       boms={boms}
+      projectInfo={projectInfo}
       HandleChangeInput={HandleChangeInput}
       HandleChangeSelect={HandleChangeSelect}
       HandleChangeDate={HandleChangeDate}

@@ -13,6 +13,7 @@ const StandardProcessContainer = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [standardprocessInfo, setStandardProcessInfo] = useState({});
+  const [equipments, setEquipments] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStandardProcesses, setFilteredStandardProcesses] = useState(
@@ -59,7 +60,16 @@ const StandardProcessContainer = () => {
     }));
   };
 
+  const HandleChangeSelect = (name, value) => {
+    setStandardProcessInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const HandleDoubleClick = async (record) => {
+    const resEquip = await ERPapi.get(`${ERP_API}/equipments`);
+    setEquipments(resEquip.data);
     setSelectedRowKeys([record.spNo]);
     const matchData = {
       spNo: record.spNo,
@@ -67,7 +77,7 @@ const StandardProcessContainer = () => {
       spName: record.spName,
       spTime: record.spTime,
       spDescription: record.spDescription,
-      spEquipment: record.spEquipment,
+      equipNo: Number(record.equipment.equipNo),
     };
     setUpdateStandardProcessInfo({ ...matchData });
     setIsUpdateModalOpen(true);
@@ -80,9 +90,17 @@ const StandardProcessContainer = () => {
       [name]: value,
     }));
   };
+  const HandleUpdateChangeSelect = (name, value) => {
+    setUpdateStandardProcessInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleCreateStandardProcess = async () => {
     const finalData = {
       ...standardprocessInfo,
+      equipNo: Number(standardprocessInfo.equipNo),
     };
     try {
       await ERPapi.post(`${ERP_API}/standardprocesses`, finalData);
@@ -107,8 +125,8 @@ const StandardProcessContainer = () => {
   const HandleUpdateStandardProcess = async (values) => {
     const finalData = {
       ...updateStandardProcessInfo,
-      ...values,
       spNo: Number(updateStandardProcessInfo.spNo),
+      equipNo: Number(updateStandardProcessInfo.equipNo),
     };
     try {
       await ERPapi.put(
@@ -138,6 +156,8 @@ const StandardProcessContainer = () => {
   };
 
   const HandleCreateModalOpen = async () => {
+    const resEquip = await ERPapi.get(`${ERP_API}/equipments`);
+    setEquipments(resEquip.data);
     setStandardProcessInfo("");
     setIsModalOpen(true);
   };
@@ -153,17 +173,20 @@ const StandardProcessContainer = () => {
   return (
     <StandardProcessPresenter
       HandleChangeInput={HandleChangeInput}
+      HandleChangeSelect={HandleChangeSelect}
       HandleCreateStandardProcess={handleCreateStandardProcess}
       HandleDeleteStandardProcess={HandleDeleteStandardProcess}
       setIsUpdateModalOpen={setIsUpdateModalOpen}
       updateStandardProcessInfo={updateStandardProcessInfo}
       HandleUpdateChangeInput={HandleUpdateChangeInput}
+      HandleUpdateChangeSelect={HandleUpdateChangeSelect}
       HandleUpdateStandardProcess={HandleUpdateStandardProcess}
       HandleCreateModalOpen={HandleCreateModalOpen}
       HandleModalClose={HandleModalClose}
       isModalOpen={isModalOpen}
       isUpdateModalOpen={isUpdateModalOpen}
       standardprocesses={standardprocesses}
+      equipments={equipments}
       rowSelection={rowSelection}
       HandleRowClick={HandleRowClick}
       hasSelected={hasSelected}
