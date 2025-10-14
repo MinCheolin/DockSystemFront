@@ -7,7 +7,12 @@ const BOMContainer = () => {
   // bom 상태값
   const [boms, setBoms] = useState([]);
   const [vessels, setVessels] = useState([]);
-  const [standardProcesses, setStandardProcesses] = useState([]);
+  const [filteredVessels, setFilteredVessels] = useState(vessels);
+  const [typeValue, setTypeValue] = useState(null);
+  const [standardProcesses, setStandardProcesses] = useState(filteredVessels);
+  const [filteredStandardProcesses, setFilteredStandardProcesses] = useState(
+    []
+  );
 
   // bom detail 상태값
   const [bomdetails, setBomdetails] = useState([]);
@@ -33,6 +38,12 @@ const BOMContainer = () => {
     try {
       const responseBom = await ERPapi.get(`${ERP_API}/boms`);
       const responseBomDetail = await ERPapi.get(`${ERP_API}/bomdetails`);
+      const resVes = await ERPapi.get(`${ERP_API}/vessels`);
+      const resSp = await ERPapi.get(`${ERP_API}/standardprocesses`);
+      const resMat = await ERPapi.get(`${ERP_API}/materials`);
+      setMaterials(resMat.data);
+      setVessels(resVes.data);
+      setStandardProcesses(resSp.data);
       setBoms(responseBom.data);
       setBomdetails(responseBomDetail.data);
     } catch (error) {
@@ -54,6 +65,33 @@ const BOMContainer = () => {
   };
 
   const hasSelected = selectedRowKeys.length > 0;
+
+  const HandleVesselSearch = (input) => {
+    if (!input) {
+      setFilteredVessels(vessels);
+      return;
+    }
+
+    const vesselFiltered = vessels.filter(
+      (vessel) =>
+        vessel.vesselName &&
+        vessel.vesselName.toLowerCase().includes(input.toLowerCase())
+    );
+    setFilteredVessels(vesselFiltered);
+  };
+
+  const HandleSpSearch = (inputSp) => {
+    if (!inputSp) {
+      setFilteredStandardProcesses(standardProcesses);
+      return;
+    }
+
+    const spFiltered = standardProcesses.filter(
+      (sp) =>
+        sp.spName && sp.spName.toLowerCase().includes(inputSp.toLowerCase())
+    );
+    setFilteredStandardProcesses(spFiltered);
+  };
 
   //등록
   const HandleChangeSelectBomDetail = (index, key, value) => {
@@ -116,10 +154,6 @@ const BOMContainer = () => {
   };
 
   const HandleDoubleClickBOM = async (record) => {
-    const resVes = await ERPapi.get(`${ERP_API}/vessels`);
-    const resSp = await ERPapi.get(`${ERP_API}/standardprocesses`);
-    setVessels(resVes.data);
-    setStandardProcesses(resSp.data);
     setSelectedRowKeys([record.bomNo]);
     const matchData = {
       bomNo: record.bomNo,
@@ -131,9 +165,6 @@ const BOMContainer = () => {
   };
 
   const HandleDoubleClickBOMDetail = async (record) => {
-    const resMat = await ERPapi.get(`${ERP_API}/materials`);
-    setMaterials(resMat.data);
-
     const matchData = {
       bomDetailNo: record.bomDetailNo,
       bomNo: record.bom.bomNo,
@@ -259,6 +290,8 @@ const BOMContainer = () => {
 
   return (
     <BOMPresenter
+      typeValue={typeValue}
+      setTypeValue={setTypeValue}
       rowSelection={rowSelection}
       hasSelected={hasSelected}
       searchTerm={searchTerm}
@@ -279,6 +312,8 @@ const BOMContainer = () => {
       updateBomInfo={updateBomInfo}
       bomDetailInfo={bomDetailInfo}
       updateBomDetailInfo={updateBomDetailInfo}
+      filteredVessels={filteredVessels}
+      filteredStandardProcesses={filteredStandardProcesses}
       HandleRowClick={HandleRowClick}
       HandleDoubleClickBOM={HandleDoubleClickBOM}
       HandleDoubleClickBOMDetail={HandleDoubleClickBOMDetail}
@@ -297,6 +332,8 @@ const BOMContainer = () => {
       HandleModalClose={HandleModalClose}
       HandleUpdateBomModalClose={HandleUpdateBomModalClose}
       HandleUpdateBomDetailModalClose={HandleUpdateBomDetailModalClose}
+      HandleVesselSearch={HandleVesselSearch}
+      HandleSpSearch={HandleSpSearch}
     />
   );
 };

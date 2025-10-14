@@ -16,6 +16,7 @@ const ProjectViewPresenter = ({
   HandleModalStatusChange,
   HandleStatusChangeBtnClick,
   HandleChangeType,
+  getStatusClass,
 }) => {
   const items = [
     {
@@ -102,30 +103,33 @@ const ProjectViewPresenter = ({
                       </div>
                     </div>
 
-                    <div className="product-plans">
-                      <div className="pp-items">
-                        <div className="pp-title">생산 계획</div>
-                        {productPlans.map((productPlan) => {
-                          if (
-                            productPlan.project.projectNo === project.projectNo
-                          ) {
-                            return (
-                              <div className="pp-item" key={productPlan.ppNo}>
-                                <div>{productPlan.ppName}</div>
-                                <div>
-                                  {productPlan.bom
-                                    ? productPlan.bom.vessel.vesselName
-                                    : "-"}
-                                </div>
-                                <div>
-                                  {productPlan.bom
-                                    ? productPlan.bom.standardProcess.spName
-                                    : "-"}
-                                </div>
-                                <div>
-                                  {productPlan.ppStartDate.split("T")[0]} ~{" "}
-                                  {productPlan.ppEndDate.split("T")[0]}
-                                </div>
+                  <div className="product-plans">
+                    <div className="pp-items">
+                      <div className="pp-title">생산 계획</div>
+                      {productPlans.map((productPlan) => {
+                        if (
+                          productPlan.project.projectNo === project.projectNo
+                        ) {
+                          return (
+                            <div
+                              className={`pp-item ${getStatusClass(
+                                productPlan.ppStatus
+                              )}`}
+                              key={productPlan.ppNo}
+                            >
+                              <div>
+                                [{productPlan.ppStatus}] &nbsp;&nbsp;
+                                {productPlan.ppName}
+                              </div>
+                              <div>
+                                {productPlan.bom
+                                  ? productPlan.bom.vessel.vesselName
+                                  : "-"}
+                              </div>
+                              <div>
+                                {productPlan.bom
+                                  ? productPlan.bom.standardProcess.spName
+                                  : "-"}
                               </div>
                             );
                           }

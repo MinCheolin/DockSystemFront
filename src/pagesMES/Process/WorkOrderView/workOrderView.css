@@ -1,3 +1,29 @@
+.workOrder-content {
+  min-height: 100vh;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+.grid-func {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  gap: 5px;
+}
+
+.header-phrase {
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+  font-weight: 500;
+  gap: 15px;
+}
+.workOrder-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
 .work-order-detail-header {
   display: flex;
   justify-content: space-between;

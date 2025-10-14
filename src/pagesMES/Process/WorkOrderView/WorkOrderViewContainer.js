@@ -7,6 +7,7 @@ import { MESapi } from "../../../components/api/api";
 
 const WorkOrderViewContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [nowStatus, setNowStatus] = useState("대기");
   const [workOrder, setWorkOrder] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [productPlans, setProductPlans] = useState([]);
@@ -95,6 +96,8 @@ const WorkOrderViewContainer = () => {
       bomDetails={bomDetails}
       isModalOpen={isModalOpen}
       woStatus={woStatus}
+      nowStatus={nowStatus}
+      setNowStatus={setNowStatus}
       HandleModalStatusChange={HandleModalStatusChange}
       HandleWoStatusChange={HandleWoStatusChange}
       HandleNumberChange={HandleNumberChange}
