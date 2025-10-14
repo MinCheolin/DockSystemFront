@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 
 const BOMPresenter = ({
+  typeValue,
+  setTypeValue,
   HandleCreateModalOpen,
   hasSelected,
   HandleDoubleClickBOM,
@@ -26,6 +28,8 @@ const BOMPresenter = ({
   vessels,
   materials,
   standardProcesses,
+  filteredVessels,
+  filteredStandardProcesses,
   HandleRowClick,
   isModalOpen,
   HandleModalClose,
@@ -46,9 +50,17 @@ const BOMPresenter = ({
   HandleUpdateChangeInputBomDetail,
   updateBomInfo,
   updateBomDetailInfo,
+  HandleVesselSearch,
+  HandleSpSearch,
 }) => {
   const [form] = Form.useForm();
-
+  const typeOpt = [
+    { value: "철강", label: "철강" },
+    { value: "화학", label: "화학" },
+    { value: "전기/전자", label: "전기/전자" },
+    { value: "기계/엔진 부품", label: "기계/엔진 부품" },
+    { value: "기타 자재", label: "기타 자재" },
+  ];
   const vesselFilter = [
     ...new Set(boms.map((bom) => bom.vessel.vesselName)),
   ].map((name) => ({
@@ -177,6 +189,7 @@ const BOMPresenter = ({
         />
       </div>
       <Modal
+        width={650}
         title="BOM 추가"
         open={isModalOpen}
         footer={null}
@@ -185,28 +198,48 @@ const BOMPresenter = ({
       >
         <Form
           form={form}
-          labelCol={{ span: 4 }}
+          labelCol={{ span: 6 }}
           wrapperCol={{ span: 20 }}
           onFinish={HandleCreateBom}
         >
           <Form.Item label="선박명" name="vesselName">
             <Select
+              showSearch
               placeholder="선박을 선택하세요."
-              options={vessels.map((vessel) => ({
-                value: vessel.vesselNo,
-                label: vessel.vesselName,
+              options={filteredVessels.map((v) => ({
+                value: v.vesselNo,
+                label: v.vesselName,
               }))}
               onChange={(value) => HandleChangeSelectBom("vesselNo", value)}
+              onSearch={HandleVesselSearch}
+              optionFilterProp="label"
+              filterOption={false}
+              notFoundContent="일치하는 항목이 없습니다"
+              onInputKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                }
+              }}
             />
           </Form.Item>
           <Form.Item label="표준 공정명" name="spName">
             <Select
+              showSearch
               placeholder="표준 공정을 선택하세요."
-              options={standardProcesses.map((sp) => ({
+              options={filteredStandardProcesses.map((sp) => ({
                 value: sp.spNo,
                 label: sp.spName,
               }))}
               onChange={(value) => HandleChangeSelectBom("spNo", value)}
+              onSearch={HandleSpSearch}
+              optionFilterProp="label"
+              filterOption={false}
+              notFoundContent="일치하는 항목이 없습니다"
+              onInputKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                }
+              }}
             />
           </Form.Item>
           <p>
@@ -217,14 +250,27 @@ const BOMPresenter = ({
               <>
                 {fields.map((field, index) => (
                   <div className="bomDetailInput" key={field.key}>
+                    <label>자재 유형 : </label>
+                    <Select
+                      options={typeOpt}
+                      onChange={(value) => setTypeValue(value)}
+                      placeholder="유형을 선택하세요."
+                      style={{ width: 120 }}
+                    />
                     <label>자재명:</label>
                     <Form.Item name={[field.name, "materialName"]}>
                       <Select
+                        disabled={!typeValue}
+                        style={{ width: 170 }}
                         placeholder="자재를 선택하세요."
-                        options={materials.map((material) => ({
-                          value: material.materialNo,
-                          label: material.materialName,
-                        }))}
+                        options={materials
+                          .filter(
+                            (material) => material.materialType === typeValue
+                          )
+                          .map((material) => ({
+                            value: material.materialNo,
+                            label: material.materialName,
+                          }))}
                         onChange={(value) =>
                           HandleChangeSelectBomDetail(
                             index,
@@ -237,7 +283,9 @@ const BOMPresenter = ({
                     <label>자재 수량:</label>
                     <Form.Item name={[field.name, "bomDetailCount"]}>
                       <InputNumber
-                        placeholder="자재 수량을 입력하세요"
+                        disabled={!typeValue}
+                        style={{ width: 60 }}
+                        placeholder="수량"
                         onChange={(value) =>
                           HandleChangeInputBomDetail(
                             index,

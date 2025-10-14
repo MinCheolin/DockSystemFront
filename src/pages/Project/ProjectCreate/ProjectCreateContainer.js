@@ -54,6 +54,7 @@ const ProjectCreateContainer = () => {
               ...plan,
               ppStartDate: dates ? dates[0]?.format("YYYY-MM-DD") : null,
               ppEndDate: dates ? dates[1]?.format("YYYY-MM-DD") : null,
+              ppStatus: "미완료",
             }
           : plan
       )

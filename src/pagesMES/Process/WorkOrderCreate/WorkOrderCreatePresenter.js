@@ -3,7 +3,9 @@ import "./workOrderCreate.css";
 
 const { RangePicker } = DatePicker;
 const WorkOrderPresenter = ({
-  ppNo,
+  ppName,
+  spName,
+  vesselName,
   equipments,
   workOrder,
   HandleChangeInput,
@@ -40,10 +42,15 @@ const WorkOrderPresenter = ({
             </div>
           </div>
           <div className="processInfo-Input">
-            <Form.Item label="생산 계획 번호">
-              <Input className="underline-input" readOnly value={ppNo} />
+            <Form.Item label="생산 계획명">
+              <Input className="underline-input" readOnly value={ppName} />
             </Form.Item>
-
+            <Form.Item label="공정명">
+              <Input className="underline-input" readOnly value={spName} />
+            </Form.Item>
+            <Form.Item label="선박명">
+              <Input className="underline-input" readOnly value={vesselName} />
+            </Form.Item>
             <Form.Item label="작업 지시명">
               <Input name="woName" onChange={HandleChangeInput} />
             </Form.Item>
@@ -53,18 +60,15 @@ const WorkOrderPresenter = ({
                 style={{ width: "100%" }}
               />
             </Form.Item>
-
             <Form.Item label="작업 지시 내용">
               <Input.TextArea name="woDetail" onChange={HandleChangeInput} />
             </Form.Item>
-
             <Form.Item label="특이사항">
               <Input.TextArea
                 name="woDescription"
                 onChange={HandleChangeInput}
               />
             </Form.Item>
-
             <Form.Item label="사용 장비">
               <Select
                 onChange={(value) => HandleChangeSelect("equipNo", value)}
@@ -74,13 +78,8 @@ const WorkOrderPresenter = ({
                 }))}
               />
             </Form.Item>
-
             <Form.Item label="작업 상태">
-              <Select
-                onChange={(value) => HandleChangeSelectType("type", value)}
-                options={typeOptions}
-                value={workOrder.type}
-              />
+              <Input className="underline-input" readOnly value="대기" />
             </Form.Item>
           </div>
         </div>

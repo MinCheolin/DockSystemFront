@@ -13,6 +13,7 @@ const ProjectViewPresenter = ({
   HandleModalStatusChange,
   HandleStatusChangeBtnClick,
   HandleChangeType,
+  getStatusClass,
 }) => {
   const items = [
     {
@@ -92,8 +93,16 @@ const ProjectViewPresenter = ({
                           productPlan.project.projectNo === project.projectNo
                         ) {
                           return (
-                            <div className="pp-item" key={productPlan.ppNo}>
-                              <div>{productPlan.ppName}</div>
+                            <div
+                              className={`pp-item ${getStatusClass(
+                                productPlan.ppStatus
+                              )}`}
+                              key={productPlan.ppNo}
+                            >
+                              <div>
+                                [{productPlan.ppStatus}] &nbsp;&nbsp;
+                                {productPlan.ppName}
+                              </div>
                               <div>
                                 {productPlan.bom
                                   ? productPlan.bom.vessel.vesselName

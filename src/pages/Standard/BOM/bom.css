@@ -6,6 +6,10 @@
   padding: 15px;
 }
 
+.bom-create-modal {
+  width: 650;
+}
+
 .modal-title {
   text-align: center;
   font-size: 30px;

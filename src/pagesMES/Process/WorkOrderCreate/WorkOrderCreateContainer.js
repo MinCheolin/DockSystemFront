@@ -7,7 +7,7 @@ import { MESapi } from "../../../components/api/api";
 const WorkOrderCreateContainer = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { ppNo } = location.state || {};
+  const { ppNo, ppName, spName, vesselName } = location.state || {};
   const [equipments, setEquipments] = useState([]);
   const [workOrder, setWorkOrder] = useState({
     woName: "",
@@ -15,7 +15,7 @@ const WorkOrderCreateContainer = () => {
     woEndDate: "",
     woDetail: "",
     woDescription: "",
-    type: null,
+    type: "대기",
     ppNo: String(ppNo),
     equipNo: "",
   });
@@ -81,7 +81,9 @@ const WorkOrderCreateContainer = () => {
     <WorkOrderCreatePresenter
       workOrder={workOrder}
       equipments={equipments}
-      ppNo={ppNo}
+      ppName={ppName}
+      spName={spName}
+      vesselName={vesselName}
       HandleChangeInput={HandleChangeInput}
       HandleChangeSelect={HandleChangeSelect}
       HandleChangeSelectType={HandleChangeSelectType}

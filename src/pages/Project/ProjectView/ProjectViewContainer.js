@@ -16,6 +16,15 @@ const ProjectViewContainer = () => {
     navigate(`/erp/project/projectUpdate/${key}`);
   };
 
+  const getStatusClass = (value) => {
+    switch (value) {
+      case "미완료":
+        return "incomplete";
+      case "완료":
+        return "complete";
+    }
+  };
+
   const fetchData = async () => {
     try {
       const resProjects = await ERPapi.get(`${ERP_API}/projects`);
@@ -73,6 +82,7 @@ const ProjectViewContainer = () => {
       HandleModalStatusChange={HandleModalStatusChange}
       HandleStatusChangeBtnClick={HandleStatusChangeBtnClick}
       HandleChangeType={HandleChangeType}
+      getStatusClass={getStatusClass}
     />
   );
 };
