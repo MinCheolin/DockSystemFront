@@ -133,7 +133,6 @@ const BOMPresenter = ({
       />
     );
   };
-
   return (
     <div className="bom-content">
       <div className="grid-func">

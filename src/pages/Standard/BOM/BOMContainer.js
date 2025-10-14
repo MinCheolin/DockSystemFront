@@ -46,6 +46,8 @@ const BOMContainer = () => {
       setStandardProcesses(resSp.data);
       setBoms(responseBom.data);
       setBomdetails(responseBomDetail.data);
+      setFilteredStandardProcesses(resSp.data);
+      setFilteredVessels(resVes.data);
     } catch (error) {
       alert("조회 실패");
     }

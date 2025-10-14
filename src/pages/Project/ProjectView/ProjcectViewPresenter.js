@@ -132,6 +132,10 @@ const ProjectViewPresenter = ({
                                     ? productPlan.bom.standardProcess.spName
                                     : "-"}
                                 </div>
+                                <div>
+                                  {productPlan.ppStartDate.split("T")[0]} ~{" "}
+                                  {productPlan.ppEndDate.split("T")[0]}
+                                </div>
                               </div>
                             );
                           }
