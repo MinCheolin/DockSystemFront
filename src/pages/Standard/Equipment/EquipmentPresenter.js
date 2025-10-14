@@ -85,6 +85,11 @@ const EquipmentPresenter = ({
       categories[cat].some((keyword) => equipName.includes(keyword))
     );
   };
+  const fileteredCategory = equipments.filter((eq) =>
+    selectedCategories.some((cat) =>
+      categories[cat].some((keyword) => eq.equipName.includes(keyword))
+    )
+  );
 
   const columns = [
     { title: "번호", key: "index", render: (text, record, index) => index + 1 },
@@ -103,11 +108,17 @@ const EquipmentPresenter = ({
       filters: typeFilter,
       onFilter: (value, record) => record.type === value,
     },
-    { title: "장비 구매가", dataIndex: "equipPrice", key: "equipPrice" },
+    {
+      title: "장비 구매가",
+      dataIndex: "equipPrice",
+      key: "equipPrice",
+      render: (value) => value.toLocaleString(),
+    },
     {
       title: "장비 감가 상각",
       dataIndex: "equipDepreciation",
       key: "equipDepreciation",
+      render: (value) => value.toLocaleString(),
     },
     {
       title: "장비 구매일",
@@ -198,8 +209,8 @@ const EquipmentPresenter = ({
             {selectedCategories.length > 0 ? (
               (() => {
                 const renderedCategories = selectedCategories.map((cat) => {
-                  const equipmentInCategory = equipments.filter(
-                    (eq) => getCategoryByEquip(eq.equipName) === cat
+                  const equipmentInCategory = fileteredCategory.filter(
+                    (mat) => getCategoryByEquip(mat.equipName) === cat
                   );
 
                   if (equipmentInCategory.length === 0) return null;
@@ -209,7 +220,7 @@ const EquipmentPresenter = ({
                       <h4>{cat}</h4>
                       <ul>
                         {equipmentInCategory.map((eq) => (
-                          <li key={eq.equip_No}>{eq.equipName}</li>
+                          <li key={eq.equipName}>{eq.equipName}</li>
                         ))}
                       </ul>
                     </div>

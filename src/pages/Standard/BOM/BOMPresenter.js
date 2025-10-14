@@ -63,7 +63,7 @@ const BOMPresenter = ({
       dataIndex: ["vessel", "vesselName"],
       key: "vessel",
       filters: vesselFilter,
-      onFilter: (value, record) => record.vesselName === value,
+      onFilter: (value, record) => record.vessel.vesselName === value,
     },
     {
       title: "표준 공정명",
@@ -159,7 +159,10 @@ const BOMPresenter = ({
       <div className="grid-box">
         <Table
           size="small"
-          pagination={false}
+          pagination={{
+            pageSize: 13,
+            position: ["bottomCenter"],
+          }}
           rowSelection={rowSelection}
           columns={BomColumns}
           dataSource={isSearching ? filteredBoms : boms}

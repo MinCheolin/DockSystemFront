@@ -57,23 +57,43 @@
   gap: 5px;
 }
 
-.projects {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  margin: 15px;
-}
-
 .card-inner-div {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+.projects .slick-prev,
+.projects .slick-next {
+  z-index: 10; /* 카드 위로 올라오도록 */
+  top: 50%; /* 수직 중앙 */
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* 둥근 원 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projects .slick-prev::before,
+.projects .slick-next::before {
+  color: rgb(179, 175, 175); /* 화살표 색 */
+  font-size: 35px;
+}
+
+.projects .slick-prev {
+  left: 70px;
+}
+
+.projects .slick-next {
+  right: 70px;
+}
+
 .project-card {
   width: 800px;
+  margin: 0 auto;
+  margin-top: 10px;
   transition: box-shadow 0.3s ease-in-out;
   border: 1px solid rgb(204, 204, 204);
 }

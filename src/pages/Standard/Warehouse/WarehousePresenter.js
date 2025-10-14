@@ -92,7 +92,15 @@ const WarehousePresenter = ({
         </div>
 
         <div className="grid-box">
-          <Table columns={columns} dataSource={warehouses} rowKey="whNo" />
+          <Table
+            columns={columns}
+            pagination={{
+              pageSize: 13,
+              position: ["bottomCenter"],
+            }}
+            dataSource={warehouses}
+            rowKey="whNo"
+          />
         </div>
       </div>
     </>

@@ -69,7 +69,11 @@ const ClientPresenter = ({
   }));
 
   const columns = [
-    { title: "번호", key: "index", render: (text, record, index) => index + 1 },
+    {
+      title: "번호",
+      key: "index",
+      render: (text, record, index) => index + 1,
+    },
     {
       title: "거래처명",
       dataIndex: "clientName",
@@ -140,7 +144,10 @@ const ClientPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
-            pagination={false}
+            pagination={{
+              pageSize: 13,
+              position: ["bottomCenter"],
+            }}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
             columns={columns}

@@ -81,10 +81,6 @@ const LayoutPresent = ({
         <Content className="main-content">
           <Outlet />
         </Content>
-        <Footer className="main-footer">
-          2025-SmartFactory Final Project ©{new Date().getFullYear()} Created by
-          Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
