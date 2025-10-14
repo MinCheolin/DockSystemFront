@@ -166,7 +166,7 @@ const ProjectUpdatePresenter = ({
                   <Select
                     style={{ flex: "0 0 35%" }}
                     placeholder="BOM"
-                    value={plan.bom ? plan.bom.bomNo : ""}
+                    value={plan.bom ? plan.bom.bomNo : null}
                     options={[
                       { value: "", label: "BOM 없음" },
                       ...boms

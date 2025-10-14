@@ -42,9 +42,9 @@ const ProjectViewPresenter = ({
     speed: 500,
     centerMode: true,
     centerPadding: "0px",
-    slidesToShow: 1, // 한 화면에 보여줄 카드 수
-    slidesToScroll: 1, // 한 번에 이동할 카드 수
-    arrows: true, // 좌우 화살표 표시
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
   };
 
   return (
@@ -62,6 +62,7 @@ const ProjectViewPresenter = ({
           <Button>새 프로젝트 등록</Button>
         </div>
       </div>
+
       <div className="projects">
         <Slider {...settings}>
           {projects
@@ -87,7 +88,7 @@ const ProjectViewPresenter = ({
                       </div>
                       <div className="grid-item">선박 :</div>
                       <div className="grid-item">
-                        {project.vessel.vesselName}
+                        {project.vessel?.vesselName}
                       </div>
                       <div className="grid-item">금액 :</div>
                       <div className="grid-item">
@@ -95,7 +96,7 @@ const ProjectViewPresenter = ({
                       </div>
                       <div className="grid-item">고객사 :</div>
                       <div className="grid-item">
-                        {project.customer.customerName}
+                        {project.customer?.customerName}
                       </div>
                       <div className="grid-item">비고 :</div>
                       <div className="grid-item">
@@ -103,33 +104,34 @@ const ProjectViewPresenter = ({
                       </div>
                     </div>
 
-                  <div className="product-plans">
-                    <div className="pp-items">
-                      <div className="pp-title">생산 계획</div>
-                      {productPlans.map((productPlan) => {
-                        if (
-                          productPlan.project.projectNo === project.projectNo
-                        ) {
-                          return (
-                            <div
-                              className={`pp-item ${getStatusClass(
-                                productPlan.ppStatus
-                              )}`}
-                              key={productPlan.ppNo}
-                            >
-                              <div>
-                                [{productPlan.ppStatus}] &nbsp;&nbsp;
-                                {productPlan.ppName}
-                              </div>
-                              <div>
-                                {productPlan.bom
-                                  ? productPlan.bom.vessel.vesselName
-                                  : "-"}
-                              </div>
-                              <div>
-                                {productPlan.bom
-                                  ? productPlan.bom.standardProcess.spName
-                                  : "-"}
+                    <div className="product-plans">
+                      <div className="pp-items">
+                        <div className="pp-title">생산 계획</div>
+                        {productPlans.map((productPlan) => {
+                          if (
+                            productPlan.project.projectNo === project.projectNo
+                          ) {
+                            return (
+                              <div
+                                className={`pp-item ${getStatusClass(
+                                  productPlan.ppStatus
+                                )}`}
+                                key={productPlan.ppNo}
+                              >
+                                <div>
+                                  [{productPlan.ppStatus}] &nbsp;&nbsp;
+                                  {productPlan.ppName}
+                                </div>
+                                <div>
+                                  {productPlan.bom
+                                    ? productPlan.bom.vessel.vesselName
+                                    : "-"}
+                                </div>
+                                <div>
+                                  {productPlan.bom
+                                    ? productPlan.bom.standardProcess.spName
+                                    : "-"}
+                                </div>
                               </div>
                             );
                           }
@@ -138,6 +140,7 @@ const ProjectViewPresenter = ({
                       </div>
                     </div>
                   </div>
+
                   <div className="button-area">
                     <Button
                       onClick={() => HandleProjectUpdate(project.projectNo)}
@@ -163,6 +166,7 @@ const ProjectViewPresenter = ({
                     </Button>
                   </div>
                 </Card>
+
                 <Modal
                   open={isModalOpen}
                   onCancel={HandleModalStatusChange}
@@ -198,4 +202,5 @@ const ProjectViewPresenter = ({
     </div>
   );
 };
+
 export default ProjectViewPresenter;
