@@ -32,8 +32,8 @@ const ProductPlanMesContainer = () => {
       state: {
         ppNo: pp.ppNo,
         ppName: pp.ppName,
-        spName: pp.bom.standardProcess.spName,
-        vesselName: pp.bom.vessel.vesselName,
+        spName: pp?.bom?.standardProcess?.spName ?? "-",
+        vesselName: pp?.bom?.vessel?.vesselName ?? "-",
       },
     });
   };
