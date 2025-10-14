@@ -8,6 +8,7 @@ const WorkOrderPresenter = ({
   vesselName,
   equipments,
   workOrder,
+  productPlans,
   HandleChangeInput,
   HandleChangeDate,
   HandleCreateWorkOrder,

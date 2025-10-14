@@ -15,6 +15,8 @@ const MaterialContainer = () => {
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const fetchData = async () => {
     try {
       const response = await ERPapi.get(`${ERP_API}/materials`);
@@ -125,6 +127,7 @@ const MaterialContainer = () => {
 
   const HandleChangeModalStatus = () => {
     setIsModalOpen(!isModalOpen);
+
   };
 
   const HandleUpdateModalClose = () => {
@@ -138,6 +141,8 @@ const MaterialContainer = () => {
       HandleDeleteMaterial={HandleDeleteMaterial}
       setIsUpdateModalOpen={setIsUpdateModalOpen}
       updateMaterialInfo={updateMaterialInfo}
+      selectedCategories={selectedCategories}
+      HandleCheckbox={HandleCheckbox}
       HandleUpdateChangeInput={HandleUpdateChangeInput}
       HandleUpdateMaterial={HandleUpdateMaterial}
       handleShowAll={handleShowAll}

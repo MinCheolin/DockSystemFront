@@ -8,6 +8,8 @@ const MaterialPresenter = ({
   HandleCreateMaterial,
   HandleChangeModalStatus,
   isModalOpen,
+  selectedCategories,
+  HandleCheckbox,
   HandleUpdateModalClose,
   handleSearchMaterial,
   HandleUpdateMaterial,
@@ -70,6 +72,26 @@ const MaterialPresenter = ({
     text: unit,
     value: unit,
   }));
+
+  const categories = {
+    철강: ["형강", "합금판", "강판"],
+    화학: ["페인트", "코팅제", "접착제", "윤활유"],
+    "전기/전자": ["전선", "케이블", "센서"],
+    "기계/엔진 부품": ["터반", "펌프", "밸브", "볼트"],
+    "기타 자재": ["단열재", "고무", "유리", "감지기"],
+  };
+
+  const getCategoryByMaterial = (materialName) => {
+    return Object.keys(categories).find((cat) =>
+      categories[cat].some((keyword) => materialName.includes(keyword))
+    );
+  };
+
+  const fileteredCategory = materials.filter((mat) =>
+    selectedCategories.some((cat) =>
+      categories[cat].some((keyword) => mat.materialName.includes(keyword))
+    )
+  );
 
   const columns = [
     {
@@ -158,6 +180,7 @@ const MaterialPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
+            scroll={{ y: 200 }}
             pagination={false}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
@@ -171,6 +194,57 @@ const MaterialPresenter = ({
               },
             })}
           />
+        </div>
+
+        <div className="category">
+          <div>
+            <h1>자재 카테고리</h1>
+            {Object.keys(categories).map((cat) => (
+              <div key={cat}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => HandleCheckbox(cat)}
+                  />
+                  {cat}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="category-list">
+            <h1>선택된 자재 목록</h1>
+            {selectedCategories.length > 0 ? (
+              (() => {
+                const renderedCategories = selectedCategories.map((cat) => {
+                  const materialsInCategory = fileteredCategory.filter(
+                    (mat) => getCategoryByMaterial(mat.materialName) === cat
+                  );
+
+                  if (materialsInCategory.length === 0) return null;
+
+                  return (
+                    <div key={cat} className="selected-category">
+                      <h4>{cat}</h4>
+                      <ul>
+                        {materialsInCategory.map((mat) => (
+                          <li key={mat.materialName}>{mat.materialName}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                });
+
+                if (renderedCategories.every((el) => el === null)) {
+                  return <p>선택된 자재가 없습니다</p>;
+                }
+
+                return renderedCategories;
+              })()
+            ) : (
+              <p>선택된 자재가 없습니다</p>
+            )}
+          </div>
         </div>
 
         <Modal

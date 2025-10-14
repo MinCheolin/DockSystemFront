@@ -80,7 +80,10 @@ const UserPresenter = ({
       <div className="grid-box">
         <Table
           size="small"
-          pagination={false}
+          pagination={{
+            pageSize: 13,
+            position: ["bottomCenter"],
+          }}
           rowSelection={rowSelection}
           columns={columns}
           dataSource={users}
