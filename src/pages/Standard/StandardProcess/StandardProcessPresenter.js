@@ -151,7 +151,9 @@ const StandardProcessPresenter = ({
         <div className="grid-box">
           <Table
             size="small"
-            pagination={false}
+            pagination={{
+              pageSize: 13,
+            }}
             rowClassName="clickable-row"
             rowSelection={rowSelection}
             columns={columns}

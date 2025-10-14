@@ -221,7 +221,7 @@ const MaterialPresenter = ({
                       <h4>{cat}</h4>
                       <ul>
                         {materialsInCategory.map((mat) => (
-                          <li key={mat.material_name}>{mat.materialName}</li>
+                          <li key={mat.materialName}>{mat.materialName}</li>
                         ))}
                       </ul>
                     </div>

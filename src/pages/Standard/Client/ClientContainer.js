@@ -143,6 +143,7 @@ const ClientContainer = () => {
     setFilteredClients([]);
     setIsSearching(false);
   };
+
   const HandleCreateModalOpen = () => {
     setClientInfo({
       clientName: "",
