@@ -6,10 +6,6 @@ import { MESapi } from "../../components/api/api";
 const QualityControlContainer = () => {
   const [value, setValue] = useState("대기");
   const [qualityControls, setQualityControls] = useState([]);
-  const [updateQualityControl, setUpdateQualityControl] = useState({
-    successQuantity: 0,
-    faultyQuantity: 0,
-  });
 
   const fetchData = async () => {
     const resQc = await MESapi.get(`${MES_API}/quality_controls`);
@@ -20,40 +16,81 @@ const QualityControlContainer = () => {
     fetchData();
   }, []);
 
-  const HandleChangeQuantity = (qcNo, name, value) => {
-    setUpdateQualityControl((prev) => ({
-      ...prev,
-      qcNo: qcNo,
-      [name]: value,
-    }));
+  const HandleChangeQuantity = (updateQcNo, name, value) => {
+    const filteredQC = qualityControls.find((qc) => qc.qcNo === updateQcNo);
+    if (value > filteredQC.totalQuantity) {
+      value = filteredQC.totalQuantity;
+    }
+
+    if (name === "successQuantity") {
+      setQualityControls((prev) =>
+        prev.map((qc) =>
+          qc.qcNo === updateQcNo
+            ? {
+                ...qc,
+                [name]: value,
+                faultQuantity: filteredQC.totalQuantity - value,
+              }
+            : qc
+        )
+      );
+    } else {
+      setQualityControls((prev) =>
+        prev.map((qc) =>
+          qc.qcNo === updateQcNo
+            ? {
+                ...qc,
+                [name]: value,
+                successQuantity: filteredQC.totalQuantity - value,
+              }
+            : qc
+        )
+      );
+    }
   };
 
-  const HandleUpdateQualityControl = async (total, stockNo) => {
+  const HandleUpdateQualityControl = async (updateQcNo) => {
+    const filteredQC = qualityControls.find((qc) => qc.qcNo === updateQcNo);
+
     if (
-      total !==
-      updateQualityControl.successQuantity + updateQualityControl.faultyQuantity
+      filteredQC.totalQuantity !==
+      filteredQC.successQuantity + filteredQC.faultQuantity
     )
-      alert("수량을 확인해 주세요.");
+      alert("합계 불일치!");
     else {
       try {
         //1. 재고 추가
-        await MESapi.put(`${MES_API}/stocks/${stockNo}`, {
-          normalCount: updateQualityControl.successQuantity,
-          errorCount: updateQualityControl.faultyQuantity,
+        await MESapi.put(`${MES_API}/stocks/${filteredQC.stock.stockNo}`, {
+          normalCount: filteredQC.successQuantity,
+          errorCount: filteredQC.faultQuantity,
         });
-
         //2. 품질 검사 상태 변경
-        await MESapi.put(
-          `${MES_API}/quality_controls/${updateQualityControl.qcNo}`,
-          {
-            successQuantity: updateQualityControl.successQuantity,
-            faultQuantity: updateQualityControl.faultyQuantity,
-          }
-        );
+        await MESapi.put(`${MES_API}/quality_controls/${filteredQC.qcNo}`, {
+          type: "완료",
+          successQuantity: filteredQC.successQuantity,
+          faultQuantity: filteredQC.faultQuantity,
+        });
         fetchData();
       } catch (err) {
         alert("수정 실패");
       }
+    }
+  };
+
+  const HandleReturnQualityControl = async (record) => {
+    try {
+      await MESapi.put(`${MES_API}/quality_controls/${record.qcNo}`, {
+        type: "대기",
+        successQuantity: 0,
+        faultQuantity: 0,
+      });
+      await MESapi.put(`${MES_API}/stocks/${record.stock.stockNo}`, {
+        normalCount: -record.successQuantity,
+        errorCount: -record.faultyQuantity,
+      });
+      fetchData();
+    } catch (err) {
+      alert("상태 변경 실패");
     }
   };
 
@@ -64,6 +101,7 @@ const QualityControlContainer = () => {
       qualityControls={qualityControls}
       HandleChangeQuantity={HandleChangeQuantity}
       HandleUpdateQualityControl={HandleUpdateQualityControl}
+      HandleReturnQualityControl={HandleReturnQualityControl}
     />
   );
 };
