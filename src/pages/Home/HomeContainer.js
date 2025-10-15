@@ -37,8 +37,6 @@ const HomeContainer = () => {
             })
           );
         }
-
-        // 데이터를 모두 가공한 후, 마지막에 한번만 state를 업데이트합니다.
         setRateSummary(summaryData);
       } catch (err) {
         console.error("환율 통계 정보를 가져오는 데 실패했습니다:", err);
@@ -58,10 +56,9 @@ const HomeContainer = () => {
 
     fetchNews();
     fetchRateSummary();
-    fetchOilPrices(); // 함수 호출
+    fetchOilPrices();
   }, []);
 
-  // Presenter에 oilSummary prop 전달
   return (
     <HomePresenter
       dummyNotices={notices}

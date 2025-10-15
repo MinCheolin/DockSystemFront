@@ -1,41 +1,57 @@
 import { Segmented, Table, Button, InputNumber } from "antd";
 import "./qualityControl.css";
 
-const columns = [
-  {
-    title: "작업지시명",
-    dataIndex: ["workOrder", "woName"],
-    key: "woName",
-  },
-  {
-    title: "결과물",
-    dataIndex: ["stock", "stockName"],
-    key: "stockName",
-  },
-  {
-    title: "갯수",
-    dataIndex: "totalQuantity",
-    key: "totalQuantity",
-  },
-  {
-    title: "정상",
-    dataIndex: "successQuantity",
-    key: "successQuantity",
-  },
-  {
-    title: "불량",
-    dataIndex: "faultQuantity",
-    key: "faultQuantity",
-  },
-];
-
 const QualityControlPresenter = ({
   qualityControls,
   HandleChangeQuantity,
   HandleUpdateQualityControl,
+  HandleReturnQualityControl,
   value,
   setValue,
 }) => {
+  const columns = [
+    {
+      title: "작업지시명",
+      align: "center",
+      dataIndex: ["workOrder", "woName"],
+      key: "woName",
+    },
+    {
+      title: "결과물",
+      align: "center",
+      dataIndex: ["stock", "stockName"],
+      key: "stockName",
+    },
+    {
+      title: "갯수",
+      align: "center",
+      dataIndex: "totalQuantity",
+      key: "totalQuantity",
+    },
+    {
+      title: "정상",
+      align: "center",
+      dataIndex: "successQuantity",
+      key: "successQuantity",
+    },
+    {
+      title: "불량",
+      align: "center",
+      dataIndex: "faultQuantity",
+      key: "faultQuantity",
+    },
+    {
+      title: "상태",
+      align: "center",
+      width: 50,
+      key: "status",
+      render: (_, record) => (
+        <Button onClick={() => HandleReturnQualityControl(record)}>
+          재검사
+        </Button>
+      ),
+    },
+  ];
   const filteredQC = qualityControls.filter((qc) => qc.type === value);
   return (
     <div className="quality-content">
@@ -74,7 +90,7 @@ const QualityControlPresenter = ({
                   <div className="item-data">
                     <InputNumber
                       min={0}
-                      defaultValue={0}
+                      value={qc.successQuantity}
                       onChange={(value) =>
                         HandleChangeQuantity(qc.qcNo, "successQuantity", value)
                       }
@@ -86,9 +102,10 @@ const QualityControlPresenter = ({
                   <div className="item-data">
                     <InputNumber
                       min={0}
-                      defaultValue={0}
+                      value={qc.faultQuantity}
+                      max={qc.totalQuantity}
                       onChange={(value) =>
-                        HandleChangeQuantity(qc.qcNo, "faultyQuantity", value)
+                        HandleChangeQuantity(qc.qcNo, "faultQuantity", value)
                       }
                     />
                   </div>
@@ -96,14 +113,7 @@ const QualityControlPresenter = ({
               </div>
 
               <div className="card-btn-area">
-                <Button
-                  onClick={() =>
-                    HandleUpdateQualityControl(
-                      qc.totalQuantity,
-                      qc.stock.stockNo
-                    )
-                  }
-                >
+                <Button onClick={() => HandleUpdateQualityControl(qc.qcNo)}>
                   검사 완료
                 </Button>
               </div>

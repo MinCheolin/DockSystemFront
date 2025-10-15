@@ -1,6 +1,5 @@
 import { Row, Col, Card, List, Typography, Spin, Statistic, Tabs } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
-// 👇 XAxis, YAxis, CartesianGrid를 recharts import에 추가합니다.
 import {
   LineChart,
   Line,
@@ -10,6 +9,7 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts";
+import "./home.css";
 
 const { Text } = Typography;
 
@@ -26,23 +26,40 @@ const HomePresenter = ({ dummyNotices = [], rateSummary, oilPrices }) => {
   }
 
   return (
-    <Row gutter={[16, 16]}>
-      <Col span={24}>
-        <Card title="조선소 최신 뉴스">
-          <List
-            dataSource={dummyNotices}
-            renderItem={(item) => (
-              <List.Item>
-                <a href={item.link} target="_blank" rel="noopener noreferrer">
-                  {item.title}
-                </a>
-              </List.Item>
-            )}
-          />
-        </Card>
-      </Col>
+    <div className="home-content">
+      <div className="top-area">
+        <div className="article-area">
+          <Card title="조선소 최신 뉴스">
+            <List
+              dataSource={dummyNotices}
+              renderItem={(item) => (
+                <List.Item>
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    {item.title}
+                  </a>
+                </List.Item>
+              )}
+            />
+          </Card>
+        </div>
+        <div className="notice-area">
+          <div class="slider">
+            <div class="slide-track">
+              <div class="slide">
+                <div class="train-card">이미지 또는 카드</div>
+              </div>
+              <div class="slide">
+                <div class="train-card">이미지 또는 카드</div>
+              </div>
+              <div class="slide">
+                <div class="train-card">이미지 또는 카드</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Col span={24}>
+      <div className="business-index">
         <Card
           title="주요 경제 지표"
           extra={
@@ -237,8 +254,8 @@ const HomePresenter = ({ dummyNotices = [], rateSummary, oilPrices }) => {
             </Tabs.TabPane>
           </Tabs>
         </Card>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
