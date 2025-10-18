@@ -40,6 +40,7 @@ const ProjectViewPresenter = ({
       {content}
     </div>
   );
+
   const items = [
     {
       key: "1",
@@ -303,13 +304,13 @@ const ProjectViewPresenter = ({
                 <Col span={12}>
                   <DescriptionItem
                     title="프로젝트명"
-                    content={drawerInfo.projectName}
+                    content={drawerInfo?.projectName}
                   />
                 </Col>
                 <Col span={12}>
                   <DescriptionItem
                     title="선박명"
-                    content={drawerInfo.vessel.vesselName}
+                    content={drawerInfo?.vessel.vesselName}
                   />
                 </Col>
               </Row>
@@ -317,13 +318,13 @@ const ProjectViewPresenter = ({
                 <Col span={12}>
                   <DescriptionItem
                     title="금액"
-                    content={drawerInfo.projectPrice}
+                    content={drawerInfo?.projectPrice}
                   />
                 </Col>
                 <Col span={12}>
                   <DescriptionItem
                     title="고객사명"
-                    content={drawerInfo.customer.customerName}
+                    content={drawerInfo?.customer.customerName}
                   />
                 </Col>
               </Row>
@@ -331,7 +332,7 @@ const ProjectViewPresenter = ({
                 <Col span={24}>
                   <DescriptionItem
                     title="비고"
-                    content={drawerInfo.projectDescription}
+                    content={drawerInfo?.projectDescription}
                   />
                 </Col>
               </Row>
