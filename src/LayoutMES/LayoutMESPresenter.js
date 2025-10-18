@@ -1,4 +1,5 @@
 import "./layout.css";
+import userImageUrl from "../assets/dockonicon.png";
 import {
   SafetyOutlined,
   FileOutlined,
@@ -12,6 +13,7 @@ import {
 
 import { Layout, Menu } from "antd";
 import { Outlet } from "react-router-dom";
+import Chatbot from "../components/Chatbot/Chatbot";
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -59,7 +61,14 @@ const LayoutMESPresent = ({
       </Sider>
       <Layout>
         <Header className="main-header">
-          <div></div>
+          <div>
+            {" "}
+            <img
+              src={userImageUrl}
+              alt="페이지 로고"
+              style={{ width: "200px" }}
+            />
+          </div>
           <div className="user-info">
             <div>{loginUser} 님</div>
             <div className="info-item">마이페이지</div>
@@ -76,6 +85,7 @@ const LayoutMESPresent = ({
           Ant UED
         </Footer>
       </Layout>
+      <Chatbot />
     </Layout>
   );
 };

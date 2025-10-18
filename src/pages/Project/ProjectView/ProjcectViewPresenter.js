@@ -110,6 +110,7 @@ const ProjectViewPresenter = ({
           <Button>새 프로젝트 등록</Button>
         </div>
       </div>
+
       <div className="projects">
         {value !== "완료" ? (
           <Slider {...settings}>
@@ -143,6 +144,19 @@ const ProjectViewPresenter = ({
                             {project.type}
                           </Tag>
                         </span>
+                    </div>
+                  }
+                >
+                  <div className="card-inner-div">
+                    <div className="grid-item-container">
+                      <div className="grid-item">기간 :</div>
+                      <div className="grid-item">
+                        {project.projectStartDate.split("T")[0]} ~{" "}
+                        {project.projectEndDate.split("T")[0]}
+                      </div>
+                      <div className="grid-item">선박 :</div>
+                      <div className="grid-item">
+                        {project.vessel?.vesselName}
                       </div>
                     }
                   >
@@ -170,7 +184,6 @@ const ProjectViewPresenter = ({
                           {project.projectDescription}
                         </div>
                       </div>
-
                       <div className="product-plans">
                         <div className="pp-items">
                           <div className="pp-title">생산 계획</div>
@@ -331,4 +344,5 @@ const ProjectViewPresenter = ({
     </div>
   );
 };
+
 export default ProjectViewPresenter;

@@ -13,7 +13,15 @@ import "./home.css";
 
 const { Text } = Typography;
 
-const HomePresenter = ({ dummyNotices = [], rateSummary, oilPrices }) => {
+const HomePresenter = ({
+  dummyNotices = [],
+  rateSummary,
+  oilPrices,
+  weather,
+  cityCoordinates,
+  selectedCity,
+  onSelectCity,
+}) => {
   let ratePositionPercent = 0;
   if (rateSummary && !rateSummary.error) {
     const { currentRate, weeklyHigh, weeklyLow } = rateSummary;
@@ -42,7 +50,124 @@ const HomePresenter = ({ dummyNotices = [], rateSummary, oilPrices }) => {
             />
           </Card>
         </div>
-        <div className="notice-area"></div>
+        <div className="weather-container" style={{ width: "600px" }}>
+          <div className="city-buttons">
+            {Object.entries(cityCoordinates).map(([key, { name }]) => (
+              <button
+                key={key}
+                onClick={() => onSelectCity(key)}
+                style={{
+                  margin: "4px",
+                  padding: "6px 12px",
+                  borderRadius: "6px",
+                  background: selectedCity === key ? "#1677ff" : "#eef3faff",
+                  color: selectedCity === key ? "#fff" : "#000",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+          <div
+            className="current-and-forecast"
+            style={{
+              display: "flex",
+              gap: "16px",
+              marginTop: "16px",
+            }}
+          >
+            {weather && weather.current && (
+              <div
+                className="current-weather"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: "0 0 200px",
+                  background: "#dbe7f9ff",
+                  borderRadius: "12px",
+                  padding: "16px",
+                  textAlign: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                  fontSize: "16px",
+                }}
+              >
+                <h3>{cityCoordinates[selectedCity].name} 현재 날씨</h3>
+                <div>온도: {weather.current.main.temp}°C</div>
+                <div>풍속: {weather.current.wind.speed}m/s</div>
+                <div>날씨: {weather.current.weather[0].description}</div>
+                <img
+                  src={`http://openweathermap.org/img/wn/${weather.current.weather[0].icon.replace(
+                    "n",
+                    "d"
+                  )}@2x.png`}
+                  alt="날씨 아이콘"
+                />
+              </div>
+            )}
+
+            {weather && weather.forecast && (
+              <div
+                className="forecast"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  flex: "1",
+                  gap: "8px",
+                }}
+              >
+                {weather.forecast.list
+                  .filter((_, idx) => idx % 8 === 0) // 하루 1개
+                  .map((item, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        background: "#dbe7f9ff",
+                        borderRadius: "10px",
+                        textAlign: "center",
+                        padding: "8px",
+                        minWidth: "140px",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "0.75rem",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {new Date(item.dt_txt).toLocaleDateString("ko-KR", {
+                          month: "numeric",
+                          day: "numeric",
+                          weekday: "short",
+                        })}
+                      </div>
+                      <div style={{ fontSize: "0.85rem", fontWeight: "bold" }}>
+                        {item.main.temp.toFixed(1)}°C
+                      </div>
+                      <img
+                        src={`http://openweathermap.org/img/wn/${item.weather[0].icon.replace(
+                          "n",
+                          "d"
+                        )}@2x.png`}
+                        alt="아이콘"
+                        style={{ width: "40px", height: "40px" }}
+                      />
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="business-index">

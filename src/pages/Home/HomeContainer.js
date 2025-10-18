@@ -7,6 +7,16 @@ const HomeContainer = () => {
   const [rateSummary, setRateSummary] = useState(null);
   const [oilPrices, setOilPrices] = useState(null);
 
+  const [weather, setWeather] = useState(null);
+
+  const cityCoordinates = {
+    busan: { name: "부산", lat: 35.1796, lon: 129.0756 },
+    ulsan: { name: "울산", lat: 35.5384, lon: 129.3114 },
+    geoje: { name: "거제", lat: 34.8806, lon: 128.6217 },
+  };
+
+  const [selectedCity, setSelectedCity] = useState("geoje");
+
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -59,11 +69,32 @@ const HomeContainer = () => {
     fetchOilPrices();
   }, []);
 
+  const fetchWeather = async (cityKey) => {
+    const { lat, lon } = cityCoordinates[cityKey];
+    try {
+      const res = await axios.get("http://localhost:8080/api/weather", {
+        params: { lat, lon },
+      });
+      setWeather(res.data);
+      setSelectedCity(cityKey);
+    } catch (err) {
+      console.error("날씨 정보를 가져오는 데 실패했습니다:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather("geoje");
+  }, []);
+
   return (
     <HomePresenter
       dummyNotices={notices}
       rateSummary={rateSummary}
       oilPrices={oilPrices}
+      weather={weather}
+      cityCoordinates={cityCoordinates}
+      selectedCity={selectedCity}
+      onSelectCity={fetchWeather}
     />
   );
 };
