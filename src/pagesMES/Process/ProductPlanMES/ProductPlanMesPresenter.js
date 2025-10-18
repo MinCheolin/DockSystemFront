@@ -90,19 +90,6 @@ const ProductPlanMesPresenter = ({
       align: "center",
       dataIndex: ["project", "projectName"],
       key: "projectName",
-      onCell: (record, rowIndex) => {
-        const projectName = record.project.projectName;
-        const sameGroup = productplans.filter(
-          (d) => d.project.projectName === projectName
-        );
-        const firstIndex = productplans.findIndex(
-          (d) => d.project.projectName === projectName
-        );
-        const isFirst = rowIndex === firstIndex;
-        return {
-          rowSpan: isFirst ? sameGroup.length : 0, // 첫 행만 병합
-        };
-      },
     },
     {
       title: "생산 계획명",
@@ -114,8 +101,8 @@ const ProductPlanMesPresenter = ({
       title: "기간",
       align: "center",
       render: (_, record) => {
-        const start = dayjs(record.startDate).format("YYYY-MM-DD");
-        const end = dayjs(record.endDate).format("YYYY-MM-DD");
+        const start = dayjs(record.ppStartDate).format("YYYY-MM-DD");
+        const end = dayjs(record.ppEndDate).format("YYYY-MM-DD");
         return `${start} ~ ${end}`;
       },
       key: "period",

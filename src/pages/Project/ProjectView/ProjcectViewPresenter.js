@@ -2,7 +2,6 @@ import {
   Row,
   Col,
   Divider,
-  Descriptions,
   Dropdown,
   Button,
   Card,
@@ -125,7 +124,6 @@ const ProjectViewPresenter = ({
                     title={
                       <div className="card-title-flex">
                         <span>{project.projectName}</span>
-                        <span></span>
                         <span>
                           <Tag
                             color={
