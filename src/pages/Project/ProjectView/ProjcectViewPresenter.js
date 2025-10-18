@@ -18,6 +18,16 @@ const ProjectViewPresenter = ({
   HandleChangeType,
   getStatusClass,
 }) => {
+<<<<<<< HEAD
+=======
+  const DescriptionItem = ({ title, content }) => (
+    <div className="site-description-item-profile-wrapper">
+      <p className="site-description-item-profile-p-label">{title}:</p>
+      {content}
+    </div>
+  );
+
+>>>>>>> ef9fcb528b100611f27954c021759952bb3139ea
   const items = [
     {
       key: "1",
@@ -64,6 +74,7 @@ const ProjectViewPresenter = ({
       </div>
 
       <div className="projects">
+<<<<<<< HEAD
         <Slider {...settings}>
           {projects
             .filter((project) => project.type === value)
@@ -93,6 +104,66 @@ const ProjectViewPresenter = ({
                       <div className="grid-item">금액 :</div>
                       <div className="grid-item">
                         {project.projectPrice.toLocaleString()} 원
+=======
+        {value !== "완료" ? (
+          <Slider {...settings}>
+            {projects
+              .filter((project) => project.type === value)
+              .map((project) => (
+                <div key={project.projectNo}>
+                  <Card
+                    className="project-card"
+                    title={
+                      <div className="card-title-flex">
+                        <span>{project.projectName}</span>
+                        <span></span>
+                        <span>
+                          <Tag
+                            color={
+                              value === "대기"
+                                ? "lime"
+                                : value === "진행"
+                                ? "orange"
+                                : value === "완료"
+                                ? "green"
+                                : ""
+                            }
+                            style={{
+                              fontSize: 16,
+                              padding: "6px 12px",
+                              height: "auto",
+                            }}
+                          >
+                            {project.type}
+                          </Tag>
+                        </span>
+                      </div>
+                    }
+                  >
+                    <div className="card-inner-div">
+                      <div className="grid-item-container">
+                        <div className="grid-item">기간 :</div>
+                        <div className="grid-item">
+                          {project.projectStartDate.split("T")[0]} ~{" "}
+                          {project.projectEndDate.split("T")[0]}
+                        </div>
+                        <div className="grid-item">선박 :</div>
+                        <div className="grid-item">
+                          {project.vessel?.vesselName}
+                        </div>
+                        <div className="grid-item">금액 :</div>
+                        <div className="grid-item">
+                          {project.projectPrice.toLocaleString()} 원
+                        </div>
+                        <div className="grid-item">고객사 :</div>
+                        <div className="grid-item">
+                          {project.customer.customerName}
+                        </div>
+                        <div className="grid-item">비고 :</div>
+                        <div className="grid-item">
+                          {project.projectDescription}
+                        </div>
+>>>>>>> ef9fcb528b100611f27954c021759952bb3139ea
                       </div>
                       <div className="grid-item">고객사 :</div>
                       <div className="grid-item">
@@ -197,11 +268,96 @@ const ProjectViewPresenter = ({
                       </Button>
                       <Button onClick={HandleModalStatusChange}>취소</Button>
                     </div>
+<<<<<<< HEAD
                   </div>
                 </Modal>
               </div>
             ))}
         </Slider>
+=======
+                  </Card>
+                  <Modal
+                    open={isModalOpen}
+                    onCancel={HandleModalStatusChange}
+                    footer={null}
+                  >
+                    <div className="modal-status-change">
+                      <div className="modal-status-change-header">
+                        상태값 변경
+                      </div>
+                      <div className="modal-status-change-body">
+                        <div>
+                          <span className="current-status">{project.type}</span>
+                          {"  →   "}
+                          <span className="target-status">{selectStatus}</span>
+                        </div>
+                        <div>변경하시겠습니까?</div>
+                      </div>
+                      <div className="modal-status-change-footer">
+                        <Button
+                          onClick={() => HandleChangeType(project.projectNo)}
+                          type="primary"
+                        >
+                          변경
+                        </Button>
+                        <Button onClick={HandleModalStatusChange}>취소</Button>
+                      </div>
+                    </div>
+                  </Modal>
+                </div>
+              ))}
+          </Slider>
+        ) : (
+          <>
+            <Table columns={colums} dataSource={completedPjt} />
+            <Drawer
+              title="프로젝트 상세정보"
+              open={isDrawerOpen}
+              onClose={HandleDrawerClose}
+              width={500}
+            >
+              <Row>
+                <Col span={12}>
+                  <DescriptionItem
+                    title="프로젝트명"
+                    content={drawerInfo?.projectName}
+                  />
+                </Col>
+                <Col span={12}>
+                  <DescriptionItem
+                    title="선박명"
+                    content={drawerInfo?.vessel.vesselName}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <DescriptionItem
+                    title="금액"
+                    content={drawerInfo?.projectPrice}
+                  />
+                </Col>
+                <Col span={12}>
+                  <DescriptionItem
+                    title="고객사명"
+                    content={drawerInfo?.customer.customerName}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <DescriptionItem
+                    title="비고"
+                    content={drawerInfo?.projectDescription}
+                  />
+                </Col>
+              </Row>
+              <Divider />
+              <>생산계획</>
+            </Drawer>
+          </>
+        )}
+>>>>>>> ef9fcb528b100611f27954c021759952bb3139ea
       </div>
     </div>
   );
