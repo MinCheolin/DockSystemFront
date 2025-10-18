@@ -1,4 +1,5 @@
 import "./layout.css";
+import userImageUrl from "../assets/dockonicon.png";
 import {
   TeamOutlined,
   WarningOutlined,
@@ -70,7 +71,13 @@ const LayoutPresent = ({
       </Sider>
       <Layout>
         <Header className="main-header">
-          <div></div>
+          <div>
+            <img
+              src={userImageUrl}
+              alt="페이지 로고"
+              style={{ width: "200px" }}
+            />
+          </div>
           <div className="user-info">
             <div>{loginUser} 님</div>
             <div className="info-item">마이페이지</div>
