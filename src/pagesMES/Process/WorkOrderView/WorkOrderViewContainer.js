@@ -31,7 +31,6 @@ const WorkOrderViewContainer = () => {
       setLoading(false);
     }
   };
-  console.log(workOrder);
 
   const fetchBomDetails = async (ppBomNo) => {
     try {

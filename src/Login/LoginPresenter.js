@@ -13,8 +13,16 @@ const LoginPresenter = ({
 }) => {
   if (username) {
     return (
-      <div>
+      <div className="event_wrap">
+        <div class="wave_box">
+          <div class="wave"></div>
+        </div>
+
         <div className="login-container">
+          <div className="wave_box">
+            <div className="wave"></div>
+          </div>
+
           <div className="header-area">
             <div className="header-img">
               <img className="logo-img" src={logoImg} />
@@ -63,50 +71,57 @@ const LoginPresenter = ({
   }
 
   return (
-    <div className="login-container">
-      <div className="header-area">
-        <div className="header-img">
-          <img className="logo-img" src={logoImg} />
-        </div>
-        <div className="header-text">
-          <div className="system-name">DockON</div>
-          <div className="system-desc">조선소 통합 관리 시스템</div>
+    <div className="page-wrap">
+      <div className="event_wrap">
+        <div className="wave_box">
+          <div className="wave"></div>
         </div>
       </div>
-      <div className="login-box">
-        <div className="login-tabs">
-          <div
-            className={`select-tab ${selectedTab === "erp" ? "erp" : ""}`}
-            onClick={() => HandleTabSelect("erp")}
-          >
-            ERP
+      <div className="login-container">
+        <div className="header-area">
+          <div className="header-img">
+            <img className="logo-img" src={logoImg} />
           </div>
-          <div
-            className={`select-tab  ${selectedTab === "mes" ? "mes" : ""}`}
-            onClick={() => HandleTabSelect("mes")}
-          >
-            MES
+          <div className="header-text">
+            <div className="system-name">DockON</div>
+            <div className="system-desc">조선소 통합 관리 시스템</div>
           </div>
         </div>
-        <div className="login-input">
-          <Input
-            className="input"
-            name="userId"
-            placeholder="아이디"
-            onChange={HandleChangeInput}
-          />
-          <Input.Password
-            className="input"
-            name="password"
-            placeholder="패스워드"
-            onChange={HandleChangeInput}
-          />
-          <Button type="primary" onClick={HandleLogin}>
-            로그인
-          </Button>
+        <div className="login-box">
+          <div className="login-tabs">
+            <div
+              className={`select-tab ${selectedTab === "erp" ? "erp" : ""}`}
+              onClick={() => HandleTabSelect("erp")}
+            >
+              ERP
+            </div>
+            <div
+              className={`select-tab  ${selectedTab === "mes" ? "mes" : ""}`}
+              onClick={() => HandleTabSelect("mes")}
+            >
+              MES
+            </div>
+          </div>
+          <div className="login-input">
+            <Input
+              className="input"
+              name="userId"
+              placeholder="아이디"
+              onChange={HandleChangeInput}
+            />
+            <Input.Password
+              className="input"
+              name="password"
+              placeholder="패스워드"
+              onChange={HandleChangeInput}
+            />
+            <Button type="primary" onClick={HandleLogin}>
+              로그인
+            </Button>
+          </div>
         </div>
+        © BUVA 2025 SmartFactory. Crafted with passion and care.
       </div>
-      © BUVA 2025 SmartFactory. Crafted with passion and care.
     </div>
   );
 };

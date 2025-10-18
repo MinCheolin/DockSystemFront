@@ -9,11 +9,23 @@ const ProjectViewContainer = () => {
   const [productPlans, setProductPlans] = useState([]);
   const [value, setValue] = useState("대기");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerInfo, setDrawerInfo] = useState();
   const [selectStatus, setSelectStatus] = useState(null);
   const navigate = useNavigate();
 
   const HandleProjectUpdate = (key) => {
     navigate(`/erp/project/projectUpdate/${key}`);
+  };
+
+  const HandleDrawerOpen = (record) => {
+    console.log(record);
+    setDrawerInfo(record);
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const HandleDrawerClose = () => {
+    setIsDrawerOpen(false);
   };
 
   const getStatusClass = (value) => {
@@ -72,14 +84,18 @@ const ProjectViewContainer = () => {
   return (
     <ProjectViewPresenter
       isModalOpen={isModalOpen}
+      isDrawerOpen={isDrawerOpen}
       projects={projects}
       value={value}
       productPlans={productPlans}
       selectStatus={selectStatus}
+      drawerInfo={drawerInfo}
       setValue={setValue}
       HandleProjectUpdate={HandleProjectUpdate}
       HandleDeleteProject={HandleDeleteProject}
       HandleModalStatusChange={HandleModalStatusChange}
+      HandleDrawerOpen={HandleDrawerOpen}
+      HandleDrawerClose={HandleDrawerClose}
       HandleStatusChangeBtnClick={HandleStatusChangeBtnClick}
       HandleChangeType={HandleChangeType}
       getStatusClass={getStatusClass}

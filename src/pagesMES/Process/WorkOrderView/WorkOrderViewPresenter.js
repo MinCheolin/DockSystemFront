@@ -3,12 +3,20 @@ import {
   Descriptions,
   Button,
   Modal,
+  Tag,
   Select,
   InputNumber,
   Segmented,
 } from "antd";
 import dayjs from "dayjs";
 import "./workOrderView.css";
+
+const options = [
+  { value: "대기", label: "대기" },
+  { value: "진행", label: "진행" },
+  { value: "품질", label: "품질" },
+  { value: "완료", label: "완료" },
+];
 
 const WorkOrderViewPresenter = ({
   workOrder,
@@ -25,11 +33,37 @@ const WorkOrderViewPresenter = ({
   HandleStatusUpdate,
   HandleStockChange,
 }) => {
+  const filteredStatus = options.filter((option) => option.value !== nowStatus);
+  const getTagByType = (type) => {
+    let color;
+    switch (type) {
+      case "대기":
+        color = "geekblue";
+        break;
+      case "진행":
+        color = "blue";
+        break;
+      case "품질":
+        color = "gold";
+        break;
+      case "완료":
+        color = "green";
+        break;
+      default:
+        color = "default";
+    }
+    return <Tag color={color}>{type}</Tag>;
+  };
   const collapseItems = workOrder
     .filter((wo) => nowStatus === wo.type)
     .map((wo) => ({
       key: wo.woNo,
-      label: `[${wo.type}] \u00A0\u00A0   ${wo.woName}  `,
+
+      label: (
+        <span>
+          {getTagByType(wo.type)}&nbsp;&nbsp;&nbsp;{wo.woName}
+        </span>
+      ),
       children: (
         <div className="work-order-detail-content">
           <div className="work-order-detail-header">
@@ -105,12 +139,7 @@ const WorkOrderViewPresenter = ({
                       defaultValue={wo.type}
                       style={{ width: "70%" }}
                       onChange={(value) => HandleWoStatusChange(value)}
-                      options={[
-                        { value: "대기", label: "대기" },
-                        { value: "진행", label: "진행" },
-                        { value: "품질", label: "품질" },
-                        { value: "완료", label: "완료" },
-                      ]}
+                      options={filteredStatus}
                     ></Select>
                   </div>
                   {woStatus === "품질" && (

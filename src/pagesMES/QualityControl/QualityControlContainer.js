@@ -70,6 +70,14 @@ const QualityControlContainer = () => {
           successQuantity: filteredQC.successQuantity,
           faultQuantity: filteredQC.faultQuantity,
         });
+
+        await MESapi.patch(
+          `${MES_API}/work_orders/${filteredQC.workOrder.woNo}/type`,
+          {
+            type: "완료",
+          }
+        );
+
         fetchData();
       } catch (err) {
         alert("수정 실패");
@@ -88,6 +96,12 @@ const QualityControlContainer = () => {
         normalCount: -record.successQuantity,
         errorCount: -record.faultyQuantity,
       });
+      await MESapi.patch(
+        `${MES_API}/work_orders/${record.workOrder.woNo}/type`,
+        {
+          type: "품질",
+        }
+      );
       fetchData();
     } catch (err) {
       alert("상태 변경 실패");

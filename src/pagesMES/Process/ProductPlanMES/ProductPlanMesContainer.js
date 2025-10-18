@@ -16,7 +16,7 @@ const ProductPlanMesContainer = () => {
       const response = await ERPapi.get(`${ERP_API}/product_plans`);
       const resWO = await MESapi.get(`${MES_API}/work_orders`);
       setProductPlans(
-        response.data.filter((data) => data.project.type !== "대기")
+        response.data.filter((data) => data.project.type === "진행")
       );
       setWorkOrders(resWO.data);
     } catch (err) {

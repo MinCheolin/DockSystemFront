@@ -112,31 +112,6 @@ const MesHomePresenter = () => {
     <div>
       <div className="home-content">
         <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <Card title="공지사항">
-              <List
-                dataSource={dummyNotices}
-                renderItem={(item) => (
-                  <List.Item>
-                    <button
-                      type="button"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        padding: 0,
-                        color: "blue",
-                        textDecoration: "underline",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {item.title}
-                    </button>
-                  </List.Item>
-                )}
-              />
-            </Card>
-          </Col>
-
           <Col span={12}>
             <Card title="품질율">
               <QualityChart data={qualityData} />
