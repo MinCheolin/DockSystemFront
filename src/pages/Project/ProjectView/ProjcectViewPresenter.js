@@ -145,19 +145,6 @@ const ProjectViewPresenter = ({
                             {project.type}
                           </Tag>
                         </span>
-                    </div>
-                  }
-                >
-                  <div className="card-inner-div">
-                    <div className="grid-item-container">
-                      <div className="grid-item">기간 :</div>
-                      <div className="grid-item">
-                        {project.projectStartDate.split("T")[0]} ~{" "}
-                        {project.projectEndDate.split("T")[0]}
-                      </div>
-                      <div className="grid-item">선박 :</div>
-                      <div className="grid-item">
-                        {project.vessel?.vesselName}
                       </div>
                     }
                   >
@@ -170,7 +157,7 @@ const ProjectViewPresenter = ({
                         </div>
                         <div className="grid-item">선박 :</div>
                         <div className="grid-item">
-                          {project.vessel.vesselName}
+                          {project.vessel?.vesselName}
                         </div>
                         <div className="grid-item">금액 :</div>
                         <div className="grid-item">
