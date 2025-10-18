@@ -2,7 +2,6 @@ import {
   Row,
   Col,
   Divider,
-  Descriptions,
   Dropdown,
   Button,
   Card,
@@ -16,6 +15,7 @@ import "./projectview.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 const ProjectViewPresenter = ({
   isModalOpen,
   isDrawerOpen,
@@ -58,6 +58,7 @@ const ProjectViewPresenter = ({
       onClick: () => HandleStatusChangeBtnClick("완료"),
     },
   ];
+
   const colums = [
     {
       title: "프로젝트명",
@@ -95,7 +96,6 @@ const ProjectViewPresenter = ({
     arrows: true,
   };
   const completedPjt = projects.filter((project) => project.type === "완료");
-
   return (
     <div className="project-content">
       <div className="grid-func">
@@ -124,7 +124,6 @@ const ProjectViewPresenter = ({
                     title={
                       <div className="card-title-flex">
                         <span>{project.projectName}</span>
-                        <span></span>
                         <span>
                           <Tag
                             color={
