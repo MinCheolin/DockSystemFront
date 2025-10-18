@@ -70,7 +70,6 @@ const HomePresenter = ({
               </button>
             ))}
           </div>
-
           <div
             className="current-and-forecast"
             style={{

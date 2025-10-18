@@ -122,7 +122,6 @@ const MesHomePresenter = ({
                   </button>
                 ))}
             </div>
-
             <div
               className="current-and-forecast"
               style={{

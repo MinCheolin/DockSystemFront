@@ -45,5 +45,22 @@
 }
 
 .main-table .ant-table-expanded-row .ant-table-tbody > tr > td {
-  background-color: #feecec;
+  background-color: #fdfeee;
 }
+
+/*
+.row-waiting td {
+  background-color: #ffeceb; 
+}
+
+.row-working td {
+  background-color: #fffbe6; 
+}
+.row-quality td {
+  background-color: #ffeceb; 
+}
+
+.row-complete td {
+  background-color: #fffbe6; 
+}
+*/

@@ -1,10 +1,11 @@
-import { Button, Table, Segmented } from "antd";
+import { Button, Table, Segmented, Tag } from "antd";
 import dayjs from "dayjs";
 import "./productPlanMes.css";
 
 const subColumns = [
   {
     title: "번호",
+    width: 50,
     align: "center",
     key: "index",
     render: (text, record, index) => index + 1,
@@ -12,19 +13,43 @@ const subColumns = [
   {
     title: "작업 지시명",
     width: "15%",
+    align: "center",
     dataIndex: "woName",
     key: "woName",
+  },
+
+  {
+    title: "작업 지시 내용",
+    dataIndex: "woDetail",
+    align: "center",
+    key: "woDetail",
   },
   {
     title: "작업 상태",
     width: "10%",
+    align: "center",
     dataIndex: "type",
     key: "type",
-  },
-  {
-    title: "작업 지시 내용",
-    dataIndex: "woDetail",
-    key: "woDetail",
+    render: (type) => {
+      let color;
+      switch (type) {
+        case "대기":
+          color = "geekblue";
+          break;
+        case "진행":
+          color = "blue";
+          break;
+        case "품질":
+          color = "gold";
+          break;
+        case "완료":
+          color = "green";
+          break;
+        default:
+          color = "default";
+      }
+      return <Tag color={color}> {type}</Tag>;
+    },
   },
 ];
 
@@ -45,6 +70,20 @@ const ProductPlanMesPresenter = ({
       align: "center",
       dataIndex: "ppStatus",
       key: "ppStatus",
+      render: (ppStatus) => {
+        let color;
+        switch (ppStatus) {
+          case "미완료":
+            color = "red";
+            break;
+          case "완료":
+            color = "green";
+            break;
+          default:
+            color = "default";
+        }
+        return <Tag color={color}> {ppStatus}</Tag>;
+      },
     },
     {
       title: "프로젝트명",
