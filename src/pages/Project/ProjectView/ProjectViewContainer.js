@@ -10,7 +10,7 @@ const ProjectViewContainer = () => {
   const [value, setValue] = useState("대기");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [drawerInfo, setDrawerInfo] = useState();
+  const [drawerInfo, setDrawerInfo] = useState(null);
   const [selectStatus, setSelectStatus] = useState(null);
   const navigate = useNavigate();
 
