@@ -127,6 +127,7 @@ const ProjectUpdateContainer = () => {
       {
         ppStartDate: "",
         ppEndDate: "",
+        bomNo: null,
       },
     ]);
   };

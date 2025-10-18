@@ -153,6 +153,7 @@ const StandardProcessPresenter = ({
             size="small"
             pagination={{
               pageSize: 13,
+              position: ["bottomCenter"],
             }}
             rowClassName="clickable-row"
             rowSelection={rowSelection}

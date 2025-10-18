@@ -43,7 +43,14 @@ const StockPresenter = ({
         </div>
       </div>
       <div className="grid-box">
-        <Table columns={columns} dataSource={stocks}></Table>
+        <Table
+          columns={columns}
+          dataSource={stocks}
+          pagination={{
+            pageSize: 13,
+            position: ["bottomCenter"],
+          }}
+        ></Table>
       </div>
 
       <Modal

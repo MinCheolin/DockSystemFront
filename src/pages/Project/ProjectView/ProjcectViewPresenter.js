@@ -62,6 +62,7 @@ const ProjectViewPresenter = ({
           <Button>새 프로젝트 등록</Button>
         </div>
       </div>
+
       <div className="projects">
         <Slider {...settings}>
           {projects
@@ -87,7 +88,7 @@ const ProjectViewPresenter = ({
                       </div>
                       <div className="grid-item">선박 :</div>
                       <div className="grid-item">
-                        {project.vessel.vesselName}
+                        {project.vessel?.vesselName}
                       </div>
                       <div className="grid-item">금액 :</div>
                       <div className="grid-item">
@@ -95,7 +96,7 @@ const ProjectViewPresenter = ({
                       </div>
                       <div className="grid-item">고객사 :</div>
                       <div className="grid-item">
-                        {project.customer.customerName}
+                        {project.customer?.customerName}
                       </div>
                       <div className="grid-item">비고 :</div>
                       <div className="grid-item">
@@ -131,7 +132,6 @@ const ProjectViewPresenter = ({
                                     ? productPlan.bom.standardProcess.spName
                                     : "-"}
                                 </div>
-
                                 <div>
                                   {productPlan.ppStartDate.split("T")[0]} ~{" "}
                                   {productPlan.ppEndDate.split("T")[0]}
@@ -144,6 +144,7 @@ const ProjectViewPresenter = ({
                       </div>
                     </div>
                   </div>
+
                   <div className="button-area">
                     <Button
                       onClick={() => HandleProjectUpdate(project.projectNo)}
@@ -169,6 +170,7 @@ const ProjectViewPresenter = ({
                     </Button>
                   </div>
                 </Card>
+
                 <Modal
                   open={isModalOpen}
                   onCancel={HandleModalStatusChange}
@@ -204,4 +206,5 @@ const ProjectViewPresenter = ({
     </div>
   );
 };
+
 export default ProjectViewPresenter;
