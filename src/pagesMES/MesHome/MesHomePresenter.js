@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Row, Col, Card, Modal, List } from "antd";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import "./mesHome.css";
 
 const dummyNotices = [
@@ -66,8 +67,18 @@ const MesHomePresenter = ({
   cityCoordinates,
   selectedCity,
   onSelectCity,
+  totalSuccess,
+  totalQty,
+  totalQualityRate,
 }) => {
   const [activeNotice, setActiveNotice] = useState(null);
+  const currentDate = new Date().toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+  });
+
   return (
     <div className="home-content">
       <Row gutter={[16, 16]} style={{ display: "flex", flexWrap: "nowrap" }}>
@@ -173,7 +184,7 @@ const MesHomePresenter = ({
                   }}
                 >
                   {weather.forecast.list
-                    .filter((_, idx) => idx % 8 === 0) // 하루 1개
+                    .filter((_, idx) => idx % 8 === 0)
                     .map((item, idx) => (
                       <div
                         key={idx}
@@ -224,6 +235,112 @@ const MesHomePresenter = ({
           </div>
         </Col>
       </Row>
+
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col span={24}>
+          <Card
+            title={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span>품질 현황</span>
+                <span style={{ fontSize: "0.9rem", color: "#888" }}>
+                  {currentDate}
+                </span>
+              </div>
+            }
+          >
+            <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+              <Col span={8}>
+                <Card
+                  style={{
+                    position: "relative",
+                    backgroundColor: "#ffffffff",
+                    color: "black",
+                    height: "230px",
+                  }}
+                >
+                  <h2 style={{ fontWeight: "bold" }}>전체 품질율</h2>
+                  <PieChart width={150} height={150}>
+                    <Pie
+                      data={[
+                        { name: "Good", value: totalQualityRate },
+                        { name: "error", value: 100 - totalQualityRate },
+                      ]}
+                      innerRadius={50}
+                      outerRadius={70}
+                      startAngle={90}
+                      endAngle={-270}
+                      dataKey="value"
+                      nameKey="name"
+                    >
+                      <Cell key="good" fill="#ffffffff" />
+                      <Cell key="error" fill="#8b2b1f" />
+                    </Pie>
+                  </PieChart>
+                  <p
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: "30px",
+                      transform: "translateY(-50%)",
+                      fontSize: "40px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {totalQualityRate}%
+                  </p>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  style={{
+                    backgroundColor: "#ffffffff",
+                    color: "black",
+                    height: "230px",
+                  }}
+                >
+                  <h2 style={{ fontWeight: "bold" }}>총 생산 수량</h2>
+                  <p
+                    style={{
+                      position: "absolute",
+                      left: "70px",
+                      fontSize: "80px",
+                    }}
+                  >
+                    {totalQty.toLocaleString()} EA
+                  </p>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  style={{
+                    backgroundColor: "#ffffffff",
+                    color: "black",
+                    height: "230px",
+                  }}
+                >
+                  <h2 style={{ fontWeight: "bold" }}>성공 수량</h2>
+                  <p
+                    style={{
+                      position: "absolute",
+                      left: "70px",
+                      fontSize: "80px",
+                    }}
+                  >
+                    {totalSuccess.toLocaleString()} EA
+                  </p>
+                </Card>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+
       {activeNotice && (
         <Modal
           title={activeNotice.title}

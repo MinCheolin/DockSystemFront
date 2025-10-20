@@ -6,6 +6,9 @@ import MesHomePresenter from "./MesHomePresenter";
 const MesHomeContainer = () => {
   const [weather, setWeather] = useState(null);
   const [quality, setQuality] = useState([]);
+  const [totalQualityRate, setTotalQualityRate] = useState(0);
+  const [totalSuccess, setTotalSuccess] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
 
   const cityCoordinates = {
     busan: { name: "부산", lat: 35.1796, lon: 129.0756 },
@@ -31,9 +34,27 @@ const MesHomeContainer = () => {
   const fetchQuality = async () => {
     try {
       const res = await axios.get(`${MES_API}/quality_controls`);
-      setQuality(res.data);
+      const dataWithRate = res.data.map((qc) => ({
+        qc_no: qc.qcNo,
+        wo_no: qc.workOrder.woNo,
+        qualityRate: qc.totalQuantity
+          ? ((qc.successQuantity / qc.totalQuantity) * 100).toFixed(1)
+          : 0,
+      }));
+      setQuality(dataWithRate);
+
+      const totalSuccess = res.data.reduce(
+        (sum, qc) => sum + qc.successQuantity,
+        0
+      );
+      const totalQty = res.data.reduce((sum, qc) => sum + qc.totalQuantity, 0);
+      const avgRate = totalQty ? (totalSuccess / totalQty) * 100 : 0;
+
+      setTotalSuccess(totalSuccess);
+      setTotalQty(totalQty);
+      setTotalQualityRate(avgRate.toFixed(1));
     } catch (err) {
-      console.error("품질 정보 조회 실패");
+      console.error("품질 정보 조회 실패", err);
     }
   };
 
@@ -42,13 +63,16 @@ const MesHomeContainer = () => {
     fetchQuality();
   }, []);
 
-  const HandleCalculateQuality = () => {};
   return (
     <MesHomePresenter
       weather={weather}
       cityCoordinates={cityCoordinates}
       selectedCity={selectedCity}
       onSelectCity={fetchWeather}
+      quality={quality}
+      totalSuccess={totalSuccess}
+      totalQty={totalQty}
+      totalQualityRate={totalQualityRate}
     />
   );
 };
