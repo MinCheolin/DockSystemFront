@@ -243,3 +243,16 @@
   margin-inline-end: 8px;
   color: rgba(0, 0, 0, 0.85);
 }
+
+.drawer-product-plan {
+  margin: 5px;
+  display: flex;
+  padding: 7px;
+  height: 30px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
