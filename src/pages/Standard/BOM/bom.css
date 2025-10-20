@@ -1,6 +1,5 @@
 .bom-content {
-  min-height: 100vh;
-  height: auto;
+  height: 100vh;
   border-radius: 15px;
   background-color: white;
   padding: 15px;

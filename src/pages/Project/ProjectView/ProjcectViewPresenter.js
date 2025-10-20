@@ -15,6 +15,7 @@ import "./projectview.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 const ProjectViewPresenter = ({
   isModalOpen,
   isDrawerOpen,
@@ -57,7 +58,6 @@ const ProjectViewPresenter = ({
       onClick: () => HandleStatusChangeBtnClick("완료"),
     },
   ];
-  console.log(productPlans);
   const colums = [
     {
       title: "프로젝트명",

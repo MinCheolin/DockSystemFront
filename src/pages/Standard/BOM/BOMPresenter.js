@@ -84,8 +84,8 @@ const BOMPresenter = ({
     },
     {
       title: "장비명",
-      dataIndex: ["standardProcess", "spEquipment"],
-      key: "spEquipment",
+      dataIndex: ["standardProcess", "equipment", "equipName"],
+      key: "equipName",
     },
   ];
 
