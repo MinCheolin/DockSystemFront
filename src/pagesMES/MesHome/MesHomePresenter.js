@@ -268,8 +268,11 @@ const MesHomePresenter = ({
                   <PieChart width={150} height={150}>
                     <Pie
                       data={[
-                        { name: "Good", value: totalQualityRate },
-                        { name: "error", value: 100 - totalQualityRate },
+                        { name: "Good", value: Number(totalQualityRate) },
+                        {
+                          name: "error",
+                          value: 100 - Number(totalQualityRate),
+                        },
                       ]}
                       innerRadius={50}
                       outerRadius={70}
@@ -278,8 +281,8 @@ const MesHomePresenter = ({
                       dataKey="value"
                       nameKey="name"
                     >
-                      <Cell key="good" fill="#ffffffff" />
-                      <Cell key="error" fill="#8b2b1f" />
+                      <Cell key="good" fill="#8b2b1f" />
+                      <Cell key="error" fill="#d8d8d8ff" />
                     </Pie>
                   </PieChart>
                   <p
