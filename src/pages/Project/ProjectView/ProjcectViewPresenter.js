@@ -2,7 +2,6 @@ import {
   Row,
   Col,
   Divider,
-  Descriptions,
   Dropdown,
   Button,
   Card,
@@ -58,6 +57,7 @@ const ProjectViewPresenter = ({
       onClick: () => HandleStatusChangeBtnClick("완료"),
     },
   ];
+  console.log(productPlans);
   const colums = [
     {
       title: "프로젝트명",
@@ -95,7 +95,6 @@ const ProjectViewPresenter = ({
     arrows: true,
   };
   const completedPjt = projects.filter((project) => project.type === "완료");
-
   return (
     <div className="project-content">
       <div className="grid-func">
@@ -124,7 +123,6 @@ const ProjectViewPresenter = ({
                     title={
                       <div className="card-title-flex">
                         <span>{project.projectName}</span>
-                        <span></span>
                         <span>
                           <Tag
                             color={
@@ -285,7 +283,7 @@ const ProjectViewPresenter = ({
               title="프로젝트 상세정보"
               open={isDrawerOpen}
               onClose={HandleDrawerClose}
-              width={500}
+              width={700}
             >
               <Row>
                 <Col span={12}>
@@ -324,7 +322,34 @@ const ProjectViewPresenter = ({
                 </Col>
               </Row>
               <Divider />
-              <>생산계획</>
+              <>
+                <></>생산계획
+                {productPlans
+                  .filter(
+                    (pp) => pp.project.projectNo === drawerInfo?.projectNo
+                  )
+                  .map((productPlan) => {
+                    return (
+                      <div
+                        className="drawer-product-plan"
+                        key={productPlan.ppNo}
+                      >
+                        <div>
+                          <Tag>{productPlan.ppStatus}</Tag>
+                          {""}
+                          {productPlan.ppName}
+                        </div>
+                        <div>{productPlan.bom.vessel.vesselName}</div>
+                        <div>{productPlan.bom.standardProcess.spName}</div>
+                        <div>
+                          {" "}
+                          {productPlan.ppStartDate.split("T")[0]} ~{" "}
+                          {productPlan.ppEndDate.split("T")[0]}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </>
             </Drawer>
           </>
         )}

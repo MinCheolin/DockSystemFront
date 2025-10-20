@@ -7,7 +7,10 @@
 .main-content {
   margin: 10px 16px;
 }
-
+.ant-layout-sider {
+  background: #001529; /* 또는 원하는 색 */
+  min-height: 100vh; /* 화면 높이 기준으로 고정 */
+}
 .main-header {
   display: flex;
   justify-content: space-between;
