@@ -86,7 +86,7 @@ const ProjectViewPresenter = ({
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     centerMode: true,
     centerPadding: "0px",
@@ -303,7 +303,7 @@ const ProjectViewPresenter = ({
                 <Col span={12}>
                   <DescriptionItem
                     title="금액"
-                    content={drawerInfo?.projectPrice}
+                    content={drawerInfo?.projectPrice.toLocaleString()}
                   />
                 </Col>
                 <Col span={12}>

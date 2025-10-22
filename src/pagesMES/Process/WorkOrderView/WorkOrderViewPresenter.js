@@ -70,10 +70,7 @@ const WorkOrderViewPresenter = ({
             <div>작업 지시 내용</div>
             <Button onClick={HandleModalStatusChange}>상태 변경</Button>
           </div>
-          <Descriptions
-            bordered
-            column={2} // 한 줄에 두 개씩
-          >
+          <Descriptions bordered column={2}>
             <Descriptions.Item label="작업지시번호" span={1}>
               {wo.woNo}
             </Descriptions.Item>
