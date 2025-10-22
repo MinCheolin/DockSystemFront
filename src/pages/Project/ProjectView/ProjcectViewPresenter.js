@@ -58,7 +58,6 @@ const ProjectViewPresenter = ({
       onClick: () => HandleStatusChangeBtnClick("완료"),
     },
   ];
-
   const colums = [
     {
       title: "프로젝트명",
@@ -87,7 +86,7 @@ const ProjectViewPresenter = ({
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     centerMode: true,
     centerPadding: "0px",
@@ -284,7 +283,7 @@ const ProjectViewPresenter = ({
               title="프로젝트 상세정보"
               open={isDrawerOpen}
               onClose={HandleDrawerClose}
-              width={500}
+              width={700}
             >
               <Row>
                 <Col span={12}>
@@ -304,7 +303,7 @@ const ProjectViewPresenter = ({
                 <Col span={12}>
                   <DescriptionItem
                     title="금액"
-                    content={drawerInfo?.projectPrice}
+                    content={drawerInfo?.projectPrice.toLocaleString()}
                   />
                 </Col>
                 <Col span={12}>
@@ -323,7 +322,34 @@ const ProjectViewPresenter = ({
                 </Col>
               </Row>
               <Divider />
-              <>생산계획</>
+              <>
+                <></>생산계획
+                {productPlans
+                  .filter(
+                    (pp) => pp.project.projectNo === drawerInfo?.projectNo
+                  )
+                  .map((productPlan) => {
+                    return (
+                      <div
+                        className="drawer-product-plan"
+                        key={productPlan.ppNo}
+                      >
+                        <div>
+                          <Tag>{productPlan.ppStatus}</Tag>
+                          {""}
+                          {productPlan.ppName}
+                        </div>
+                        <div>{productPlan?.bom?.vessel?.vesselName}</div>
+                        <div>{productPlan?.bom?.standardProcess?.spName}</div>
+                        <div>
+                          {" "}
+                          {productPlan.ppStartDate.split("T")[0]} ~{" "}
+                          {productPlan.ppEndDate.split("T")[0]}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </>
             </Drawer>
           </>
         )}

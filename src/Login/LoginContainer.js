@@ -26,15 +26,19 @@ const LoginContainer = () => {
     }));
   };
 
-  const HandleLogin = async () => {
-    try {
-      const response = await LOGINapi.post(`${LOGIN_API}`, loginInfo);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("username", response.data.userName);
-      navigate(`/${selectedTab}`);
-    } catch (err) {
-      alert("로그인 실패");
-    }
+  // const HandleLogin = async () => {
+  //   try {
+  //     const response = await LOGINapi.post(`${LOGIN_API}`, loginInfo);
+  //     localStorage.setItem("token", response.data.token);
+  //     localStorage.setItem("username", response.data.userName);
+  //     navigate(`/${selectedTab}`);
+  //   } catch (err) {
+  //     alert("로그인 실패");
+  //   }
+  // };
+
+  const HandleLogin = () => {
+    navigate(`/${selectedTab}`);
   };
 
   const HandleLogout = () => {

@@ -1,6 +1,6 @@
 import { Button, Input } from "antd";
 import { ExportOutlined } from "@ant-design/icons";
-import logoImg from "../assets/dockon.png";
+import logoImg from "../assets/dockoniconNoBack.png";
 import "./login.css";
 const LoginPresenter = ({
   username,
@@ -82,10 +82,10 @@ const LoginPresenter = ({
           <div className="header-img">
             <img className="logo-img" src={logoImg} />
           </div>
-          <div className="header-text">
+          {/* <div className="header-text">
             <div className="system-name">DockON</div>
             <div className="system-desc">조선소 통합 관리 시스템</div>
-          </div>
+          </div> */}
         </div>
         <div className="login-box">
           <div className="login-tabs">

@@ -79,7 +79,7 @@ const LayoutPresent = ({
             />
           </div>
           <div className="user-info">
-            <div>{loginUser} 님</div>
+            <div>{loginUser} 최강현님</div>
             <div className="info-item">마이페이지</div>
             <div onClick={HandleLogout} className="info-item">
               로그아웃
