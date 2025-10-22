@@ -339,8 +339,8 @@ const ProjectViewPresenter = ({
                           {""}
                           {productPlan.ppName}
                         </div>
-                        <div>{productPlan?.bom?.vessel?.vesselName}</div>
-                        <div>{productPlan?.bom?.standardProcess?.spName}</div>
+                        <div>{productPlan.bom.vessel.vesselName}</div>
+                        <div>{productPlan.bom.standardProcess.spName}</div>
                         <div>
                           {" "}
                           {productPlan.ppStartDate.split("T")[0]} ~{" "}
