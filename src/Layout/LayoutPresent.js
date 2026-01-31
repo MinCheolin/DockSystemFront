@@ -34,6 +34,7 @@ const items = [
     getItem("표준 공정 관리", "/erp/standard/StandardProcess"),
     getItem("사원 정보 관리", "/erp/standard/user"),
     getItem("BOM 관리", "/erp/standard/bom"),
+
   ]),
   getItem("프로젝트 관리", "/erp/project", <ProjectOutlined />, [
     getItem("프로젝트 등록", "/erp/project/projectCreate"),
