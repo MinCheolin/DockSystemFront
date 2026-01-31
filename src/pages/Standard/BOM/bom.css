@@ -1,0 +1,82 @@
+.bom-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.bom-create-modal {
+  width: 650;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  margin: -24px -24px 20px -24px;
+  padding-top: 16px;
+}
+
+.modal-info-box {
+  margin-bottom: 20px;
+  padding: 12px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+
+.modal-info-box p {
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+.modal-info-box .vessel-name {
+  font-size: 16px;
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.modal-form-button {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.bomDetailInput {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bomDetailInput .ant-form-item {
+  margin-top: 3px;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.bomDetailInput .anticon {
+  cursor: pointer;
+}
+
+.addButtonWrapper {
+  margin-top: 20px;
+}
+.bomDetailInput .ant-form-item .ant-select {
+  width: 150px;
+}
+
+.bom-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.bom-search input {
+  flex: 1;
+}

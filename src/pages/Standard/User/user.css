@@ -1,0 +1,47 @@
+.user-content{
+    height: 100vh;
+    border-radius: 15px;
+    background-color: white;
+    padding: 15px;
+}
+
+.grid-func{
+    height: 70px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.user-list{
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+.func-button{
+    display: flex;
+    gap : 15px
+}
+
+.grid-box{
+    height: 80vh;
+}
+
+.modal-form-item-center {
+  text-align: center;
+}
+
+.modal-form-button{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    gap: 15px;
+    
+}
+
+
+.ant-input[disabled] {
+  background-color: #eeeeee !important;  /* 더 연한 회색 */
+  color: rgba(0, 0, 0, 0.65) !important; /* 글자색 */
+  border-color: #e5e5e5 !important;      /* 연한 border */
+}

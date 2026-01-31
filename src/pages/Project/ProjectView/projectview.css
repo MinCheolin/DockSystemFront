@@ -1,0 +1,258 @@
+.project-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-list {
+  display: flex;
+  gap: 15px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-box {
+  height: 80vh;
+}
+
+.modal-form-item-center {
+  text-align: center;
+}
+
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.details {
+  display: flex;
+  gap: 5px;
+}
+
+.pjt-info {
+  font-weight: 500;
+  font-size: 15px;
+  width: 35%;
+}
+
+.pps {
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-inner-div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.projects {
+}
+
+.projects .slick-prev,
+.projects .slick-next {
+  z-index: 10; /* 카드 위로 올라오도록 */
+  top: 50%; /* 수직 중앙 */
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* 둥근 원 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projects .slick-prev::before,
+.projects .slick-next::before {
+  color: rgb(179, 175, 175); /* 화살표 색 */
+  font-size: 35px;
+}
+
+.projects .slick-prev {
+  left: 70px;
+}
+
+.projects .slick-next {
+  right: 70px;
+}
+
+.project-card {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+  border: 1px solid rgb(204, 204, 204);
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.grid-item-container {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 0.8fr 1fr; /* 1,3번째 칸만 살짝 좁게 */
+  grid-template-rows: repeat(3, auto);
+  gap: 1px;
+}
+
+.grid-item {
+  text-align: center;
+  padding: 10px;
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 최신 표준 */
+  white-space: normal;
+}
+
+/* 10번 아이템: 3칸 차지 */
+.grid-item:nth-child(10) {
+  grid-column: span 3;
+}
+
+.grid-item:nth-child(4n + 1),
+.grid-item:nth-child(4n + 3) {
+  font-weight: bold;
+  text-align: right;
+  background-color: #f5f5f5;
+}
+.grid-item:nth-child(4n + 2),
+.grid-item:nth-child(4n + 4) {
+  background-color: rgb(250, 250, 255);
+}
+
+.product-plans {
+  width: 100%;
+}
+
+.card-title-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pp-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pp-title {
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+}
+
+.pp-item {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+
+.pp-item > div {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.pp-item.incomplete {
+  background-color: rgb(249, 214, 214);
+}
+.pp-item.complete {
+  background-color: rgb(222, 255, 229);
+}
+.button-area {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding-top: 15px;
+  margin-top: 15px;
+  margin-left: 20px;
+  border-top: 1px solid black;
+}
+
+.modal-status-change {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-status-change-header {
+  padding-bottom: 5px;
+  font-size: 22px;
+  border-bottom: 1px solid rgb(102, 102, 102);
+}
+
+.modal-status-change-body {
+  display: flex;
+  font-size: 17px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.current-status {
+  font-weight: bold; /* 글씨 두껍게 */
+  font-size: 1.2em; /* 글씨 크기 키우기 */
+  background-color: #ffcc00; /* 색상 변경 가능 */
+  color: #000000;
+}
+.target-status {
+  font-weight: bold; /* 글씨 두껍게 */
+  font-size: 1.2em; /* 글씨 크기 키우기 */
+  background-color: #81b1ff; /* 색상 변경 가능 */
+}
+
+.modal-status-change-footer {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.site-description-item-profile-wrapper {
+  margin-bottom: 7px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.5715;
+}
+
+.ant-drawer-body p.site-description-item-profile-p {
+  display: block;
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  line-height: 1.5715;
+}
+
+.site-description-item-profile-p-label {
+  display: inline-block;
+  margin-inline-end: 8px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.drawer-product-plan {
+  margin: 5px;
+  display: flex;
+  padding: 7px;
+  height: 30px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}

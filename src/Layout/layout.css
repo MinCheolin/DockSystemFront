@@ -1,23 +1,35 @@
-.layout-content{
-    margin: 24px 16px;
-    padding: 24px;
-    min-height: 280px;
-    background: #fff;       
-    border-radius: 8px; 
-}
-
-.layout-wrapper {
+.layout {
   min-height: 100vh;
 }
-
-
-.layout-header {
-  background-color: #fff;
-  padding: 0;
+.layout > .ant-layout {
+  min-height: 100vh;
+}
+.main-content {
+  margin: 10px 16px;
+}
+.ant-layout-sider {
+  background: #001529; /* 또는 원하는 색 */
+  min-height: 100vh; /* 화면 높이 기준으로 고정 */
+}
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
 }
 
-.ant-btn.toggle-btn {
-  font-size: 16px;
-  width: 64px;
-  height: 64px;
+.main-footer {
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-item {
+  padding: 10px 8px;
+  cursor: pointer;
 }

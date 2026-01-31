@@ -1,17 +1,50 @@
-.button-list {
+.client-content {
+  height: 100vh;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+}
+
+.grid-func {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client-list {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.func-button {
+  display: flex;
+  gap: 15px;
+}
+
+.grid-box {
+  height: 80vh;
+}
+
+.modal-form-item-center {
+  text-align: center;
+}
+
+.modal-form-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.client-search {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.buttons{
-    display: flex;
-    gap: 5px;
-}
-.submit{
-    border: none;
-}
-.delete{
-    background-color: red;
-    color: white;
-    border: none;
+
+.client-search input {
+  flex: 1;
 }
